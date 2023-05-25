@@ -1,6 +1,9 @@
 import {
 	Button,
+	Checkbox,
 	CircularProgress,
+	Icon,
+	IconButton,
 	Paper,
 	Table,
 	TableBody,
@@ -28,6 +31,7 @@ import { makeSelectTestChoice } from "../../store/selectors/prediction"
 import { CSVLink } from "react-csv"
 import "../list.scss"
 import { TableInfo } from "../../components/tableHeader"
+import downloadIcon from "../../images/downloadIcon.svg"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -207,9 +211,6 @@ const TestChoices = ({
 			<div className='table-container'>
 				<div className='filters between choices'>
 					<div>
-						<Button className='choice-button' onClick={editDetailButtonClick}>
-							Edit Details
-						</Button>
 						<Button
 							disabled={disableAdd}
 							onClick={choiceButtonClick}
@@ -218,9 +219,10 @@ const TestChoices = ({
 							Add Your Choice
 						</Button>
 					</div>
-					<div style={{ marginRight: "10rem" }}>
-						<TableInfo heading={`JoSAA ${year} Round ${round}`} />
-					</div>
+					<div>
+						<Icon className="choice-button icon" onClick={editDetailButtonClick}>
+							<img src={downloadIcon}/>
+						</Icon>
 					{testChoices.length !== 0 && (
 						<CSVLink
 							data={testChoices}
@@ -229,9 +231,12 @@ const TestChoices = ({
 							target='_blank'
 							onClick={downloadClick}
 						>
-							<DownloadIcon color='primary' className='choice-button icon' />
+							<Icon className="choice-button icon">
+								<img src={downloadIcon}/>
+							</Icon>
 						</CSVLink>
 					)}
+					</div>
 				</div>
 				{testChoiceObj.loading ? (
 					<CircularProgress />
@@ -242,6 +247,9 @@ const TestChoices = ({
 								<Table sx={{ minWidth: 650 }}>
 									<TableHead>
 										<TableRow>
+											<TableCell className='noto-sans'>
+												<Checkbox />
+											</TableCell>
 											{choicesHeader.map((header, index) => (
 												<TableCell key={index}>{header.label}</TableCell>
 											))}
@@ -256,7 +264,13 @@ const TestChoices = ({
 												className={`${row.color} rank`}
 												key={row.id}
 											>
-												<TableCell className='noto-sans'>{index + 1}</TableCell>
+												<TableCell className='noto-sans'>
+													{/* <Checkbox className="checkbox"/> */}
+													<Checkbox />
+												</TableCell>
+												{/* <TableCell className='noto-sans'>
+													{index + 1}
+												</TableCell> */}
 												<TableCell className='noto-sans'>
 													{row.institute_type}
 												</TableCell>
@@ -266,10 +280,12 @@ const TestChoices = ({
 												<TableCell className='noto-sans'>
 													{row.branch_name}
 												</TableCell>
-												<TableCell className='noto-sans'>
+												{/* <TableCell className='noto-sans'>
 													{row.category}
+												</TableCell> */}
+												<TableCell className='noto-sans'>
+													{row.quota}
 												</TableCell>
-												<TableCell className='noto-sans'>{row.quota}</TableCell>
 												<TableCell className='noto-sans'>
 													{row.seat_pool}
 												</TableCell>
