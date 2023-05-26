@@ -38,12 +38,6 @@ const TestChoices = ({
 	testChoiceComponent,
 	showToastComponent,
 }) => {
-	const [cutoff, setcutoff] = useState(10)
-	const [rank, setrank] = useState(0)
-	const [rankMain, setrankMain] = useState(0)
-	const [year, setyear] = useState(0)
-	const [round, setround] = useState(0)
-	const [choice, setchoice] = useState("")
 	const [instituteType, setinstituteType] = useState("")
 	const [instituteId, setinstituteId] = useState(0)
 	const [branchId, setbranchId] = useState(0)
@@ -55,9 +49,52 @@ const TestChoices = ({
 	const [quota, setquota] = useState("")
 	const [category, setcategory] = useState("")
 	const [choiceDataSubmit, setchoiceDataSubmit] = useState(false)
-	const [disableAdd, setdisableAdd] = useState(true)
-	const [testChoices, settestChoices] = useState([])
-	const [saveTestChoices, setsaveTestChoices] = useState([])
+	const [selectAll, setSelectAll] = useState(false)
+	const [disableAdd, setdisableAdd] = useState(
+		(localStorage.getItem('autoOpenedForm')!==null) ?
+		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
+		true
+	)
+	const [cutoff, setcutoff] = useState(
+		(localStorage.getItem('cutoff')!==null) ?
+		JSON.parse(localStorage.getItem('cutoff')) :
+		10
+	)
+	const [rank, setrank] = useState(
+		(localStorage.getItem('rank')!==null) ?
+		JSON.parse(localStorage.getItem('rank')) :
+		0
+	)
+	const [rankMain, setrankMain] = useState(
+		(localStorage.getItem('rankMain')!==null) ?
+		JSON.parse(localStorage.getItem('rankMain')) :
+		0
+	)
+	const [year, setyear] = useState(
+		(localStorage.getItem('year')!==null) ?
+		JSON.parse(localStorage.getItem('year')) :
+		0
+	)
+	const [round, setround] = useState(
+		(localStorage.getItem('round')!==null) ?
+		localStorage.getItem('round') :
+		0
+	)
+	const [choice, setchoice] = useState(
+		(localStorage.getItem('choice')!==null) ?
+		localStorage.getItem('choice') :
+		""
+	)
+	const [testChoices, settestChoices] = useState(
+		(localStorage.getItem('testChoices')!==null) ?
+		JSON.parse(localStorage.getItem('testChoices')) :
+		[]
+	)
+	const [saveTestChoices, setsaveTestChoices] = useState(
+		(localStorage.getItem('saveTestChoices')!==null) ?
+		JSON.parse(localStorage.getItem('saveTestChoices')) :
+		[]
+	)
 
 	useEffect(() => {
 		setopenForm(true)
@@ -84,15 +121,19 @@ const TestChoices = ({
 					testChoiceComponent(payload)
 				})
 			}
-			localStorage.setItem("cutoff", cutoff)
-			localStorage.setItem("rank", rank)
-			localStorage.setItem("rankMain", rankMain)
-			localStorage.setItem("year", year)
+			localStorage.setItem("cutoff", JSON.stringify(cutoff))
+			localStorage.setItem("rank", JSON.stringify(rank))
+			localStorage.setItem("rankMain", JSON.stringify(rankMain))
+			localStorage.setItem("year", JSON.stringify(year))
 			localStorage.setItem("round", round)
 			localStorage.setItem("choice", choice)
-			setdisableAdd(false)
-			setchoiceFormOpen(true)
+			if (JSON.parse(localStorage.getItem('autoOpenedForm'))!==true) {
+				setdisableAdd(false)
+				setchoiceFormOpen(true)
+				localStorage.setItem('autoOpenedForm', JSON.stringify(true))
+			}
 			setdataSubmit(false)
+			
 		}
 	}, [dataSubmit])
 
@@ -161,6 +202,14 @@ const TestChoices = ({
 			}
 		}
 	}, [testChoiceObj])
+
+	useEffect(() => {
+		localStorage.setItem('testChoices', JSON.stringify(testChoices))
+	}, [testChoices])
+
+	useEffect(() => {
+		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+	}, [saveTestChoices])
 
 	const choiceButtonClick = () => {
 		setchoiceFormOpen(true)
