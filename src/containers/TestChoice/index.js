@@ -32,6 +32,7 @@ import { CSVLink } from "react-csv"
 import "../list.scss"
 import { TableInfo } from "../../components/tableHeader"
 import downloadIcon from "../../images/downloadIcon.svg"
+import editIcon from "../../images/editIcon.svg"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -49,7 +50,9 @@ const TestChoices = ({
 	const [quota, setquota] = useState("")
 	const [category, setcategory] = useState("")
 	const [choiceDataSubmit, setchoiceDataSubmit] = useState(false)
-	const [selectAll, setSelectAll] = useState(false)
+	const [selectAll, setselectAll] = useState(false)
+	const [showCheckboxes, showcheckboxesAll] = useState(false)
+	const [showRemoveButton, setshowRemoveButton] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
 		(localStorage.getItem('autoOpenedForm')!==null) ?
 		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
@@ -212,20 +215,28 @@ const TestChoices = ({
 	}, [saveTestChoices])
 
 	const choiceButtonClick = () => {
-		setchoiceFormOpen(true)
+		if (!showRemoveButton) setchoiceFormOpen(true)
+	}
+
+	const removeButtonClick = () => {
+		alert("Just remove 'em!!")
 	}
 
 	const editDetailButtonClick = () => {
-		setisEditing(true)
-		setopenForm(true)
+		if (!showRemoveButton) {
+			setisEditing(true)
+			setopenForm(true)
+		}
 	}
 
 	const downloadClick = () => {
-		showToastComponent(
-			"Your choices have been exported",
-			"success",
-			toastDuration
-		)
+		if (!showRemoveButton) {
+			showToastComponent(
+				"Your choices have been exported",
+				"success",
+				toastDuration
+			)
+		}
 	}
 
 	return (
@@ -261,16 +272,25 @@ const TestChoices = ({
 				<div className='filters between choices'>
 					<div>
 						<Button
-							disabled={disableAdd}
+							disabled={disableAdd || showRemoveButton}
 							onClick={choiceButtonClick}
 							className='choice-button add-choice'
 						>
 							Add Your Choice
 						</Button>
+						{showRemoveButton && (
+							<Button
+								disabled={!showRemoveButton}
+								onClick={removeButtonClick}
+								className='choice-button add-choice'
+							>
+								Remove
+							</Button>
+						)}
 					</div>
 					<div>
 						<Icon className="choice-button icon" onClick={editDetailButtonClick}>
-							<img src={downloadIcon}/>
+							<img src={editIcon}/>
 						</Icon>
 					{testChoices.length !== 0 && (
 						<CSVLink
