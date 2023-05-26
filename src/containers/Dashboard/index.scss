@@ -150,4 +150,80 @@
 			justify-content: center;
 		}
 	}
+	.options{
+		@media(max-width:1956px)and(min-width:1090px){
+			justify-content: space-evenly;
+		}
+		@media(min-width:2800px){
+			justify-content: space-evenly;
+		}
+	}
+
+	.datagrid{
+		width: 50%;
+		margin-right: 2rem;
+		align-items: end;
+		align-self: flex-start;
+		@media (max-width:600px) {
+			align-items: center;
+			width: 100%;
+			
+		}
+		@media (min-width:1200px) {
+			width: 33%;
+			
+		}
+		
+	}
+	.datelist{
+		padding-bottom: 0rem !important;
+	}
+	.dates{
+		align-self: flex-start;
+		background: #f4f6fd;
+		box-shadow: 0px 0px 15px -6px rgba(0, 25, 71, 0.05);
+		border-radius: 12px;
+		padding: 1rem;
+		width:16rem;
+		margin-left: 0.7rem;
+		@media (max-width: 600px) {
+			min-height: 10rem;
+		}
+		.MuiTypography-root {
+			font-family: "Poppins", sans-serif;
+			font-size: 1rem;
+			font-weight: 500;
+		}
+		li.MuiTypography-root {
+			font-size: 0.9rem;
+			font-weight: 400;
+			padding-right: 0.2rem;
+		}
+		.important-dates {
+			max-height: 13rem;
+			overflow-y: auto;
+		}
+		@media (max-width: 900px) {
+			.MuiTypography-root {
+				font-size: 1rem;
+			}
+			li.MuiTypography-root {
+				font-size: 0.8rem;
+			}
+		}
+		@media (max-width: 700px) {
+			ul {
+				padding-left: 1rem;
+			}
+		}
+		
+	}
+	.title{
+		margin-bottom: 1rem;
+	}
+	
 }
+
+
+
+

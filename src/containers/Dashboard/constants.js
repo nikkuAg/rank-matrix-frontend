@@ -30,4 +30,29 @@ export const featuresCard = [
 		image: testChoices,
 		link: "/choices",
 	},
+	{
+		title: "Important pdfs",
+		image: testChoices,
+		link: "/choices",
+	}
 ];
+
+export const ImpDates=[
+	{
+		id:1,
+		title:"Jee Main Phase 2 paper",
+		date:"05-05-2023"
+	},
+	
+];
+
+export const Websites=[
+	{
+		name:"JOSAA",
+		val:"https://josaa.nic.in/",
+	},
+	{
+		name:"Certificate-format",
+		val:"https://josaa.nic.in/certificate-format/"
+	}
+]
