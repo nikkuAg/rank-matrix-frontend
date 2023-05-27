@@ -88,11 +88,6 @@ const TestChoices = ({
 		localStorage.getItem('choice') :
 		""
 	)
-	// const [testChoices, settestChoices] = useState(
-	// 	(localStorage.getItem('testChoices')!==null) ?
-	// 	JSON.parse(localStorage.getItem('testChoices')) :
-	// 	[]
-	// )
 	const [testChoices, settestChoices] = useState([])
 	const [saveTestChoices, setsaveTestChoices] = useState(
 		(localStorage.getItem('saveTestChoices')!==null) ?
@@ -174,8 +169,10 @@ const TestChoices = ({
 		if (testChoiceObj.data.opening_rank) {
 			if (!testChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 				const choice = {
+					institute_id: testChoiceObj.data.institute_detail.id,
 					institute_type: testChoiceObj.data.institute_detail.type,
 					institute_name: testChoiceObj.data.institute_detail.name,
+					branch_id: testChoiceObj.data.branch_detail.id,
 					branch_name: testChoiceObj.data.branch_detail.name,
 					quota: testChoiceObj.data.quota,
 					seat_pool: testChoiceObj.data.seat_pool,
@@ -210,10 +207,6 @@ const TestChoices = ({
 			}
 		}
 	}, [testChoiceObj])
-
-	// useEffect(() => {
-	// 	localStorage.setItem('testChoices', JSON.stringify(testChoices))
-	// }, [testChoices])
 
 	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
@@ -270,8 +263,24 @@ const TestChoices = ({
 	}
 
 	const removeButtonClick = () => {
-		console.log(testChoices.length)
-		console.log(saveTestChoices.length)
+		setsaveTestChoices([])
+		settestChoices(testChoices.filter(testChoice => {
+			if (testChoice.selected || selectAll) return false
+
+			const saveChoice = {
+				institute_id: testChoice.institute_id,
+				branch_id: testChoice.branch_id,
+				quota: testChoice.quota,
+				seat_pool: testChoice.seat_pool,
+				category: testChoice.category,
+				id: testChoice.id,
+			}
+			setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
+			return true
+		}))
+		setselectAll(false)
+		setshowAllCheckboxes(false)
+		setshowRemoveButton(false)
 	}
 
 	const editDetailButtonClick = () => {
