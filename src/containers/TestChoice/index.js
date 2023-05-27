@@ -88,11 +88,12 @@ const TestChoices = ({
 		localStorage.getItem('choice') :
 		""
 	)
-	const [testChoices, settestChoices] = useState(
-		(localStorage.getItem('testChoices')!==null) ?
-		JSON.parse(localStorage.getItem('testChoices')) :
-		[]
-	)
+	// const [testChoices, settestChoices] = useState(
+	// 	(localStorage.getItem('testChoices')!==null) ?
+	// 	JSON.parse(localStorage.getItem('testChoices')) :
+	// 	[]
+	// )
+	const [testChoices, settestChoices] = useState([])
 	const [saveTestChoices, setsaveTestChoices] = useState(
 		(localStorage.getItem('saveTestChoices')!==null) ?
 		JSON.parse(localStorage.getItem('saveTestChoices')) :
@@ -186,16 +187,18 @@ const TestChoices = ({
 					selected: false,
 					showCheckbox: false
 				}
-				const saveChoice = {
-					institute_id: testChoiceObj.data.institute_detail.id,
-					branch_id: testChoiceObj.data.branch_detail.id,
-					quota: testChoiceObj.data.quota,
-					seat_pool: testChoiceObj.data.seat_pool,
-					category: testChoiceObj.data.category,
-					id: testChoiceObj.data.id,
-				}
 				settestChoices((prevChoice) => [...prevChoice, choice])
-				setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
+				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
+					const saveChoice = {
+						institute_id: testChoiceObj.data.institute_detail.id,
+						branch_id: testChoiceObj.data.branch_detail.id,
+						quota: testChoiceObj.data.quota,
+						seat_pool: testChoiceObj.data.seat_pool,
+						category: testChoiceObj.data.category,
+						id: testChoiceObj.data.id,
+					}
+					setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
+				}
 			} else {
 				if (!isEditing) {
 					showToastComponent(
@@ -208,9 +211,9 @@ const TestChoices = ({
 		}
 	}, [testChoiceObj])
 
-	useEffect(() => {
-		localStorage.setItem('testChoices', JSON.stringify(testChoices))
-	}, [testChoices])
+	// useEffect(() => {
+	// 	localStorage.setItem('testChoices', JSON.stringify(testChoices))
+	// }, [testChoices])
 
 	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
@@ -267,7 +270,8 @@ const TestChoices = ({
 	}
 
 	const removeButtonClick = () => {
-		settestChoices
+		console.log(testChoices.length)
+		console.log(saveTestChoices.length)
 	}
 
 	const editDetailButtonClick = () => {
