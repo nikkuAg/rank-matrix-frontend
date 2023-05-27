@@ -17,6 +17,7 @@ import DownloadIcon from "@mui/icons-material/Download"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import FormDialog from "../../components/formDialog"
+import { ConfirmationDialog } from "../../components/confirmationDialog"
 import { Header } from "../../components/header"
 import {
 	AddChoice,
@@ -25,6 +26,7 @@ import {
 	toastDuration,
 } from "../../constants/general"
 import { choicesHeader, download_headers } from "../../constants/tableHeader"
+import { removeConfirmationPrompt } from "../../constants/general"
 import { fetchTestChoice } from "../../store/actions/prediction"
 import { showToast } from "../../store/actions/toast"
 import { makeSelectTestChoice } from "../../store/selectors/prediction"
@@ -53,6 +55,7 @@ const TestChoices = ({
 	const [selectAll, setselectAll] = useState(false)
 	const [showAllCheckboxes, setshowAllCheckboxes] = useState(false)
 	const [showRemoveButton, setshowRemoveButton] = useState(false)
+	const [openConfirmPrompt, setopenConfirmPrompt] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
 		(localStorage.getItem('autoOpenedForm')!==null) ?
 		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
@@ -263,6 +266,23 @@ const TestChoices = ({
 	}
 
 	const removeButtonClick = () => {
+		setopenConfirmPrompt(true)
+	}
+
+	const cancelRemoveChoices = () => {
+		settestChoices(
+			testChoices.map(testChoice => {
+				testChoice.selected = false
+				testChoice.showCheckbox = false
+			})
+		)
+		setselectAll(false)
+		setshowAllCheckboxes(false)
+		setshowRemoveButton(false)
+		setopenConfirmPrompt(false)
+	}
+
+	const confirmRemoveChoices = () => {
 		setsaveTestChoices([])
 		settestChoices(testChoices.filter(testChoice => {
 			if (testChoice.selected || selectAll) return false
@@ -329,6 +349,15 @@ const TestChoices = ({
 				setdataSubmit={setchoiceDataSubmit}
 				fetchinstituteTypeDetail={choiceFormOpen}
 			/>
+			<ConfirmationDialog 
+				open={openConfirmPrompt}
+				onClose={() => setopenConfirmPrompt(false)}
+				title={removeConfirmationPrompt.title}
+				content={removeConfirmationPrompt.content}
+				confirmButtonText={removeConfirmationPrompt.confirmButtonText}
+				cancelAction={cancelRemoveChoices}
+				confirmAction={confirmRemoveChoices}
+			/>
 			<div className='table-container'>
 				<div className='filters between choices'>
 					<div>
@@ -384,12 +413,12 @@ const TestChoices = ({
 								<Table sx={{ minWidth: 650 }}>
 									<TableHead>
 										<TableRow>
-											<TableCell className='noto-sans tablehead_checkbox_column' align="center">
+											<TableCell className='noto-sans tablehead-checkbox-column' align="center">
 												<Checkbox 
 													checked={selectAll}
 													onChange={selectAllCheckboxOnChange}
 													disabled={!showAllCheckboxes}
-													className={showAllCheckboxes ? 'active_tablehead_checkbox' : 'inactive_tablehead_checkbox'}
+													className={showAllCheckboxes ? 'active-tablehead-checkbox' : 'inactive-tablehead-checkbox'}
 												/>
 											</TableCell>
 											{choicesHeader.map((header, index) => (
@@ -409,12 +438,12 @@ const TestChoices = ({
 												onMouseLeave={() => checkboxOnMouseLeave(row.id)}
 												onClick={() => checkboxOnChange(row.id)}
 											>
-												<TableCell className='noto-sans checkbox_column' align="center">
+												<TableCell className='noto-sans checkbox-column' align="center">
 													<Checkbox 
 														checked={row.selected || selectAll}
 														onChange={(event) => checkboxOnChange(row.id, event)}
 														disabled={!(row.showCheckbox || showAllCheckboxes)}
-														className={(row.showCheckbox || showAllCheckboxes) ? 'active_checkbox' : 'inactive_checkbox'}
+														className={(row.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
 													/>
 												</TableCell>
 												<TableCell className='noto-sans'>

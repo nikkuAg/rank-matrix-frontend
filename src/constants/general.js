@@ -449,3 +449,9 @@ export const AddChoice = {
 		},
 	],
 };
+
+export const removeConfirmationPrompt = {
+	title: "Remove selected items",
+	content: "Are you sure you want to remove the selected items? You cannot undo this action.",
+	confirmButtonText: "Yes, Remove",
+}

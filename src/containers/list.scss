@@ -181,13 +181,13 @@
 				border: 1px solid #e1e5f0;
 			}
 			// added
-			.checkbox_column {
+			.checkbox-column {
 				padding: 0.75rem;
-				.active_checkbox {
+				.active-checkbox {
 					padding: 0;
 					color: #6096fc;
 				}
-				.inactive_checkbox {
+				.inactive-checkbox {
 					padding: 0;
 					color: transparent;
 				}
@@ -195,13 +195,13 @@
 			//
 		}
 		// added
-		.tablehead_checkbox_column {
+		.tablehead-checkbox-column {
 			padding: 1rem 0.75rem 0.5rem;
-			.active_tablehead_checkbox {
+			.active-tablehead-checkbox {
 				padding: 0;
 				color: #6096fc;
 			}
-			.inactive_tablehead_checkbox {
+			.inactive-tablehead-checkbox {
 				padding: 0;
 				color: transparent;
 			}
