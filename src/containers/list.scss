@@ -24,14 +24,14 @@
 		.MuiTableCell-head {
 			font-weight: 600;
 			//added
-			padding-top: 0.75rem;
+			padding-top: 1rem;
 			padding-bottom: 0.5rem;
 			//
 		}
 		.MuiTableCell-body {
 			//added
-			padding-top: 0.25rem;
-			padding-bottom: 0.25rem;
+			padding-top: 0.75rem;
+			padding-bottom: 0.75rem;
 			//
 			.nirf_column {
 				display: flex;
@@ -105,11 +105,24 @@
 					&:hover {
 						cursor: pointer;
 					}
+					&:disabled {
+						color: #B0BCD6;
+						background-color: transparent;
+					}
 					//
 				}
 				&.add-choice {
-					background: #6096fc;
+					// Changed
+					// background: #6096fc;
+					background-color: #6096fc;
 					color: white;
+					// added
+					&:disabled {
+						color: #B0BCD6;
+						background-color: #F0F4FB;
+						border: 0.5px solid #B0BCD6;
+					}
+					//
 				}
 				&.Mui-disabled {
 					background-color: #6097fc77;
@@ -169,21 +182,31 @@
 			}
 			// added
 			.checkbox_column {
-				// display: flex;
-				// align-items: center;
-				// width: 5rem;
-				// background-color: black;
-				// padding-left: 0;
-				// padding-right: 0;
-				.checkbox {
+				padding: 0.75rem;
+				.active_checkbox {
+					padding: 0;
+					color: #6096fc;
+				}
+				.inactive_checkbox {
+					padding: 0;
 					color: transparent;
-					&:hover {
-						color: #6096fc;
-					}
 				}
 			}
 			//
 		}
+		// added
+		.tablehead_checkbox_column {
+			padding: 1rem 0.75rem 0.5rem;
+			.active_tablehead_checkbox {
+				padding: 0;
+				color: #6096fc;
+			}
+			.inactive_tablehead_checkbox {
+				padding: 0;
+				color: transparent;
+			}
+		}
+		//
 	}
 	.extra-container {
 		margin: 2rem 5rem;

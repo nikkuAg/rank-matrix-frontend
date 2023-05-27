@@ -51,7 +51,7 @@ const TestChoices = ({
 	const [category, setcategory] = useState("")
 	const [choiceDataSubmit, setchoiceDataSubmit] = useState(false)
 	const [selectAll, setselectAll] = useState(false)
-	const [showCheckboxes, showcheckboxesAll] = useState(false)
+	const [showAllCheckboxes, setshowAllCheckboxes] = useState(false)
 	const [showRemoveButton, setshowRemoveButton] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
 		(localStorage.getItem('autoOpenedForm')!==null) ?
@@ -183,6 +183,8 @@ const TestChoices = ({
 					closing_rank: testChoiceObj.data.closing_rank || "-",
 					color: testChoiceObj.data.color,
 					id: testChoiceObj.data.id,
+					selected: false,
+					showCheckbox: false
 				}
 				const saveChoice = {
 					institute_id: testChoiceObj.data.institute_detail.id,
@@ -214,12 +216,58 @@ const TestChoices = ({
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
 	}, [saveTestChoices])
 
+	useEffect(() => {
+		setshowRemoveButton(showAllCheckboxes)
+	}, [showAllCheckboxes])
+
+	const checkboxOnMouseEnter = (id) => {
+		settestChoices(
+			testChoices.map(testChoice => {
+				if(testChoice.id===id) testChoice.showCheckbox=true
+				return testChoice
+			})
+		)
+	}
+
+	const checkboxOnMouseLeave = (id) => {
+		settestChoices(
+			testChoices.map(testChoice => {
+				if(testChoice.id===id) testChoice.showCheckbox=false
+				return testChoice
+			})
+		)
+	}
+
+	const checkboxOnChange = (id, event=null) => {
+		let activateAllCheckboxes = false
+		let selectAllCheckboxes = true
+		settestChoices(
+			testChoices.map(testChoice => {
+				if (testChoice.id===id) {
+					testChoice.selected = event===null ? !testChoice.selected : event.target.checked
+				}else {
+					testChoice.selected = selectAll ? true : testChoice.selected
+				}
+				activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
+				selectAllCheckboxes = selectAllCheckboxes && testChoice.selected
+				return testChoice
+			})
+		)
+		setselectAll(selectAllCheckboxes)
+		setshowAllCheckboxes(activateAllCheckboxes)
+		setshowRemoveButton(activateAllCheckboxes)
+	}
+
+	const selectAllCheckboxOnChange = (event) => {
+		setselectAll(event.target.checked)
+	}
+
 	const choiceButtonClick = () => {
 		if (!showRemoveButton) setchoiceFormOpen(true)
 	}
 
 	const removeButtonClick = () => {
-		alert("Just remove 'em!!")
+		settestChoices
 	}
 
 	const editDetailButtonClick = () => {
@@ -289,9 +337,13 @@ const TestChoices = ({
 						)}
 					</div>
 					<div>
-						<Icon className="choice-button icon" onClick={editDetailButtonClick}>
+						<IconButton 
+						disabled={showRemoveButton}
+						className="choice-button icon" 
+						onClick={editDetailButtonClick}
+						>
 							<img src={editIcon}/>
-						</Icon>
+						</IconButton>
 					{testChoices.length !== 0 && (
 						<CSVLink
 							data={testChoices}
@@ -300,9 +352,12 @@ const TestChoices = ({
 							target='_blank'
 							onClick={downloadClick}
 						>
-							<Icon className="choice-button icon">
+							<IconButton 
+							disabled={showRemoveButton}
+							className="choice-button icon"
+							>
 								<img src={downloadIcon}/>
-							</Icon>
+							</IconButton>
 						</CSVLink>
 					)}
 					</div>
@@ -316,8 +371,13 @@ const TestChoices = ({
 								<Table sx={{ minWidth: 650 }}>
 									<TableHead>
 										<TableRow>
-											<TableCell className='noto-sans'>
-												<Checkbox />
+											<TableCell className='noto-sans tablehead_checkbox_column' align="center">
+												<Checkbox 
+													checked={selectAll}
+													onChange={selectAllCheckboxOnChange}
+													disabled={!showAllCheckboxes}
+													className={showAllCheckboxes ? 'active_tablehead_checkbox' : 'inactive_tablehead_checkbox'}
+												/>
 											</TableCell>
 											{choicesHeader.map((header, index) => (
 												<TableCell key={index}>{header.label}</TableCell>
@@ -332,14 +392,18 @@ const TestChoices = ({
 												}}
 												className={`${row.color} rank`}
 												key={row.id}
+												onMouseEnter={() => checkboxOnMouseEnter(row.id)}
+												onMouseLeave={() => checkboxOnMouseLeave(row.id)}
+												onClick={() => checkboxOnChange(row.id)}
 											>
-												<TableCell className='noto-sans'>
-													{/* <Checkbox className="checkbox"/> */}
-													<Checkbox />
+												<TableCell className='noto-sans checkbox_column' align="center">
+													<Checkbox 
+														checked={row.selected || selectAll}
+														onChange={(event) => checkboxOnChange(row.id, event)}
+														disabled={!(row.showCheckbox || showAllCheckboxes)}
+														className={(row.showCheckbox || showAllCheckboxes) ? 'active_checkbox' : 'inactive_checkbox'}
+													/>
 												</TableCell>
-												{/* <TableCell className='noto-sans'>
-													{index + 1}
-												</TableCell> */}
 												<TableCell className='noto-sans'>
 													{row.institute_type}
 												</TableCell>
@@ -349,9 +413,6 @@ const TestChoices = ({
 												<TableCell className='noto-sans'>
 													{row.branch_name}
 												</TableCell>
-												{/* <TableCell className='noto-sans'>
-													{row.category}
-												</TableCell> */}
 												<TableCell className='noto-sans'>
 													{row.quota}
 												</TableCell>
