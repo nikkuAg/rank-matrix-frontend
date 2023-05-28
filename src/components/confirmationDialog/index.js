@@ -21,8 +21,8 @@ export const ConfirmationDialog = ({
     return (
         <div>
             <Dialog
-            open={true}
-            onClose={() => alert("Close")}
+            open={open}
+            onClose={onClose}
             className="confirm-dialog"
             >
                 <DialogTitle className="confirm-dialog-title">
@@ -34,12 +34,12 @@ export const ConfirmationDialog = ({
                 </DialogContent>
                 <DialogActions>
                     <Button
-                    onClick={() => alert("Cancel")}
+                    onClick={cancelAction}
                     >
                         Cancel
                     </Button>
                     <Button
-                    onClick={() => alert("Confirm")}
+                    onClick={confirmAction}
                     >
                         {confirmButtonText}
                     </Button>
