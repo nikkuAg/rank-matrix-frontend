@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { DateValue,ImpDates } from './constants';
+import {ImpDates} from '../../containers/Dashboard/constants'
 import Calendar from 'react-calendar';
 import "./index.scss";
 export default function Events() {
@@ -17,7 +17,7 @@ export default function Events() {
               day='0'+day;
             }
             const realDate=day+'-'+month+'-'+date.getFullYear()
-            if(DateValue.find(val=>val===realDate)){ 
+            if(ImpDates.find(val=>val.date===realDate)){ 
               return 'highlight'
             }
           }}/>
