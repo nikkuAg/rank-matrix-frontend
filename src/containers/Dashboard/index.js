@@ -12,7 +12,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { featuresCard,ImpDates,Dates,Websites } from "./constants";
+import { featuresCard,impDates,websites } from "./constants";
 import { fetchRecentUpdates } from "../../store/actions/dashboard";
 import { connect } from "react-redux";
 import { makeSelectRecentUpdate } from "../../store/selectors/dashboard";
@@ -23,8 +23,13 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 	useEffect(() => {
 		recentUpdateComponent();
 	}, []);
-    
 
+	const [Month,setMonth]=useState();
+  
+  function handleMonth(newMonth) {
+    setMonth(newMonth);
+  }
+    
 	return (
 		<div>
 			<Box className='dashboard-container'>
@@ -33,7 +38,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 						? recentUpdateObject.data.length !== 0 && (
 							<div>
 								<Typography gutterBottom variant='h5' component='div'>
-										Updates
+									Updates
 								</Typography>
 								<ul className='recent-updates'>
 									{recentUpdateObject.data.map((update, index) => (
@@ -45,7 +50,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 											className='noto-sans'
 										>
 											{update.text}
-											</Typography>
+										</Typography>
 									))}
 								</ul>
 							</div>
@@ -55,17 +60,17 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 								Important websites
 							</Typography>
 							<ul>
-								{Websites.map((link,index)=>(
+								{websites.map((link,index)=>(
 									<div>
-									<Typography gutterBottom
-												variant='p'
-												key={index}
-												component='li'
-												className='noto-sans'
-												>
-										{link.name}
-									</Typography>
-									<a href={link.val} >{link.val}</a>
+										<Typography gutterBottom
+											variant='p'
+											key={index}
+											component='li'
+											className='noto-sans'
+										>
+											{link.name}
+										</Typography>
+										<a className="website" href={link.val} >{link.val}</a>
 									</div>
 								))}
 							</ul>
@@ -105,24 +110,35 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 					direction='column'
 					spacing={{xs:2, sm:3}}
 					columns={{xs:4, sm:8, md:8 }}
-					className='datagrid'
+					className='dategrid'
 				>
 					
 					<Grid item xs={3} sm={5} md={7} className="datelist">
 						<Box className='dates'>
-							<ul className="important-dates">
-								{ImpDates.map((dates, index) => (
-										<Typography
-											gutterBottom
-											variant='p'
-											key={index}
-											component='li'
-											className='noto-sans'
-										>
-											{dates.title} : {dates.date}
-										</Typography>
-								))}
-							</ul>
+							<div className="important-dates">
+								{impDates.map((dates, index) =>{ 
+                  let start=dates.startDate;
+                  let startobj=new Date(start)
+                  if(startobj.getMonth()+1===Month){
+                    return (
+                      <div className="timeline">
+                        <div className="timeline-date">
+                            {startobj.getDate()}
+                        </div>
+                        <Typography
+                          gutterBottom
+                          variant='p'
+                          component='p'
+                          key={index}
+                          className='noto-sans'
+                        >
+                          {dates.title} 
+                        </Typography>
+                      </div>
+                    )
+                  }	
+                })}
+							</div>
 						</Box>
 					</Grid>
 					<Grid item xs={1} sm={3} md={5}>
@@ -130,7 +146,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 							<Typography gutterBottom variant='h5' component='div' className="title">
 								Important Dates
 							</Typography>
-							<Events/>
+							<Events change={handleMonth}/>
 						</Box>
 					</Grid>
 					

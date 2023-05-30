@@ -70,6 +70,9 @@
 			}
 		}
 	}
+	.website{
+		color:#3245EB
+	}
 	.MuiGrid-root {
 		margin-top: 0;
 		margin-bottom: 0;
@@ -153,7 +156,21 @@
 		}
 	}
 
-	.datagrid{
+	.timeline{
+		display: flex;
+		margin-bottom: 0.5rem;
+	}
+	.timeline-date{
+		height: 25%;
+		flex: 0 0 11%;
+		border-radius: 50%;
+		background-color: #6096FC;
+		color:#ffffff;
+		text-align: center;	
+		margin-right:0.5rem;
+	}
+
+	.dategrid{
 		width: 50%;
 		margin-right: 2rem;
 		align-items: end;
@@ -188,7 +205,7 @@
 			font-size: 1rem;
 			font-weight: 500;
 		}
-		li.MuiTypography-root {
+		p.MuiTypography-root {
 			font-size: 0.9rem;
 			font-weight: 400;
 			padding-right: 0.2rem;
@@ -201,23 +218,18 @@
 			.MuiTypography-root {
 				font-size: 1rem;
 			}
-			li.MuiTypography-root {
+			p.MuiTypography-root {
 				font-size: 0.8rem;
 			}
 		}
 		@media (max-width: 700px) {
-			ul {
-				padding-left: 1rem;
+			p.MuiTypography-root {
+				font-size: 0.9rem;
 			}
 		}
 		
 	}
 	.title{
 		margin-bottom: 1rem;
-	}
-	
+	}	
 }
-
-
-
-

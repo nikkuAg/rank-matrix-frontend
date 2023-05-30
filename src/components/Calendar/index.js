@@ -1,25 +1,22 @@
 import React,{useState} from 'react';
-import {ImpDates} from '../../containers/Dashboard/constants'
+import {impDates} from '../../containers/Dashboard/constants'
 import Calendar from 'react-calendar';
+import moment from 'moment'
 import "./index.scss";
-export default function Events() {
-  const [value, setValue] = useState(new Date());
+
+export default function Events({change}) {
+  const [value, setValue] = useState();
 
   return (
-          <Calendar 
-          tileClassName={({date,view})=>{
-            let day=date.getDate()
-            let month=date.getMonth()+1
-            if (date.getMonth()<10){
-              month='0'+month;
-            }
-            if (date.getDate()<10){
-              day='0'+day;
-            }
-            const realDate=day+'-'+month+'-'+date.getFullYear()
-            if(ImpDates.find(val=>val.date===realDate)){ 
-              return 'highlight'
-            }
-          }}/>
+    <Calendar 
+      showNeighboringMonth={false}
+      tileClassName={({date,view})=>{
+        setValue(date.getMonth()+1)
+        change(value);
+        if(impDates.find(x=>x.startDate===moment(date).format("YYYY-MM-DD"))){ 
+          return 'highlight'
+        }
+      }}
+    />
   );
 }
