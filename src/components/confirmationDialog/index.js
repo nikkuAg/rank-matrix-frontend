@@ -7,6 +7,7 @@ import {
     DialogTitle, 
     Divider
 } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
 import "./index.scss"
 
 export const ConfirmationDialog = ({
@@ -25,21 +26,28 @@ export const ConfirmationDialog = ({
             onClose={onClose}
             className="confirm-dialog"
             >
-                <DialogTitle className="confirm-dialog-title">
-                    {title}
+                <DialogTitle className="dialog-title-container">
+                    <div className="dialog-title">
+                        {title}
+                    </div>
+                    <CloseIcon 
+                    onClick={onClose}
+                    className="close-icon"
+                    />
                 </DialogTitle>
-                <Divider />
-                <DialogContent className="confirm-dialog-content">
+                <DialogContent className="dialog-content">
                     {content}
                 </DialogContent>
-                <DialogActions>
+                <DialogActions className="dialog-actions">
                     <Button
                     onClick={cancelAction}
+                    className="action-button cancel-action"
                     >
                         Cancel
                     </Button>
                     <Button
                     onClick={confirmAction}
+                    className="action-button confirm-action"
                     >
                         {confirmButtonText}
                     </Button>
