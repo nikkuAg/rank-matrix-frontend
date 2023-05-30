@@ -191,6 +191,11 @@ const TestChoices = ({
 					showCheckbox: false
 				}
 				settestChoices((prevChoice) => [...prevChoice, choice])
+				console.log("ADDED TO TEST CHOICE...")
+				console.log(testChoiceObj.data.institute_detail.id)
+				console.log(testChoiceObj.data.institute_detail.name)
+				console.log(testChoiceObj.data.branch_detail.id)
+				console.log(testChoiceObj.data.branch_detail.name)
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {
 						institute_id: testChoiceObj.data.institute_detail.id,
@@ -216,6 +221,7 @@ const TestChoices = ({
 
 	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+		console.log(saveTestChoices)
 	}, [saveTestChoices])
 
 	useEffect(() => {
@@ -287,8 +293,9 @@ const TestChoices = ({
 	}
 
 	const confirmRemoveChoices = () => {
-		setsaveTestChoices([])
+		const updateSaveChoices = []
 		settestChoices(testChoices.filter(testChoice => {
+			console.log(testChoice)
 			if (testChoice.selected || selectAll) return false
 
 			const saveChoice = {
@@ -299,9 +306,10 @@ const TestChoices = ({
 				category: testChoice.category,
 				id: testChoice.id,
 			}
-			setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
+			updateSaveChoices.push(saveChoice)
 			return true
 		}))
+		setsaveTestChoices(updateSaveChoices)
 		setselectAll(false)
 		setshowAllCheckboxes(false)
 		setshowRemoveButton(false)
@@ -326,19 +334,37 @@ const TestChoices = ({
 	}
 
 	const onChoiceDragEnd = (result) => {
-		console.log(result)
-		// alert("Drag complete!")
-		// if (!result.destination) {
-		// 	return;
-		// }
-		
-		// let movedItems = reorder(
-		// testChoices, 
-		// result.source.index, 
-		// result.destination.index 
-		// );
-		// settestChoices(movedItems);
+		if(result.destination.index!==result.source.index){
+			let removeIndex = result.source.index
+			let insertIndex = result.destination.index
+			if(result.destination.index < result.source.index) removeIndex++
+			if(result.destination.index > result.source.index) insertIndex++
+
+			testChoices.splice(insertIndex, 0, testChoices[result.source.index])
+			const updateSaveChoices = []
+			
+			settestChoices(testChoices.filter((testChoice,index) => {
+				if(index===removeIndex) return false
+
+				const saveChoice = {
+					institute_id: testChoice.institute_id,
+					branch_id: testChoice.branch_id,
+					quota: testChoice.quota,
+					seat_pool: testChoice.seat_pool,
+					category: testChoice.category,
+					id: testChoice.id,
+				}
+				updateSaveChoices.push(saveChoice)
+				return true
+			}))
+			setsaveTestChoices(updateSaveChoices)
+		}
 	}
+
+	// const getDraggableStyle = (isDragging, draggableStyle) => ({
+	// 	background: isDragging ? 'purple' : 'transparent',
+	// 	...draggableStyle
+	// })
 
 	return (
 		<div className='list-container'>
@@ -461,12 +487,12 @@ const TestChoices = ({
 															draggableId={row.id}
 															index={index}
 														>
-															{(provided) => (
+															{(provided, snapshot) => (
 																<TableRow
 																	sx={{
 																		"&:last-child td, &:last-child th": { border: 0 },
 																	}}
-																	className={`${row.color} rank`}
+																	className={snapshot.isDragging ? `${row.color} rank` : `${row.color} rank`}
 																	key={row.id}
 																	onMouseEnter={() => checkboxOnMouseEnter(row.id)}
 																	onMouseLeave={() => checkboxOnMouseLeave(row.id)}
@@ -475,7 +501,10 @@ const TestChoices = ({
 																	{...provided.draggableProps}
 																	{...provided.dragHandleProps}
 																>
-																	<TableCell className='noto-sans checkbox-column' align="center">
+																	<TableCell 
+																	className='noto-sans checkbox-column'
+																	align="center"
+																	>
 																		<Checkbox 
 																			checked={row.selected || selectAll}
 																			onChange={(event) => checkboxOnChange(row.id, event)}
