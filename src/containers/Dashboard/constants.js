@@ -101,8 +101,8 @@ export const impDates=[
 	{
 		id:11,
 		title:"Online registration for Architecture Aptitude Test (AAT) 2023 ",
-		startDate:"18-06-",
-		endDate:"19-06-"
+		startDate:"2023-06-18",
+		endDate:"2023-06-19"
 	}
 	
 ];
