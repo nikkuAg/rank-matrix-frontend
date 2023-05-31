@@ -37,7 +37,9 @@ import { CSVLink } from "react-csv"
 import "../list.scss"
 import { TableInfo } from "../../components/tableHeader"
 import downloadIcon from "../../images/downloadIcon.svg"
+import downloadIconDisabled from "../../images/downloadIconDisabled.svg"
 import editIcon from "../../images/editIcon.svg"
+import editIconDisabled from "../../images/editIconDisabled.svg"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -423,10 +425,11 @@ const TestChoices = ({
 						className="choice-button icon" 
 						onClick={editDetailButtonClick}
 						>
-							<img src={editIcon}/>
+							<img src={showRemoveButton ? editIconDisabled : editIcon}/>
 						</IconButton>
 					{testChoices.length !== 0 && (
 						<CSVLink
+							disabled={showRemoveButton}
 							data={testChoices.filter(testChoice => testChoice!==null)}
 							headers={download_headers}
 							filename={fileName}
@@ -437,7 +440,7 @@ const TestChoices = ({
 							disabled={showRemoveButton}
 							className="choice-button icon"
 							>
-								<img src={downloadIcon}/>
+								<img src={showRemoveButton ? downloadIconDisabled : downloadIcon}/>
 							</IconButton>
 						</CSVLink>
 					)}
