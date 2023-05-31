@@ -107,7 +107,8 @@ const TestChoices = ({
 
 	useEffect(() => {
 		if (dataSubmit) {
-			settestChoices([])
+			const emptyChoices = Array(saveTestChoices.length).fill(null)
+			settestChoices(emptyChoices)
 			if (choice === localStorage.getItem("choice")) {
 				saveTestChoices.forEach((element) => {
 					const payload = {
@@ -173,7 +174,7 @@ const TestChoices = ({
 
 	useEffect(() => {
 		if (testChoiceObj.data.opening_rank) {
-			if (!testChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
+			if (!testChoices.find((obj) => (obj!==null) && (obj.id===testChoiceObj.data.id))) {
 				const choice = {
 					institute_id: testChoiceObj.data.institute_detail.id,
 					institute_type: testChoiceObj.data.institute_detail.type,
@@ -190,12 +191,10 @@ const TestChoices = ({
 					selected: false,
 					showCheckbox: false
 				}
-				settestChoices((prevChoice) => [...prevChoice, choice])
-				console.log("ADDED TO TEST CHOICE...")
-				console.log(testChoiceObj.data.institute_detail.id)
-				console.log(testChoiceObj.data.institute_detail.name)
-				console.log(testChoiceObj.data.branch_detail.id)
-				console.log(testChoiceObj.data.branch_detail.name)
+				const insertIndex = saveTestChoices.findIndex(
+					testChoice => (testChoice!==null && testChoice.id===testChoiceObj.data.id)
+				)
+				testChoices[insertIndex] = choice
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {
 						institute_id: testChoiceObj.data.institute_detail.id,
@@ -221,7 +220,6 @@ const TestChoices = ({
 
 	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
-		console.log(saveTestChoices)
 	}, [saveTestChoices])
 
 	useEffect(() => {
@@ -231,7 +229,7 @@ const TestChoices = ({
 	const checkboxOnMouseEnter = (id) => {
 		settestChoices(
 			testChoices.map(testChoice => {
-				if(testChoice.id===id) testChoice.showCheckbox=true
+				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=true
 				return testChoice
 			})
 		)
@@ -240,7 +238,7 @@ const TestChoices = ({
 	const checkboxOnMouseLeave = (id) => {
 		settestChoices(
 			testChoices.map(testChoice => {
-				if(testChoice.id===id) testChoice.showCheckbox=false
+				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=false
 				return testChoice
 			})
 		)
@@ -361,11 +359,6 @@ const TestChoices = ({
 		}
 	}
 
-	// const getDraggableStyle = (isDragging, draggableStyle) => ({
-	// 	background: isDragging ? 'purple' : 'transparent',
-	// 	...draggableStyle
-	// })
-
 	return (
 		<div className='list-container'>
 			<Header heading='Test your JoSAA Choices' />
@@ -434,7 +427,7 @@ const TestChoices = ({
 						</IconButton>
 					{testChoices.length !== 0 && (
 						<CSVLink
-							data={testChoices}
+							data={testChoices.filter(testChoice => testChoice!==null)}
 							headers={download_headers}
 							filename={fileName}
 							target='_blank'
@@ -482,6 +475,7 @@ const TestChoices = ({
 													ref={provided.innerRef}
 												>
 													{testChoices.map((row, index) => (
+														row!==null &&
 														<Draggable 
 															key={row.id} 
 															draggableId={row.id}
