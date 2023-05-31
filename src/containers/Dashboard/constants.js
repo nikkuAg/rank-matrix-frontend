@@ -3,6 +3,7 @@ import prediction from "../../images/prediction.svg";
 import rank from "../../images/ranks.svg";
 import seats from "../../images/seats.svg";
 import testChoices from "../../images/testChoices.svg";
+import pdf from "../../images/pdf.svg";
 
 export const featuresCard = [
 	{
@@ -32,7 +33,7 @@ export const featuresCard = [
 	},
 	{
 		title: "Important pdfs",
-		image: testChoices,
+		image: pdf,
 		link: "/pdfs",
 	}
 ];
