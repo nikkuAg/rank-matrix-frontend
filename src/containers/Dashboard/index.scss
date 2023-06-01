@@ -16,9 +16,9 @@
 	}
 	.updates {
 		max-width: 18rem;
-		margin: 0 3rem;
+		margin: 0 1rem;
 		@media (max-width: 1370px) {
-			margin-left: 0;
+			margin-left: 1rem;
 		}
 		align-self: flex-start;
 		background: #f4f6fd;
@@ -41,8 +41,12 @@
 			padding-right: 0.2rem;
 		}
 		.recent-updates {
-			max-height: 20rem;
+			max-height: 11rem;
 			overflow-y: auto;
+				@media(max-width:600px){
+					max-height: 7rem;
+					overflow-y: auto;
+				}
 		}
 		@media (max-width: 1200px) and (min-width: 1000px) {
 			padding: 1rem 0.5rem;
@@ -69,9 +73,22 @@
 				padding-left: 1rem;
 			}
 		}
+
+	}
+	.important-websites{
+		overflow-y: auto;
+		margin-bottom: 0.2rem;
+		max-height: 14rem;
+		@media(max-width:600px){
+			max-height: 7rem;
+		}
 	}
 	.website{
-		color:#3245EB
+		color:#3245EB;
+		word-wrap: break-word;
+		@media (max-width:600px) {
+			font-size: 0.8rem;
+		}
 	}
 	.MuiGrid-root {
 		margin-top: 0;
@@ -156,6 +173,10 @@
 		}
 	}
 
+	.optionCard{
+		margin: auto;
+	}
+
 	.timeline{
 		display: flex;
 		margin-bottom: 0.5rem;
@@ -211,7 +232,7 @@
 			padding-right: 0.2rem;
 		}
 		.important-dates {
-			max-height: 13rem;
+			max-height: 11rem;
 			overflow-y: auto;
 		}
 		@media (max-width: 900px) {
