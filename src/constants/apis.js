@@ -1,9 +1,15 @@
 import axios from "axios";
 import { apiURL } from "./general";
+import * as qs from 'qs';
 
-export const getRequest = (requestURL) => {
+export const getRequest = (requestURL,payload) => {
 	const url = `${apiURL}${requestURL}`;
-	return axios.get(url).then((resposne) => resposne);
+	return axios.get(url,{
+		params:payload,
+		paramsSerializer:params => {
+				return qs.stringify(params,{arrayFormat:'repeat'})
+			  }
+	}).then((resposne) => resposne);
 };
 
 export function getErrorBody(error) {

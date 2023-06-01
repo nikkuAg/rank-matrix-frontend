@@ -15,10 +15,12 @@ import {
 	TableRow,
 	TableSortLabel,
 	Tabs,
+	IconButton,
+	Tooltip
 } from "@mui/material"
 import { Header } from "../../../components/header"
 import { SearchBar } from "../../../components/search"
-import { fetchSeatMatrix } from "../../../store/actions/list"
+import { fetchSeatMatrix, setSeatMatrixFilterValues } from "../../../store/actions/list"
 import { makeSelectInstituteType } from "../../../store/selectors/form"
 import { makeSelectSeatMatrix } from "../../../store/selectors/list"
 import "../../list.scss"
@@ -26,13 +28,23 @@ import { CustomPagination } from "../../../components/pagination"
 import { seatMatrixHeader } from "../../../constants/tableHeader"
 import { fetchInstituteType } from "../../../store/actions/form"
 import { ClickableChips } from "../../../components/chips"
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { FilterBox } from "../../../components/FilterBox";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 const SeatMatrix = ({
 	seatMatrixComponent,
+	seatMatrixFilterComponent,
 	instituteTypeObj,
 	instituteTypeComponent,
 	seatMatrixObj,
 }) => {
+
+	const filter_anchor_el = seatMatrixHeader.reduce((accumulator, obj) => {
+		accumulator[obj.id] = null;
+		return accumulator
+	}, {});
+
 	const [instituteType, setInstituteType] = useState("IIT")
 	const [page, setPage] = useState(1)
 	const [searchWord, setSearchWord] = useState("")
@@ -40,6 +52,8 @@ const SeatMatrix = ({
 	const [order, setorder] = useState("asc")
 	const [tabValue, setTabValue] = useState(2022)
 	const [seatMatrixYear, setSeatMatrixYear] = useState([])
+	const [filterAnchorEl, setFilterAnchor] = useState(filter_anchor_el);
+	const filterValues = seatMatrixObj.filterValues;
 
 	useEffect(() => {
 		const payload = {
@@ -53,8 +67,9 @@ const SeatMatrix = ({
 			page,
 			search: searchWord,
 			orderField: orderBy,
-			orderType: order,
-			typeList: instituteType,
+			ordering: order,
+			type_list: instituteType,
+			...filterValues,
 		}
 		if (tabValue !== "increase") {
 			payload["year"] = tabValue
@@ -62,7 +77,7 @@ const SeatMatrix = ({
 			payload["increase"] = true
 		}
 		seatMatrixComponent(payload)
-	}, [instituteType, page, searchWord, orderBy, order, tabValue])
+	}, [instituteType, page, searchWord, orderBy, order, tabValue, filterValues])
 
 	useEffect(() => {
 		if (seatMatrixObj.data.length > 0 && seatMatrixYear.length == 0) {
@@ -77,9 +92,8 @@ const SeatMatrix = ({
 			data.reverse()
 			data.push({
 				id: "increase",
-				label: `Seat change from ${seatMatrixObj.data[0].latest_year - 1}-${
-					seatMatrixObj.data[0].latest_year
-				}`,
+				label: `Seat change from ${seatMatrixObj.data[0].latest_year - 1}-${seatMatrixObj.data[0].latest_year
+					}`,
 			})
 			setSeatMatrixYear(data)
 		}
@@ -89,9 +103,12 @@ const SeatMatrix = ({
 		setPage(value)
 	}
 
-	const createSortHandler = (property) => (event) => {
+	const createSortHandler = (property, toggle = true, ordering = "asc") => (event) => {
 		const isAsc = orderBy === property && order === "asc"
-		setorder(isAsc ? "desc" : "asc")
+		if (toggle) { setorder(isAsc ? "desc" : "asc"); }
+		else {
+			setorder(ordering)
+		}
 		setorderBy(property)
 		setPage(1)
 	}
@@ -104,6 +121,28 @@ const SeatMatrix = ({
 	const handleSeatChange = () => {
 		setTabValue("increase")
 		setPage(1)
+	}
+	const handleFilterOpen = (id, event) => {
+		const modified_object = {
+			...filterAnchorEl,
+			[id]: event.target
+
+		}
+		setFilterAnchor(modified_object);
+	}
+	const handleFilterClose = (id) => {
+		const modified_filters = {
+			...filterAnchorEl,
+			[id]: null
+
+		}
+		setFilterAnchor(modified_filters);
+	}
+	const resetAllFilters = () => {
+		seatMatrixFilterComponent({});
+		setSearchWord("");
+		setorderBy("");
+		setorder("asc");
 	}
 
 	return (
@@ -131,9 +170,8 @@ const SeatMatrix = ({
 						))}
 					</Tabs>
 					<Button
-						className={`increase-tab-button ${
-							tabValue === "increase" ? "selected" : ""
-						}`}
+						className={`increase-tab-button ${tabValue === "increase" ? "selected" : ""
+							}`}
 						onClick={handleSeatChange}
 					>
 						{/* Seat change from {yearObj[1]}-{yearObj[0]} */}
@@ -154,19 +192,25 @@ const SeatMatrix = ({
 						<CircularProgress />
 					)}
 					{seatMatrixObj.search && (
-						<SearchBar
-							labelText={"Search by any keyword"}
-							defaultWord={searchWord}
-							setSearchKey={setSearchWord}
-							setPage={setPage}
-						/>
+						<div className="searchBarContainer">
+							<Tooltip title="reset all filters" placement="left">
+								<IconButton onClick={resetAllFilters}>
+									<RestartAltIcon />
+								</IconButton>
+							</Tooltip>
+							<SearchBar
+								labelText={"Search by any keyword"}
+								defaultWord={searchWord}
+								setSearchKey={setSearchWord}
+								setPage={setPage}
+							/>
+						</div>
 					)}
 				</div>
 				{seatMatrixObj.loading ? (
 					<CircularProgress />
 				) : (
 					!seatMatrixObj.error &&
-					seatMatrixObj.data.length !== 0 &&
 					instituteType !== "" && (
 						<>
 							<TableContainer component={Paper}>
@@ -184,59 +228,81 @@ const SeatMatrix = ({
 													}
 													key={index}
 												>
-													{header.order ? (
-														<TableSortLabel
-															active={orderBy === header.id}
-															direction={orderBy === header.id ? order : "asc"}
-															onClick={createSortHandler(header.id)}
-														>
-															{header.label}
-															{orderBy === header.id ? (
-																<Box component='span' sx={visuallyHidden}>
-																	{order === "desc"
-																		? "sorted descending"
-																		: "sorted ascending"}
-																</Box>
-															) : null}
-														</TableSortLabel>
-													) : (
-														header.label
-													)}
+													<div className="header-cell">
+														{header.order ? (
+															<TableSortLabel
+																active={orderBy === header.id}
+																direction={orderBy === header.id ? order : "asc"}
+																onClick={createSortHandler(header.id)}
+															>
+																{header.label}
+																{orderBy === header.id ? (
+																	<Box component='span' sx={visuallyHidden}>
+																		{order === "desc"
+																			? "sorted descending"
+																			: "sorted ascending"}
+																	</Box>
+																) : null}
+															</TableSortLabel>
+														) : (
+															header.label
+														)}
+														<IconButton onClick={(e) => {
+															handleFilterOpen(header.id, e)
+														}}>
+															<MoreVertIcon />
+														</IconButton>
+													</div>
+													<FilterBox
+														headerName={header.id}
+														anchorEl={filterAnchorEl[header.id]}
+														handleClose={handleFilterClose}
+														filterName={header.filterName}
+														hid={header.id}
+														filterValues={filterValues}
+														setFilterValues={seatMatrixFilterComponent}
+														sortHandler={createSortHandler}
+													>
+
+													</FilterBox>
+
 												</TableCell>
 											))}
 										</TableRow>
 									</TableHead>
-									<TableBody>
-										{seatMatrixObj.data.map((row) => (
-											<TableRow
-												sx={{
-													"&:last-child td, &:last-child th": { border: 0 },
-												}}
-												key={row.id}
-											>
-												<TableCell className='noto-sans'>
-													{row.institute_detail.full_name}
-												</TableCell>
-												<TableCell className='noto-sans'>
-													{row.branch_full_detail.full_name}
-												</TableCell>
-												<TableCell className='noto-sans'>
-													{row.branch_full_detail.duration}
-												</TableCell>
-												<TableCell className='noto-sans'>
-													{row.branch_full_detail.degree}
-												</TableCell>
-												<TableCell className='noto-sans'>
-													{row.seat_pool}
-												</TableCell>
-												<TableCell className='noto-sans'>
-													{row.category}
-												</TableCell>
-												<TableCell className='noto-sans'>{row.quota}</TableCell>
-												<TableCell className='noto-sans'>{row.seats}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
+									{seatMatrixObj.data.length !== 0 && (
+										<TableBody>
+											{seatMatrixObj.data.map((row) => (
+												<TableRow
+													sx={{
+														"&:last-child td, &:last-child th": { border: 0 },
+													}}
+													key={row.id}
+												>
+													<TableCell className='noto-sans'>
+														{row.institute_detail.full_name}
+													</TableCell>
+													<TableCell className='noto-sans'>
+														{row.branch_full_detail.full_name}
+													</TableCell>
+													<TableCell className='noto-sans'>
+														{row.branch_full_detail.duration}
+													</TableCell>
+													<TableCell className='noto-sans'>
+														{row.branch_full_detail.degree}
+													</TableCell>
+													<TableCell className='noto-sans'>
+														{row.seat_pool}
+													</TableCell>
+													<TableCell className='noto-sans'>
+														{row.category}
+													</TableCell>
+													<TableCell className='noto-sans'>{row.quota}</TableCell>
+													<TableCell className='noto-sans'>{row.seats}</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									)}
 								</Table>
 							</TableContainer>
 							{seatMatrixObj.total_pages > 1 && (
@@ -265,6 +331,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		seatMatrixComponent: (payload) => dispatch(fetchSeatMatrix(payload)),
 		instituteTypeComponent: (payload) => dispatch(fetchInstituteType(payload)),
+		seatMatrixFilterComponent: (payload) => dispatch(setSeatMatrixFilterValues(payload)),
 	}
 }
 

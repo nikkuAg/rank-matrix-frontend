@@ -20,6 +20,7 @@ import Prediction from "./Prediction/All_All";
 import { NotFound } from "./404";
 import TestChoices from "./TestChoice";
 import { Footer } from "./Footer";
+import {ImportantPdfs} from "../containers/Lists/ImportantPdfs/index"
 
 export const App = () => {
 	const [howToUseClick, setHowToUseClick] = useState(false);
@@ -56,6 +57,7 @@ export const App = () => {
 							<Route path='/rank' element={<Ranks />} />
 							<Route path='/prediction' element={<Prediction />} />
 							<Route path='/choices' element={<TestChoices />} />
+							<Route path='/pdfs' element={<ImportantPdfs/>} />
 							<Route path='*' element={<NotFound />} />
 						</Routes>
 					</div>

@@ -9,6 +9,9 @@ import {
   FETCH_RANK_LIST,
   FETCH_RANK_LIST_ERROR,
   FETCH_RANK_LIST_SUCCESS,
+  SET_COLLEGES_LIST_FILTERS,
+  SET_SEAT_MATRIX_FILTERS,
+  SET_RANK_LIST_FILTERS,
 } from "../actionTypes";
 
 export const initialState = {
@@ -18,6 +21,7 @@ export const initialState = {
     data: [],
     total_pages: 0,
     search: false,
+    filterValues:{},
   },
   seatMatrix: {
     loading: false,
@@ -25,6 +29,7 @@ export const initialState = {
     data: [],
     total_pages: 0,
     search: false,
+    filterValues:{},
   },
   rankList: {
     loading: false,
@@ -32,6 +37,7 @@ export const initialState = {
     data: [],
     total_pages: 0,
     search: false,
+    filterValues:{},
   }
 };
 
@@ -91,6 +97,15 @@ const reducer = (state = initialState, action) =>
         draft.rankList.error = true;
         draft.rankList.data = [];
         draft.rankList.search = false;
+        break;
+      case SET_COLLEGES_LIST_FILTERS:
+        draft.instituteList.filterValues=action.payload;
+        break;
+      case SET_SEAT_MATRIX_FILTERS:
+        draft.seatMatrix.filterValues=action.payload;
+        break;
+      case SET_RANK_LIST_FILTERS:
+        draft.rankList.filterValues=action.payload;
         break;
       default:
         break;

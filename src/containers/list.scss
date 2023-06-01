@@ -55,6 +55,7 @@
 		.insitute_head {
 			background-color: #f5f8ff;
 		}
+		
 		.filters {
 			display: flex;
 			justify-content: flex-end;
@@ -68,6 +69,9 @@
 					margin: 0 auto;
 					text-align: center;
 				}
+			}
+			.searchBarContainer{
+				display: flex;
 			}
 			.choice-button {
 				background: #f0f4fb;
@@ -263,6 +267,10 @@
 		.MuiTabs-indicator {
 			background-color: #002942;
 		}
+	}
+	.header-cell{
+		display: flex;
+		justify-content: space-between;
 	}
 }
 

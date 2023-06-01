@@ -8,6 +8,9 @@ import {
   FETCH_RANK_LIST,
   FETCH_RANK_LIST_ERROR,
   FETCH_RANK_LIST_SUCCESS,
+  SET_COLLEGES_LIST_FILTERS,
+  SET_SEAT_MATRIX_FILTERS,
+  SET_RANK_LIST_FILTERS
 } from "../actionTypes";
 
 export const fetchInstituteList = (payload) => {
@@ -72,3 +75,21 @@ export const fetchRankListError = (errorBody) => {
         errorBody,
     };
 };
+export const setCollegeListFilterValues =(payload)=>{
+    return{
+        type:SET_COLLEGES_LIST_FILTERS,
+        payload,
+    }
+}
+export const setSeatMatrixFilterValues =(payload)=>{
+    return{
+        type:SET_SEAT_MATRIX_FILTERS,
+        payload,
+    }
+}
+export const setRankListFilterValues =(payload)=>{
+    return{
+        type:SET_RANK_LIST_FILTERS,
+        payload,
+    }
+}
