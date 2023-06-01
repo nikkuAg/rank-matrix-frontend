@@ -5,17 +5,11 @@ import {
 	IconButton,
 	Paper,
 	Table,
-	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
 } from "@mui/material"
-import {
-	DragDropContext,
-	Draggable,
-	Droppable
-} from "react-beautiful-dnd"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import FormDialog from "../../components/formDialog"
@@ -38,6 +32,7 @@ import downloadIcon from "../../images/downloadIcon.svg"
 import downloadIconDisabled from "../../images/downloadIconDisabled.svg"
 import editIcon from "../../images/editIcon.svg"
 import editIconDisabled from "../../images/editIconDisabled.svg"
+import { ChoiceTableBody } from "./choiceTableBody"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -239,44 +234,6 @@ const TestChoices = ({
 		setshowRemoveButton(showAllCheckboxes)
 	}, [showAllCheckboxes])
 
-	const checkboxOnMouseEnter = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=true
-				return testChoice
-			})
-		)
-	}
-
-	const checkboxOnMouseLeave = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=false
-				return testChoice
-			})
-		)
-	}
-
-	const checkboxOnChange = (id, event=null) => {
-		let activateAllCheckboxes = false
-		let selectAllCheckboxes = true
-		settestChoices(
-			testChoices.map(testChoice => {
-				if (testChoice.id===id) {
-					testChoice.selected = event===null ? !testChoice.selected : event.target.checked
-				}else {
-					testChoice.selected = selectAll ? true : testChoice.selected
-				}
-				activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
-				selectAllCheckboxes = selectAllCheckboxes && testChoice.selected
-				return testChoice
-			})
-		)
-		setselectAll(selectAllCheckboxes)
-		setshowAllCheckboxes(activateAllCheckboxes)
-		setshowRemoveButton(activateAllCheckboxes)
-	}
-
 	const selectAllCheckboxOnChange = (event) => {
 		setselectAll(event.target.checked)
 	}
@@ -340,34 +297,6 @@ const TestChoices = ({
 				"success",
 				toastDuration
 			)
-		}
-	}
-
-	const onChoiceDragEnd = (result) => {
-		if(result.destination.index!==result.source.index){
-			let removeIndex = result.source.index
-			let insertIndex = result.destination.index
-			if(result.destination.index < result.source.index) removeIndex++
-			if(result.destination.index > result.source.index) insertIndex++
-
-			testChoices.splice(insertIndex, 0, testChoices[result.source.index])
-			const updateSaveChoices = []
-			
-			settestChoices(testChoices.filter((testChoice,index) => {
-				if(index===removeIndex) return false
-
-				const saveChoice = {
-					institute_id: testChoice.institute_id,
-					branch_id: testChoice.branch_id,
-					quota: testChoice.quota,
-					seat_pool: testChoice.seat_pool,
-					category: testChoice.category,
-					id: testChoice.id,
-				}
-				updateSaveChoices.push(saveChoice)
-				return true
-			}))
-			setsaveTestChoices(updateSaveChoices)
 		}
 	}
 
@@ -478,76 +407,15 @@ const TestChoices = ({
 											))}
 										</TableRow>
 									</TableHead>
-									<DragDropContext 
-										onDragEnd={onChoiceDragEnd}
-									>
-										<Droppable droppableId='droppable'>
-											{(provided) => (
-												<TableBody 
-													className='prediction' 
-													ref={provided.innerRef}
-												>
-													{testChoices.map((row, index) => (
-														row!==null &&
-														<Draggable 
-															key={row.id} 
-															draggableId={row.id}
-															index={index}
-														>
-															{(provided, snapshot) => (
-																<TableRow
-																	sx={{
-																		"&:last-child td, &:last-child th": { border: 0 },
-																	}}
-																	className={snapshot.isDragging ? `${row.color} rank` : `${row.color} rank`}
-																	key={row.id}
-																	onMouseEnter={() => checkboxOnMouseEnter(row.id)}
-																	onMouseLeave={() => checkboxOnMouseLeave(row.id)}
-																	onClick={() => checkboxOnChange(row.id)}
-																	ref={provided.innerRef}	
-																	{...provided.draggableProps}
-																	{...provided.dragHandleProps}
-																>
-																	<TableCell 
-																	className='noto-sans checkbox-column'
-																	align="center"
-																	>
-																		<Checkbox 
-																			checked={row.selected || selectAll}
-																			onChange={(event) => checkboxOnChange(row.id, event)}
-																			disabled={!(row.showCheckbox || showAllCheckboxes)}
-																			className={(row.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
-																		/>
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_type}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.branch_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.quota}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.seat_pool}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.opening_rank}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.closing_rank}
-																	</TableCell>
-																</TableRow>
-															)}
-														</Draggable>
-													))}
-												</TableBody>
-											)}
-										</Droppable>
-									</DragDropContext>
+									<ChoiceTableBody 
+										testChoices={testChoices}
+										selectAll={selectAll}
+										showAllCheckboxes={showAllCheckboxes}
+										settestChoices={settestChoices}
+										setsaveTestChoices={setsaveTestChoices}
+										setselectAll={setselectAll}
+										setshowAllCheckboxes={setshowAllCheckboxes}
+									/>
 								</Table>
 							</TableContainer>
 						</>

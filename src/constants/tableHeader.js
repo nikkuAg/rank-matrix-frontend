@@ -129,10 +129,6 @@ export const rankHeader = [
 ];
 
 export const choicesHeader = [
-	//removed
-	// {
-	// 	label: "S.No.",
-	// },
 	{
 		label: "Institute Type",
 	},
@@ -142,17 +138,9 @@ export const choicesHeader = [
 	{
 		label: "Branch Name",
 	},
-	// removed
-	// {
-	// 	label: "Category",
-	// },
 	{
 		label: "Quota",
 	},
-	// renamed
-	// {
-	// 	label: "Seat Pool",
-	// },
 	{
 		label: "Gender",
 	},
