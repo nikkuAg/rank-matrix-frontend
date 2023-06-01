@@ -134,6 +134,7 @@ const CollegeList = ({
 							defaultSelected={"IIT"}
 							setChipList={setInstitute}
 							setPage={setPage}
+							type="list"
 						/>
 					) : (
 						<CircularProgress />

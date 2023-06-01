@@ -8,7 +8,9 @@ import {
 	Slide,
 	MenuItem,
 	Select,
+	Chip,
 	Divider,
+	Typography,
 } from "@mui/material"
 import "./index.scss"
 import {
@@ -49,7 +51,6 @@ import { QuotaField } from "./fields/quota"
 import { InstituteField } from "./fields/instituteList"
 import { BranchField } from "./fields/branchList"
 import { ChoiceField } from "./fields/choice"
-
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='up' ref={ref} {...props} />
 })
@@ -94,7 +95,7 @@ const FormDialog = ({
 	showToastComponent,
 }) => {
 	const [open, setOpen] = useState(openForm)
-	const [year, setyear] = useState(parseInt(localStorage.getItem("year")) || 0)
+	const [year, setyear] = useState(parseInt(localStorage.getItem("year")) || "2022")
 	const [instituteType, setinstituteType] = useState(
 		localStorage.getItem("instituteType") || ""
 	)
@@ -115,7 +116,7 @@ const FormDialog = ({
 	const [option, setoption] = useState(
 		localStorage.getItem("option") || "closing"
 	)
-	const [round, setround] = useState(localStorage.getItem("round") || "")
+	const [round, setround] = useState(localStorage.getItem("round") || "6")
 	const [choice, setchoice] = useState(localStorage.getItem("choice") || "")
 	const [choiceEdit, setchoiceEdit] = useState(localStorage.getItem("choice"))
 	const [instituteId, setinstituteId] = useState(
@@ -151,7 +152,7 @@ const FormDialog = ({
 			const payload = {
 				year,
 			}
-			setround(localStorage.getItem("round") || "")
+			setround(localStorage.getItem("round") || 6)
 			roundListComponent(payload)
 		}
 	}, [year])
@@ -305,8 +306,8 @@ const FormDialog = ({
 		}
 	}
 
-	const handlePredictionType = (event) => {
-		setPredictionType(event.target.value)
+	const handlePredictionType = (value) => {
+		setPredictionType(value)
 	}
 
 	return (
@@ -315,15 +316,16 @@ const FormDialog = ({
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}
-				fullWidth
-				maxWidth='lg'
+				// maxWidth='lg'
 				className='form-dialog-container'
 			>
 				<DialogTitle className='form-title'>
 					{predictionList ? (
 						<>
-							Details for{" "}
-							<Select
+							<div>
+								Details for
+							</div>
+							{/* <Select
 								value={predictionData.value}
 								onChange={handlePredictionType}
 								className='prediction-type'
@@ -333,7 +335,20 @@ const FormDialog = ({
 										{item.title}
 									</MenuItem>
 								))}
-							</Select>
+							</Select> */}
+							{
+								predictionList.map((item, index) => {
+									return (
+										<Chip
+											label={item.title}
+											value={item.value}
+											variant={`${predictionData.value === item.value ? "" : "outlined"}`}
+											onClick={() => handlePredictionType(item.value)}
+										/>
+									)
+
+								})
+							}
 						</>
 					) : (
 						predictionData.formTitle
@@ -456,7 +471,7 @@ const FormDialog = ({
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Cancel</Button>
-					<Button onClick={handleSubmit}>Submit</Button>
+					<Button onClick={handleSubmit} variant="contained">Submit</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

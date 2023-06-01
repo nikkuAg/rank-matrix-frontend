@@ -17,6 +17,7 @@ export const BranchField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.branchId}
+			fullWidth
 		>
 			{props.setInstituteId
 				? props.branchOneOneList.data &&

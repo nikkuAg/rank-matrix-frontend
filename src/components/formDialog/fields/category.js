@@ -17,6 +17,7 @@ export const CategoryField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.category}
+			fullWidth
 		>
 			{props.categoryList &&
 				props.categoryList.map((option) => (

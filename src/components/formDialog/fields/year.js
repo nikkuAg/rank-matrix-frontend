@@ -17,6 +17,7 @@ export const YearField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.year === 0 ? null : props.year}
+			fullWidth
 		>
 			{props.yearList.map((option) => (
 				<MenuItem key={option} value={option}>

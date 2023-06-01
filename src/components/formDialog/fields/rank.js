@@ -22,6 +22,7 @@ export const RankField = (props) => {
 						type={props.form.type}
 						name={props.form.name}
 						onChange={handleChange}
+						fullWidth
 						defaultValue={
 							props.form.name === "cutoff"
 								? props.cutoffVariation

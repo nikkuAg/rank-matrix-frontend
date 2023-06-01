@@ -18,6 +18,7 @@ export const OpeningClosingField = (props) => {
 				onChange={handleChange}
 				name={props.form.name}
 				defaultValue={props.option}
+				fullWidth
 			>
 				{props.optionsList.map((option) => (
 					<MenuItem key={option} value={option.split(" ")[0].toLowerCase()}>

@@ -17,6 +17,7 @@ export const InstituteField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.instituteId}
+			fullWidth
 		>
 			{props.instituteList.data &&
 				props.instituteList.data.map((option) => (

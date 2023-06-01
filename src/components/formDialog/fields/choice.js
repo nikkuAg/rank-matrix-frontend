@@ -33,6 +33,7 @@ export const ChoiceField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.choice}
+			fullWidth
 		>
 			{props.choicesList.map((option, index) => (
 				<MenuItem key={index} value={option.value}>

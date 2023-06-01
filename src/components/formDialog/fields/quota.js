@@ -17,6 +17,7 @@ export const QuotaField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.quota}
+			fullWidth
 		>
 			{props.quotaList.data &&
 				props.quotaList.data.quota &&

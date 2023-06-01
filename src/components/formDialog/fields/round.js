@@ -17,6 +17,7 @@ export const RoundField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.round}
+			fullWidth
 		>
 			{props.roundList.data &&
 				props.roundList.data.map((option) => (

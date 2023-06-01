@@ -1,10 +1,13 @@
 .form-dialog-container {
+	
+
 	.form-title {
-		display: flex;
-		align-items: center;
+		// display: flex;
+		// align-items: center;
 		color: #002942;
 		font-weight: 600;
-		margin: 0.5rem;
+		margin: 0.1rem;
+		max-width: 31rem;
 		.prediction-type {
 			background: #fbfcff;
 			border: 2px solid #eff2fa;
@@ -18,6 +21,21 @@
 			}
 			fieldset {
 				border: none;
+			}
+		}
+		.MuiChip-root {
+			color: #ffffff;
+			border: 1px solid #6096fc;
+			padding: 1rem 0.5rem;
+			border-radius: 8px;
+			background: #6096fc;
+			margin:0.2rem  0.2rem;
+			font-size: 0.8rem;
+			width: 15rem;
+	
+			&.MuiChip-outlined {
+				color:#6096fc;
+				background: #F0F4FB;
 			}
 		}
 		@media (max-width: 500px) {
@@ -44,14 +62,18 @@ hr {
 }
 .form-container {
 	display: flex;
-	justify-content: flex-start;
-	flex-wrap: wrap;
+	flex-direction: column;
+	// justify-content: flex-start;
+	// flex-wrap: wrap;
 	margin: 0.5rem 1rem;
 	padding: 0 0.5rem !important;
+	overflow-x: hidden;
 	.form-dialog {
+		
 		flex-basis: 100%;
 		margin: 0.3rem 0.2rem;
 		min-width: 12rem;
+		max-width: 100%;
 		@media (max-width: 520px) {
 			min-width: 90%;
 		}

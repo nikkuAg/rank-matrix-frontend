@@ -17,6 +17,7 @@ export const SeatPoolField = (props) => {
 			onChange={handleChange}
 			name={props.form.name}
 			defaultValue={props.seatPool}
+			fullWidth
 		>
 			{props.genderList &&
 				props.genderList.map((option) => (
