@@ -56,24 +56,26 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 							</div>
 							)
 						: !recentUpdateObject.error && <CircularProgress />}
-							<Typography gutterbottom variant='h5' component='div'>
-								Important websites
-							</Typography>
-							<ul className="important-websites">
-								{websites.map((link,index)=>(
-									<div>
-										<Typography gutterBottom
-											variant='p'
-											key={index}
-											component='li'
-											className='noto-sans'
-										>
-											{link.name}
-										</Typography>
-										<a className="website" href={link.val} >{link.val}</a>
-									</div>
-								))}
-							</ul>
+							<div className="website-container">
+								<Typography gutterbottom variant='h5' component='div'>
+									Important websites
+								</Typography>
+								<ul className="important-websites">
+									{websites.map((link,index)=>(
+										<div>
+											<Typography gutterBottom
+												variant='p'
+												key={index}
+												component='li'
+												className='noto-sans'
+											>
+												{link.name}
+											</Typography>
+											<a className="website" href={link.val} >{link.val}</a>
+										</div>
+									))}
+								</ul>
+							</div>
 				</Box>
 					
 				<Grid
@@ -148,7 +150,6 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 							<Events change={handleMonth}/>
 						</Box>
 					</Grid>
-					
 				</Grid>
 			</Box>
 		</div>
@@ -176,3 +177,26 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+{/* <Grid item>
+            <Box className="website-container2">
+              <Typography gutterbottom variant='h5' component='div'>
+                Important websites
+              </Typography>
+              <ul className="important-websites">
+                {websites.map((link,index)=>(
+                  <div>
+                    <Typography gutterBottom
+                      variant='p'
+                      key={index}
+                      component='li'
+                      className='noto-sans'
+                    >
+                      {link.name}
+                    </Typography>
+                    <a className="website" href={link.val} >{link.val}</a>
+                  </div>
+                ))}
+              </ul>
+            </Box>
+          </Grid> */}
