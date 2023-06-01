@@ -95,7 +95,7 @@ const FormDialog = ({
 	showToastComponent,
 }) => {
 	const [open, setOpen] = useState(openForm)
-	const [year, setyear] = useState(parseInt(localStorage.getItem("year")) || 2022)
+	const [year, setyear] = useState(parseInt(localStorage.getItem("year")) || "2022")
 	const [instituteType, setinstituteType] = useState(
 		localStorage.getItem("instituteType") || ""
 	)
@@ -116,7 +116,7 @@ const FormDialog = ({
 	const [option, setoption] = useState(
 		localStorage.getItem("option") || "closing"
 	)
-	const [round, setround] = useState(localStorage.getItem("round") || "")
+	const [round, setround] = useState(localStorage.getItem("round") || "6")
 	const [choice, setchoice] = useState(localStorage.getItem("choice") || "")
 	const [choiceEdit, setchoiceEdit] = useState(localStorage.getItem("choice"))
 	const [instituteId, setinstituteId] = useState(
@@ -152,7 +152,7 @@ const FormDialog = ({
 			const payload = {
 				year,
 			}
-			setround(localStorage.getItem("round") || "")
+			setround(localStorage.getItem("round") || 6)
 			roundListComponent(payload)
 		}
 	}, [year])
@@ -322,9 +322,9 @@ const FormDialog = ({
 				<DialogTitle className='form-title'>
 					{predictionList ? (
 						<>
-						<div>
-							Details for
-						</div>
+							<div>
+								Details for
+							</div>
 							{/* <Select
 								value={predictionData.value}
 								onChange={handlePredictionType}
@@ -337,14 +337,14 @@ const FormDialog = ({
 								))}
 							</Select> */}
 							{
-								predictionList.map((item,index)=>{
-									return(
-									<Chip
-									label={item.title}
-									value={item.value}
-									variant={`${predictionData.value===item.value? "" : "outlined"}`}
-									onClick={()=>handlePredictionType(item.value)}
-									/>
+								predictionList.map((item, index) => {
+									return (
+										<Chip
+											label={item.title}
+											value={item.value}
+											variant={`${predictionData.value === item.value ? "" : "outlined"}`}
+											onClick={() => handlePredictionType(item.value)}
+										/>
 									)
 
 								})

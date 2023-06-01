@@ -195,11 +195,11 @@ export const PredictionList = [
 				type: "number",
 				name: "rank",
 			},
-			// {
-			// 	title: "Variation in Cutoff(%)",
-			// 	type: "number",
-			// 	name: "cutoff",
-			// },
+			{
+				title: "Variation in Cutoff(%)",
+				type: "number",
+				name: "cutoff",
+			},
 			// {
 			// 	title: "Prediction Rank Boundary",
 			// 	type: "select",
@@ -259,11 +259,11 @@ export const PredictionList = [
 				type: "number",
 				name: "rank",
 			},
-			// {
-			// 	title: "Variation in Cutoff(%)",
-			// 	type: "number",
-			// 	name: "cutoff",
-			// },
+			{
+				title: "Variation in Cutoff(%)",
+				type: "number",
+				name: "cutoff",
+			},
 		],
 	},
 	{
@@ -305,11 +305,11 @@ export const PredictionList = [
 				type: "number",
 				name: "rank",
 			},
-			// {
-			// 	title: "Variation in Cutoff(%)",
-			// 	type: "number",
-			// 	name: "cutoff",
-			// },
+			{
+				title: "Variation in Cutoff(%)",
+				type: "number",
+				name: "cutoff",
+			},
 		],
 	},
 	{
@@ -357,11 +357,11 @@ export const PredictionList = [
 				type: "number",
 				name: "rank",
 			},
-			// {
-			// 	title: "Variation in Cutoff(%)",
-			// 	type: "number",
-			// 	name: "cutoff",
-			// },
+			{
+				title: "Variation in Cutoff(%)",
+				type: "number",
+				name: "cutoff",
+			},
 		],
 	},
 ];

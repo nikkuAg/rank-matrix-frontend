@@ -25,6 +25,9 @@ import "../../list.scss"
 import AllBranchOneCollegePrediction from "../All_One"
 import OneBranchAllInstitutesPrediction from "../One_All"
 import OneBranchOneInstitutesPrediction from "../One_One"
+import { YearField } from "../../../components/formDialog/fields/year"
+import { RoundField } from "../../../components/formDialog/fields/round"
+import { RankField } from "../../../components/formDialog/fields/rank"
 
 const AllBranchAllCollegePrediction = ({
 	predictionObj,
@@ -38,8 +41,8 @@ const AllBranchAllCollegePrediction = ({
 	const [quota, setquota] = useState("")
 	const [rank, setrank] = useState(0)
 	const [option, setoption] = useState("")
-	const [year, setyear] = useState(0)
-	const [round, setround] = useState(0)
+	const [year, setyear] = useState(2022)
+	const [round, setround] = useState(6)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
 
@@ -72,7 +75,7 @@ const AllBranchAllCollegePrediction = ({
 			localStorage.setItem("round", round)
 			setdataSubmit(false)
 		}
-	}, [dataSubmit])
+	}, [dataSubmit, year, round, cutoff])
 
 	const editDetailButtonClick = () => {
 		setopenForm(true)
@@ -130,7 +133,7 @@ const AllBranchAllCollegePrediction = ({
 				}
 			/>
 			<div>
-				
+
 			</div>
 			<FormDialog
 				openForm={openForm}
@@ -142,7 +145,7 @@ const AllBranchAllCollegePrediction = ({
 				setPredictionType={setpredictionType}
 				setInstituteType={setinstituteType}
 				setCategory={setcategory}
-				// setCutoff={setcutoff}
+				setCutoff={setcutoff}
 				setSeatPool={setseatPool}
 				setQuota={setquota}
 				setRank={setrank}
@@ -156,7 +159,26 @@ const AllBranchAllCollegePrediction = ({
 					<Button className='choice-button' onClick={editDetailButtonClick}>
 						Edit Details
 					</Button>
-					{year !== 0 && <TableInfo heading={`JoSAA ${year} Round ${round}`} />}
+					<div>
+						{/* <YearFieldint 
+							year={year}
+							setYear={setyear}
+
+						/>
+						<RoundField
+							roud={round}
+							setRound={setround}
+						/>
+						<RankField
+							rank={rank}
+							rankMain={rank}
+							setCutoff={setcutoff}
+						/> */}
+						<Button variant="filled">
+							JoSAA List
+						</Button>
+
+					</div>
 				</div>
 				{predictionObj.loading ? (
 					<CircularProgress />
@@ -199,18 +221,17 @@ const AllBranchAllCollegePrediction = ({
 													>
 														<TableCell
 															align='center'
-															className={`${
-																predictionObj.data.round_data[
-																	`${branch.code}-${institute.code}`
-																]?.color
-															} rank`}
+															className={`${predictionObj.data.round_data[
+																`${branch.code}-${institute.code}`
+															]?.color
+																} rank`}
 														>
 															{predictionObj.data.round_data[
 																`${branch.code}-${institute.code}`
 															]
 																? predictionObj.data.round_data[
-																		`${branch.code}-${institute.code}`
-																  ].rank
+																	`${branch.code}-${institute.code}`
+																].rank
 																: "-"}
 														</TableCell>
 													</LightRankTooltip>
