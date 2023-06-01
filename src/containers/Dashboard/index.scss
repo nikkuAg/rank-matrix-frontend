@@ -4,232 +4,250 @@
 	margin: 3rem 2rem;
 	margin-top: 2rem;
 	@media (max-width: 850px) {
-		margin: 2rem 1rem;
-		.updates {
-			margin: 0 1rem !important;
-			margin-left: 0;
-		}
+	  margin: 2rem 1rem;
+        .updates {
+        margin: 0 1rem !important;
+        margin-left: 0;
+        }
 	}
 	.MuiCircularProgress-root {
-		align-self: flex-start;
-		margin: 0 2rem;
+    align-self: flex-start;
+    margin: 0 2rem;
 	}
 	.updates {
-		max-width: 18rem;
-		margin: 0 3rem;
-		@media (max-width: 1370px) {
-			margin-left: 0;
-		}
-		align-self: flex-start;
-		background: #f4f6fd;
-		box-shadow: 0px 0px 15px -6px rgba(0, 25, 71, 0.05);
-		border-radius: 12px;
-		padding: 1rem;
-		min-height: 24rem;
-		@media (max-width: 600px) {
-			min-height: 10rem;
-			max-height: 20rem;
-		}
-		.MuiTypography-root {
-			font-family: "Poppins", sans-serif;
-			font-size: 1rem;
-			font-weight: 500;
-		}
-		li.MuiTypography-root {
-			font-size: 0.9rem;
-			font-weight: 400;
-			padding-right: 0.2rem;
-		}
-		.recent-updates {
-			max-height: 20rem;
-			overflow-y: auto;
-		}
-		@media (max-width: 1200px) and (min-width: 1000px) {
-			padding: 1rem 0.5rem;
-			max-width: 15rem;
-			.MuiTypography-root {
-				font-size: 0.8rem;
-			}
-		}
-		@media (max-width: 900px) {
-			max-width: 13rem;
-			.MuiTypography-root {
-				font-size: 1rem;
-			}
-			li.MuiTypography-root {
-				font-size: 0.8rem;
-			}
-		}
-		@media (max-width: 700px) {
-			max-width: 10rem;
-			.MuiTypography-root {
-				font-size: 0.8rem;
-			}
-			ul {
-				padding-left: 1rem;
-			}
-		}
+        max-width: 18rem;
+        margin: 0 1rem;
+        @media (max-width: 1370px) {
+            margin-left: 1rem;
+        }
+        align-self: flex-start;
+        background: #f4f6fd;
+        box-shadow: 0px 0px 15px -6px rgba(0, 25, 71, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        min-height: 24rem;
+        @media (max-width: 600px) {
+            min-height: 10rem;
+            max-height: 20rem;
+        }
+        .MuiTypography-root {
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        li.MuiTypography-root {
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding-right: 0.2rem;
+        }
+	.recent-updates {
+        max-height: 11rem;
+        overflow-y: auto;
+        @media(max-width:600px){
+            max-height: 7rem;
+            overflow-y: auto;
+	    }
+	}
+	@media (max-width: 1200px) and (min-width: 1000px) {
+        padding: 1rem 0.5rem;
+        max-width: 15rem;
+        .MuiTypography-root {
+            font-size: 0.8rem;
+        }
+	}
+	@media (max-width: 900px) {
+        max-width: 13rem;
+        .MuiTypography-root {
+            font-size: 1rem;
+        }
+        li.MuiTypography-root {
+            font-size: 0.8rem;
+        }
+	}
+	@media (max-width: 700px) {
+        max-width: 10rem;
+        .MuiTypography-root {
+            font-size: 0.8rem;
+        }
+        ul {
+            padding-left: 1rem;
+        }
+	}
+	
+	}
+	.important-websites{
+        overflow-y: auto;
+        margin-bottom: 0.2rem;
+        max-height: 14rem;
+        @media(max-width:600px){
+            max-height: 7rem;
+        }
 	}
 	.website{
-		color:#3245EB
+        color:#3245EB;
+        word-wrap: break-word;
+        @media (max-width:600px) {
+            font-size: 0.8rem;
+        }
 	}
 	.MuiGrid-root {
-		margin-top: 0;
-		margin-bottom: 0;
-		align-items: center;
-		padding-top: 0px !important;
-		padding-bottom: 1rem !important;
-		.MuiGrid-item {
-			max-width: 300px;
-			max-height: 300px;
-			@media (max-width: 450px) {
-				margin: 0.5rem auto;
-			}
-			.MuiCard-root {
-				padding: 0.5rem;
-				background: #ffffff;
-				box-shadow: 0px 0px 30px 4px rgba(0, 25, 71, 0.05);
-				border-radius: 12px;
-				.MuiCardContent-root {
-					padding: 0.5rem;
-					.MuiTypography-root {
-						font-family: "Poppins", sans-serif;
-						font-weight: 500;
-						color: #002942;
-						font-size: 1rem;
-						@media (max-width: 900px) {
-							font-size: 1rem;
-						}
-						@media (max-width: 510px) {
-							font-size: 0.8rem;
-						}
-					}
-				}
-				img {
-					border-radius: 12px;
-					width: 100%;
-					max-height: 160px;
-					object-fit: cover;
-				}
-				.MuiCardActionArea-root {
-					color: transparent;
-					&:hover {
-						color: rgb(0, 0, 0);
-					}
-				}
-			}
-		}
+        margin-top: 0;
+        margin-bottom: 0;
+        align-items: center;
+        padding-top: 0px !important;
+        padding-bottom: 1rem !important;
+        .MuiGrid-item {
+            max-width: 300px;
+            max-height: 300px;
+            @media (max-width: 450px) {
+                margin: 0.5rem auto;
+            }
+            .MuiCard-root {
+                padding: 0.5rem;
+                background: #ffffff;
+                box-shadow: 0px 0px 30px 4px rgba(0, 25, 71, 0.05);
+                border-radius: 12px;
+                .MuiCardContent-root {
+                    padding: 0.5rem;
+                    .MuiTypography-root {
+                        font-family: "Poppins", sans-serif;
+                        font-weight: 500;
+                        color: #002942;
+                        font-size: 1rem;
+                        @media (max-width: 900px) {
+                            font-size: 1rem;
+                        }
+                        @media (max-width: 510px) {
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
+                img {
+                    border-radius: 12px;
+                    width: 100%;
+                    max-height: 160px;
+                    object-fit: cover;
+                }
+                .MuiCardActionArea-root {
+                    color: transparent;
+                    &:hover {
+                        color: rgb(0, 0, 0);
+                    }
+                }
+	        }
+	    }
 	}
 	@media (max-width: 900px) and (min-width: 600px) {
-		padding: 0.8rem;
-		.css-96vknt-MuiGrid-root {
-			.MuiGrid-item {
-				max-width: 33%;
-				padding-left: 0.5rem;
-			}
-		}
+        padding: 0.8rem;
+        .css-96vknt-MuiGrid-root {
+            .MuiGrid-item {
+                max-width: 33%;
+                padding-left: 0.5rem;
+            }
+        }
 	}
 	@media (max-width: 600px) {
-		flex-direction: column;
-		padding-bottom: 2rem;
-		.updates {
-			max-width: 13rem;
-			align-self: center;
-			margin-bottom: 1rem !important;
-			.MuiTypography-root {
-				font-size: 1rem;
-			}
-			li.MuiTypography-root {
-				font-size: 0.9rem;
-			}
-		}
-		.MuiGrid-root {
-			justify-content: center;
-		}
+        flex-direction: column;
+        padding-bottom: 2rem;
+        .updates {
+            max-width: 13rem;
+            align-self: center;
+            margin-bottom: 1rem !important;
+            .MuiTypography-root {
+                font-size: 1rem;
+            }
+            li.MuiTypography-root {
+                font-size: 0.9rem;
+            }
+        }
+        .MuiGrid-root {
+            justify-content: center;
+        }
 	}
 	.options{
-		@media(max-width:1956px)and(min-width:1131px){
-			justify-content: space-evenly;
-		}
-		@media(min-width:2800px){
-			justify-content: space-evenly;
-		}
+        @media(max-width:1907px)and(min-width:1131px){
+            justify-content: space-evenly;
+        }
+        @media(min-width:2524px){
+            justify-content: space-evenly;
+        }
 	}
-
+	
+	.optionCard{
+	    margin: auto;
+	}
+	
 	.timeline{
-		display: flex;
-		margin-bottom: 0.5rem;
+        display: flex;
+        margin-bottom: 0.5rem;
 	}
 	.timeline-date{
-		height: 25%;
-		flex: 0 0 11%;
-		border-radius: 50%;
-		background-color: #6096FC;
-		color:#ffffff;
-		text-align: center;	
-		margin-right:0.5rem;
+        height: 25%;
+        flex: 0 0 11%;
+        border-radius: 50%;
+        background-color: #6096FC;
+        color:#ffffff;
+        text-align: center; 
+        margin-right:0.5rem;
 	}
-
+	
 	.dategrid{
-		width: 50%;
-		margin-right: 2rem;
-		align-items: end;
-		align-self: flex-start;
-		@media (max-width:600px) {
-			align-items: center;
-			width: 100%;
-			
-		}
-		@media (min-width:1200px) {
-			width: 33%;
-			
-		}
-		
+        width: 50%;
+        margin-right: 2rem;
+        align-items: end;
+        align-self: flex-start;
+        @media (max-width:600px) {
+            align-items: center;
+            width: 100%;
+        }
+        @media (min-width:1200px) {
+            width: auto;
+        }
 	}
 	.datelist{
-		padding-bottom: 0rem !important;
+	    padding-bottom: 0rem !important;
 	}
 	.dates{
-		align-self: flex-start;
-		background: #f4f6fd;
-		box-shadow: 0px 0px 15px -6px rgba(0, 25, 71, 0.05);
-		border-radius: 12px;
-		padding: 1rem;
-		width:16rem;
-		margin-left: 0.7rem;
-		@media (max-width: 600px) {
-			min-height: 10rem;
-		}
-		.MuiTypography-root {
-			font-family: "Poppins", sans-serif;
-			font-size: 1rem;
-			font-weight: 500;
-		}
-		p.MuiTypography-root {
-			font-size: 0.9rem;
-			font-weight: 400;
-			padding-right: 0.2rem;
-		}
-		.important-dates {
-			max-height: 13rem;
-			overflow-y: auto;
-		}
-		@media (max-width: 900px) {
-			.MuiTypography-root {
-				font-size: 1rem;
-			}
-			p.MuiTypography-root {
-				font-size: 0.8rem;
-			}
-		}
-		@media (max-width: 700px) {
-			p.MuiTypography-root {
-				font-size: 0.9rem;
-			}
-		}
-		
+        align-self: flex-start;
+        background: #f4f6fd;
+        box-shadow: 0px 0px 15px -6px rgba(0, 25, 71, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        width:16rem;
+        margin-left: 1rem;
+        @media (max-width: 600px) {
+            min-height: 10rem;
+        }
+        .MuiTypography-root {
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        p.MuiTypography-root {
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding-right: 0.2rem;
+        }
+        .important-dates {
+            max-height: 11rem;
+            overflow-y: auto;
+        }
+        @media (max-width: 900px) {
+            .MuiTypography-root {
+                font-size: 1rem;
+            }
+            p.MuiTypography-root {
+                font-size: 0.8rem;
+            }
+        }
+        @media (max-width: 700px) {
+            p.MuiTypography-root {
+                font-size: 0.9rem;
+            }
+        }
 	}
 	.title{
-		margin-bottom: 1rem;
-	}	
+	    margin-bottom: 1rem;
+	} 
 }
+	

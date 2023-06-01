@@ -59,7 +59,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 							<Typography gutterbottom variant='h5' component='div'>
 								Important websites
 							</Typography>
-							<ul>
+							<ul className="important-websites">
 								{websites.map((link,index)=>(
 									<div>
 										<Typography gutterBottom
@@ -108,13 +108,15 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 				<Grid 
 					container
 					direction='column'
-					spacing={{xs:2, sm:3}}
 					columns={{xs:4, sm:8, md:8 }}
 					className='dategrid'
 				>
 					
 					<Grid item xs={3} sm={5} md={7} className="datelist">
 						<Box className='dates'>
+              <Typography gutterBottom variant='h5' component='div' className="title">
+								Important Dates
+							</Typography>
 							<div className="important-dates">
 								{impDates.map((dates, index) =>{ 
                   let start=dates.startDate;
@@ -143,9 +145,6 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 					</Grid>
 					<Grid item xs={1} sm={3} md={5}>
 						<Box className='dates'>
-							<Typography gutterBottom variant='h5' component='div' className="title">
-								Important Dates
-							</Typography>
 							<Events change={handleMonth}/>
 						</Box>
 					</Grid>
