@@ -70,7 +70,6 @@ const Ranks = ({
 
 	useEffect(() => {
 		if (rankListObj.data.length > 0) {
-			setyear(rankListObj.data[0].latest_year)
 			if (yearObj.length == 0) {
 				let temp = []
 				for (
@@ -188,7 +187,7 @@ const Ranks = ({
 						)}
 						{!instituteTypeObj.loading &&
 							!instituteTypeObj.error &&
-							instituteTypeObj.data.length > 0 && (
+							 (
 								<ClickableChips
 									chipList={instituteTypeObj.data}
 									defaultSelected={"IIT"}
