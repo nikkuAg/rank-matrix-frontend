@@ -17,6 +17,7 @@
 		"immer": "^9.0.15",
 		"moment": "^2.29.4",
 		"node-sass": "^7.0.1",
+		"qs": "^6.11.2",
 		"react": "^18.2.0",
 		"react-calendar": "^4.2.1",
 		"react-csv": "^2.2.2",

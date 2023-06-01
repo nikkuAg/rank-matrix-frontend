@@ -17,23 +17,19 @@ import {
 } from "../actionTypes"
 
 export function* fetchInstituteList(action) {
-	let requestURL = ""
-	requestURL = `/rankmatrix/api/institute/list/?page=${action.payload.page}${
-		action.payload.search.length === 0 ? "" : "&search=" + action.payload.search
-	}${action.payload.typeList ? "&type_list=" + action.payload.typeList : ""}${
-		action.payload.instituteType
-			? "&institute_type=" + action.payload.instituteType
-			: ""
-	}`
-
-	if (action.payload.orderField) {
-		requestURL += `&ordering=${action.payload.orderType === "asc" ? "" : "-"}${
-			action.payload.orderField
-		}`
+    let requestURL="/rankmatrix/api/institute/list/"
+	let payload=action.payload
+	if(payload.search.length===0){payload.search=null}
+	if(!payload.orderfield){
+		payload.ordering=null
+	}
+	else{
+		payload.ordering === "asc" ? payload.ordering=`${payload.orderField}` : payload.ordering=`-${payload.orderField}`
+		payload.orderField=null;
 	}
 
 	try {
-		const response = yield getRequest(requestURL)
+		const response = yield getRequest(requestURL,payload)
 		yield put(fetchInstituteListSuccess(response))
 		if (response.data.results.length === 0) {
 			yield put(showToast("No data found", "warning", toastDuration))
@@ -46,29 +42,39 @@ export function* fetchInstituteList(action) {
 }
 
 export function* fetchSeatMatrix(action) {
-	let requestURL = ""
-	requestURL = `/rankmatrix/api/seat/list/?page=${action.payload.page}${
-		action.payload.search.length === 0 ? "" : "&search=" + action.payload.search
-	}${action.payload.typeList ? "&type_list=" + action.payload.typeList : ""}${
-		action.payload.instituteType
-			? "&institute_type=" + action.payload.instituteType
-			: ""
-	}`
+	let requestURL = "/rankmatrix/api/seat/list/"
+	// requestURL = `/rankmatrix/api/seat/list/?page=${action.payload.page}${
+	// 	action.payload.search.length === 0 ? "" : "&search=" + action.payload.search
+	// }${action.payload.typeList ? "&type_list=" + action.payload.typeList : ""}${
+	// 	action.payload.instituteType
+	// 		? "&institute_type=" + action.payload.instituteType
+	// 		: ""
+	// }`
 
-	if (action.payload.orderField) {
-		requestURL += `&ordering=${action.payload.orderType === "asc" ? "" : "-"}${
-			action.payload.orderField
-		}`
+	// if (action.payload.orderField) {
+	// 	requestURL += `&ordering=${action.payload.orderType === "asc" ? "" : "-"}${
+	// 		action.payload.orderField
+	// 	}`
+	// }
+	// if (action.payload.year) {
+	// 	requestURL += `&year=${action.payload.year}`
+	// }
+	// if (action.payload.increase) {
+	// 	requestURL += `&increase=action.payload.increase`
+	// }
+	let payload=action.payload
+	if(payload.search.length===0){payload.search=null}
+	if(!payload.orderField){
+		payload.ordering=null
 	}
-	if (action.payload.year) {
-		requestURL += `&year=${action.payload.year}`
+	else{
+		payload.ordering === "asc" ? payload.ordering=`${payload.orderField}` : payload.ordering=`-${payload.orderField}`
+		payload.orderField=null;
 	}
-	if (action.payload.increase) {
-		requestURL += `&increase=action.payload.increase`
-	}
+
 
 	try {
-		const response = yield getRequest(requestURL)
+		const response = yield getRequest(requestURL,payload)
 		yield put(fetchSeatMatrixSuccess(response))
 		if (response.data.results.length === 0) {
 			yield put(showToast("No data found", "warning", toastDuration))
@@ -81,29 +87,42 @@ export function* fetchSeatMatrix(action) {
 }
 
 export function* fetchRankList(action) {
-	let requestURL = ""
-	requestURL = `/rankmatrix/api/rank/list/?page=${action.payload.page}${
-		action.payload.search.length === 0 ? "" : "&search=" + action.payload.search
-	}${action.payload.typeList ? "&type_list=" + action.payload.typeList : ""}${
-		action.payload.instituteType
-			? "&institute_type=" + action.payload.instituteType
-			: ""
-	}`
+	let requestURL = "/rankmatrix/api/rank/list/"
+	// requestURL = `/rankmatrix/api/rank/list/?page=${action.payload.page}${
+	// 	action.payload.search.length === 0 ? "" : "&search=" + action.payload.search
+	// }${action.payload.typeList ? "&type_list=" + action.payload.typeList : ""}${
+	// 	action.payload.instituteType
+	// 		? "&institute_type=" + action.payload.instituteType
+	// 		: ""
+	// }`
 
-	if (action.payload.orderField) {
-		requestURL += `&ordering=${action.payload.orderType === "asc" ? "" : "-"}${
-			action.payload.orderField
-		}`
+	// if (action.payload.orderField) {
+	// 	requestURL += `&ordering=${action.payload.orderType === "asc" ? "" : "-"}${
+	// 		action.payload.orderField
+	// 	}`
+	// }
+
+	// if (action.payload.round) {
+	// 	requestURL += `&year=${action.payload.year}&round=${
+	// 		action.payload.year === 2015 ? "1" : action.payload.round
+	// 	}`
+	// }
+	let payload=action.payload
+	if(payload.search.length===0){payload.search=null}
+	if(!payload.orderfield){
+		payload.ordering=null
+	}
+	else{
+		payload.ordering === "asc" ? payload.ordering=`${payload.orderField}` : payload.ordering=`-${payload.orderField}`
+		payload.orderField=null;
+	}
+	if(payload.year===2015){
+		payload.round=1;
 	}
 
-	if (action.payload.round) {
-		requestURL += `&year=${action.payload.year}&round=${
-			action.payload.year === 2015 ? "1" : action.payload.round
-		}`
-	}
 
 	try {
-		const response = yield getRequest(requestURL)
+		const response = yield getRequest(requestURL,payload)
 		yield put(fetchRankListSuccess(response))
 		if (response.data.results.length === 0) {
 			yield put(showToast("No data found", "warning", toastDuration))

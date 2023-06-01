@@ -3,31 +3,31 @@ export const instituteListHeader = [
 		id: "code",
 		label: "Institute Code",
 		order: true,
-		alignment: "left",
+		filterName: "INSTITUTE_CODE_FILTERS"
 	},
 	{
 		id: "name",
 		label: "Institute Name",
 		order: true,
-		alignment: "left",
+		filterName :"INSTITUTE_NAME_FILTERS"
 	},
 	{
 		id: "state",
 		label: "State",
 		order: true,
-		alignment: "left",
+		filterName :"INSTITUTE_STATE_FILTERS"
 	},
 	{
 		id: "nirf_1",
 		label: "NIRF Ranking",
 		order: true,
-		alignment: "center",
+		filterName :"INSTITUTE_NIRF_FILTERS"
 	},
 	{
 		id: "website",
 		label: "Website",
 		order: true,
-		alignment: "left",
+		filterName :"INSTITUTE_WEBSITE_FILTERS"
 	},
 ];
 
@@ -36,41 +36,50 @@ export const seatMatrixHeader = [
 		id: "institute_code__name",
 		label: "Institute Name",
 		order: true,
+		filterName:"INSTITUTE_FILTER"
 	},
 	{
 		id: "branch_code__branch_name",
 		label: "Branch Name",
 		order: true,
+		filterName:"BRANCH_FILTER"
 	},
 	{
 		id: "branch_code__duration",
 		label: "Duration",
 		order: true,
+		filterName:"BRANCH_DURATION_FILTER"
+
 	},
 	{
 		id: "degree",
 		label: "Degree",
 		order: true,
+		filterName:"BRANCH_DEGREE_FILTER"
 	},
 	{
 		id: "seat_pool",
 		label: "Seat Pool",
 		order: true,
+		filterName:"SEAT_POOL_FILTER"
 	},
 	{
 		id: "category",
 		label: "Category",
 		order: true,
+		filterName:"CATEGORY_FILTER"
 	},
 	{
 		id: "quota",
 		label: "Quota",
 		order: true,
+		filterName:"QUOTA_FILTER"
 	},
 	{
 		id: "seats",
 		label: "Seats",
 		order: true,
+		filterName:"SEATS_FILTER"
 	},
 ];
 
@@ -79,36 +88,43 @@ export const rankHeader = [
 		id: "institute_code__name",
 		label: "Institute Name",
 		order: true,
+		filterName:"INSTITUTE_FILTER"
 	},
 	{
 		id: "branch_code__branch_name",
 		label: "Branch Name",
 		order: true,
+		filterName:"BRANCH_FILTER"
 	},
 	{
 		id: "category",
 		label: "Category",
 		order: true,
+		filterName:"CATEGORY_FILTER"
 	},
 	{
 		id: "quota",
 		label: "Quota",
 		order: true,
+		filterName:"QUOTA_FILTER"
 	},
 	{
 		id: "seat_pool",
 		label: "Seat Pool",
 		order: true,
+		filterName:"SEAT_POOL_FILTER"
 	},
 	{
 		id: "opening_rank",
 		label: "Opening Rank",
 		order: true,
+		filterName:"OPENING_RANK_FILTER"
 	},
 	{
 		id: "closing_rank",
 		label: "Closing Rank",
 		order: true,
+		filterName:"CLOSING_RANK_FILTER"
 	},
 ];
 
