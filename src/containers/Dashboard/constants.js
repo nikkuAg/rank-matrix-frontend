@@ -124,5 +124,5 @@ export const websites=[
 	{
 		name:"JEE Advances",
 		val:"https://jeeadv.ac.in/"
-	}
+	},
 ]

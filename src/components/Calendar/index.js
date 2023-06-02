@@ -4,11 +4,18 @@ import Calendar from 'react-calendar';
 import moment from 'moment'
 import "./index.scss";
 
-export default function Events({change}) {
+export default function Events({change,dateChange}) {
   const [value, setValue] = useState();
+  const [date,setDate]=useState(null);
+
+  const handleDate=(e)=>{
+      setDate(e)
+      dateChange(date)
+  }
 
   return (
     <Calendar 
+      onChange={handleDate}
       showNeighboringMonth={false}
       tileClassName={({date,view})=>{
         setValue(date.getMonth()+1)
