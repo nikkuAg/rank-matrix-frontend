@@ -10,7 +10,10 @@ import {
 	CircularProgress,
 	Grid,
 	Typography,
+  Button,
 } from "@mui/material";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Box } from "@mui/system";
 import { featuresCard,impDates,websites } from "./constants";
 import { fetchRecentUpdates } from "../../store/actions/dashboard";
@@ -26,19 +29,29 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 
 	const [Month,setMonth]=useState();
   const [selectdate,setSelectdate]=useState(null);
+  const [show,setShow]=useState(true);
   
   function handleMonth(newMonth) {
     setMonth(newMonth);
+    console.log(Month)
   }
   function handleSelect(newDate){
     setSelectdate(newDate);
+  }
+  function showCalendar(){
+      if(show==true){
+        setShow(false);
+      }
+      else{
+        setShow(true);
+      }
   }
     
 	return (
 		<div>
 			<Box className='dashboard-container'>
         <div className="med-screen">
-          <Box className='updates'>
+          <Box className={"updates" + (recentUpdateObject.data.length? "-present":"-absent")}>
             {!recentUpdateObject.loading && !recentUpdateObject.error
               ? recentUpdateObject.data.length !== 0 && (
                 <div>
@@ -123,7 +136,16 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
             </Grid>
             <Grid item xs={1} sm={3} md={5}>
               <Box className='dates'>
-                <Events change={handleMonth} dateChange={handleSelect}/>
+                {(recentUpdateObject.data.length==0) && 
+                  (<Button 
+                    onClick={showCalendar} 
+                    variant="contained" 
+                    startIcon={show?<ArrowDropUpIcon/>:<ArrowDropDownIcon/>} 
+                    className="calendarButton"
+                  >Calendar
+                  </Button>)
+                }
+                {show && <Events change={handleMonth} dateChange={handleSelect}/>}
               </Box>
             </Grid>
           </Grid>
@@ -197,7 +219,16 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 					</Grid>
 					<Grid item xs={1} sm={3} md={5}>
 						<Box className='dates'>
-							<Events change={handleMonth} dateChange={handleSelect}/>
+              {(recentUpdateObject.data.length==0) && 
+                (<Button 
+                  onClick={showCalendar} 
+                  variant="contained" 
+                  startIcon={show?<ArrowDropUpIcon/>:<ArrowDropDownIcon/>} 
+                  className="calendarButton"
+                >Calendar
+                </Button>)
+              }
+              {show && <Events change={handleMonth} dateChange={handleSelect}/>}
 						</Box>
 					</Grid>
 				</Grid>
