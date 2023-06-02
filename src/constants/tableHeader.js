@@ -139,10 +139,13 @@ export const choicesHeader = [
 		label: "Branch Name",
 	},
 	{
+		label: "Category",
+	},
+	{
 		label: "Quota",
 	},
 	{
-		label: "Gender",
+		label: "Seat Pool",
 	},
 	{
 		label: "Opening Rank",

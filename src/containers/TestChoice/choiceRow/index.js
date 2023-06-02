@@ -89,6 +89,9 @@ export const ChoiceRow = ({
                 {choice.branch_name}
             </TableCell>
             <TableCell className='noto-sans'>
+                {choice.category}
+            </TableCell>
+            <TableCell className='noto-sans'>
                 {choice.quota}
             </TableCell>
             <TableCell className='noto-sans'>
