@@ -65,33 +65,41 @@ export const ImportantPdfs = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{PdfsList.filter((row) => {
-									if (searchWord == "") {
-										return row
-									}
-									else if (row.title.toLowerCase().includes(searchWord.toLowerCase())) {
-										return row
-									}
-								}).map((row) => (
-									<TableRow
-										sx={{
-											"&:last-child td, &:last-child th": { border: 0 },
-										}}
-										key={row.id}
-									>
-										<TableCell className='noto-sans'>
-											{row.id}
-										</TableCell>
-										<TableCell className='noto-sans' align='left'>
-											{row.title}
-										</TableCell>
-										<TableCell className='noto-sans' align='right'>
-											<Link href={row.link} target='_blank' sx={{ mr: 1 }}>
-												<DownloadIcon color="primary" />
-											</Link>
-										</TableCell>
-									</TableRow>
-								))}
+								{PdfsList.length!==0?
+									(<div>{PdfsList.filter((row) => {
+										if (searchWord == "") {
+											return row
+										}
+										else if (row.title.toLowerCase().includes(searchWord.toLowerCase())) {
+											return row
+										}
+										}).map((row) => (
+										<TableRow
+											sx={{
+												"&:last-child td, &:last-child th": { border: 0 },
+											}}
+											key={row.id}
+										>
+											<TableCell className='noto-sans'>
+												{row.id}
+											</TableCell>
+											<TableCell className='noto-sans' align='left'>
+												{row.title}
+											</TableCell>
+											<TableCell className='noto-sans' align='right'>
+												<Link href={row.link} target='_blank' sx={{ mr: 1 }}>
+													<DownloadIcon color="primary" />
+												</Link>
+											</TableCell>
+										</TableRow>
+									))}
+									</div>)
+								:
+								(<TableRow>
+									<TableCell className='emptyList' align='left'>
+										No pdf released by JoSAA for the year 2023 yet
+									</TableCell>
+								</TableRow>)}
 							</TableBody>
 						</Table>
 					</TableContainer>
