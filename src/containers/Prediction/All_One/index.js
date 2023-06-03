@@ -8,6 +8,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	IconButton
 } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
@@ -17,7 +18,8 @@ import { TableInfo } from "../../../components/tableHeader"
 import { LightRankTooltip, PredictionList } from "../../../constants/general"
 import { fetchAllOnePrediction } from "../../../store/actions/prediction"
 import { makeSelectAllOnePrediction } from "../../../store/selectors/prediction"
-
+import TestChoiceDrawer from "../TestChoiceDrawer"
+import AddIcon from '@mui/icons-material/Add';
 const AllBranchOneCollegePrediction = ({
 	setpredictionType,
 	predictionType,
@@ -34,6 +36,12 @@ const AllBranchOneCollegePrediction = ({
 	const [instituteId, setinstituteId] = useState(0)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const [saveTestChoices, setsaveTestChoices] = useState(
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
+	)
 
 	useEffect(() => {
 		setopenForm(true)
@@ -64,6 +72,23 @@ const AllBranchOneCollegePrediction = ({
 	const editDetailButtonClick = () => {
 		setopenForm(true)
 	}
+	const handleOpenDrawer = () => {
+		setOpenDrawer(true);
+	}
+	const handleAddChoice = (branchId) => {
+		let modifiedarray = saveTestChoices;
+		modifiedarray.push({
+			institute_id: instituteId,
+			branch_id: branchId,
+			quota: quota,
+			seat_pool: seatPool,
+			category: category,
+			id: `${instituteId}_${branchId}_${quota}_${category}_${seatPool}`,
+		})
+		setsaveTestChoices(modifiedarray)
+		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+	}
+
 
 	return (
 		<div className='list-container'>
@@ -102,6 +127,21 @@ const AllBranchOneCollegePrediction = ({
 						predictionObj.data.branch.length !== 0 && (
 							<TableInfo heading={predictionObj.data.institutes.name} />
 						)}
+					<Button variant="filled" className="josaa-list-button" onClick={handleOpenDrawer}>
+						JoSAA List
+					</Button>
+					<TestChoiceDrawer
+						open={openDrawer}
+						setOpen={setOpenDrawer}
+						year={2022}
+						round={6}
+						cutoff={cutoff}
+						rank={rank}
+						rankMain={rank}
+						saveTestChoices={saveTestChoices}
+						setsaveTestChoices={setsaveTestChoices}
+
+					/>
 				</div>
 				{predictionObj.loading ? (
 					<CircularProgress />
@@ -129,6 +169,11 @@ const AllBranchOneCollegePrediction = ({
 										{predictionObj.data.branch.map((branch) => (
 											<TableRow key={branch.id} className='prediction'>
 												<TableCell className='branch-cell'>
+													<IconButton className="addIconButton" onClick={() => {
+														handleAddChoice(branch.id);
+													}}>
+														<AddIcon className="addIcon" />
+													</IconButton>
 													{branch.branch_code}
 												</TableCell>
 												{predictionObj.data.round_data[`${branch.code}`].map(
@@ -137,9 +182,8 @@ const AllBranchOneCollegePrediction = ({
 															<TableCell
 																align='center'
 																key={index}
-																className={`${
-																	obj.opening_rank != 0 ? obj.color : ""
-																} rank`}
+																className={`${obj.opening_rank != 0 ? obj.color : ""
+																	} rank`}
 															>
 																{obj.opening_rank != 0 ? (
 																	<>

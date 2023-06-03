@@ -8,6 +8,9 @@ export const RankField = (props) => {
 		} else if (event.target.name === "rankMain") {
 			props.setrankMain(event.target.value)
 		}
+		else {
+			props.setCutoff(event.target.value)
+		}
 	}
 
 	return (

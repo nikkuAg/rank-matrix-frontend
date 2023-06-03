@@ -8,6 +8,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	IconButton
 } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
@@ -17,6 +18,8 @@ import { TableInfo } from "../../../components/tableHeader"
 import { LightRankTooltip, PredictionList } from "../../../constants/general"
 import { fetchOneAllPrediction } from "../../../store/actions/prediction"
 import { makeSelectOneAllPrediction } from "../../../store/selectors/prediction"
+import TestChoiceDrawer from "../TestChoiceDrawer"
+import AddIcon from '@mui/icons-material/Add';
 
 const OneBranchAllInstitutesPrediction = ({
 	setpredictionType,
@@ -34,6 +37,12 @@ const OneBranchAllInstitutesPrediction = ({
 	const [branchId, setbranchId] = useState(0)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const [saveTestChoices, setsaveTestChoices] = useState(
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
+	)
 
 	useEffect(() => {
 		setopenForm(true)
@@ -65,6 +74,23 @@ const OneBranchAllInstitutesPrediction = ({
 	const editDetailButtonClick = () => {
 		setopenForm(true)
 	}
+	const handleOpenDrawer = () => {
+		setOpenDrawer(true);
+	}
+	const handleAddChoice = (instituteId) => {
+		let modifiedarray = saveTestChoices;
+		modifiedarray.push({
+			institute_id: instituteId,
+			branch_id: branchId,
+			quota: quota,
+			seat_pool: seatPool,
+			category: category,
+			id: `${instituteId}_${branchId}_${quota}_${category}_${seatPool}`,
+		})
+		setsaveTestChoices(modifiedarray)
+		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+	}
+
 
 	return (
 		<div className='list-container'>
@@ -92,6 +118,7 @@ const OneBranchAllInstitutesPrediction = ({
 				setQuota={setquota}
 				setRank={setrank}
 				setdataSubmit={setdataSubmit}
+
 			/>
 			<div className='table-container'>
 				<div className='filters between'>
@@ -103,6 +130,21 @@ const OneBranchAllInstitutesPrediction = ({
 						predictionObj.data.institutes.length !== 0 && (
 							<TableInfo heading={predictionObj.data.branch.branch_code} />
 						)}
+					<Button variant="filled" className="josaa-list-button" onClick={handleOpenDrawer}>
+						JoSAA List
+					</Button>
+					<TestChoiceDrawer
+						open={openDrawer}
+						setOpen={setOpenDrawer}
+						year={2022}
+						round={6}
+						cutoff={cutoff}
+						rank={rank}
+						rankMain={rank}
+						saveTestChoices={saveTestChoices}
+						setsaveTestChoices={setsaveTestChoices}
+
+					/>
 				</div>
 				{predictionObj.loading ? (
 					<CircularProgress />
@@ -130,6 +172,11 @@ const OneBranchAllInstitutesPrediction = ({
 										{predictionObj.data.institutes.map((institute) => (
 											<TableRow key={institute.id} className='prediction'>
 												<TableCell className='branch-cell'>
+													<IconButton className="addIconButton" onClick={() => {
+														handleAddChoice(institute.id);
+													}}>
+														<AddIcon className="addIcon" />
+													</IconButton>
 													{institute.name}
 												</TableCell>
 												{predictionObj.data.round_data[`${institute.code}`].map(
@@ -138,9 +185,8 @@ const OneBranchAllInstitutesPrediction = ({
 															<TableCell
 																align='center'
 																key={index}
-																className={`${
-																	obj.opening_rank != 0 ? obj.color : ""
-																} rank`}
+																className={`${obj.opening_rank != 0 ? obj.color : ""
+																	} rank`}
 															>
 																{obj.opening_rank != 0 ? (
 																	<>

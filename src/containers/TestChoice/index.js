@@ -62,45 +62,45 @@ const TestChoices = ({
 	const [showRemoveButton, setshowRemoveButton] = useState(false)
 	const [openConfirmPrompt, setopenConfirmPrompt] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
-		(localStorage.getItem('autoOpenedForm')!==null) ?
-		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
-		true
+		(localStorage.getItem('autoOpenedForm') !== null) ?
+			!JSON.parse(localStorage.getItem('autoOpenedForm')) :
+			true
 	)
 	const [cutoff, setcutoff] = useState(
-		(localStorage.getItem('cutoff')!==null) ?
-		JSON.parse(localStorage.getItem('cutoff')) :
-		10
+		(localStorage.getItem('cutoff') !== null) ?
+			JSON.parse(localStorage.getItem('cutoff')) :
+			10
 	)
 	const [rank, setrank] = useState(
-		(localStorage.getItem('rank')!==null) ?
-		JSON.parse(localStorage.getItem('rank')) :
-		0
+		(localStorage.getItem('rank') !== null) ?
+			JSON.parse(localStorage.getItem('rank')) :
+			0
 	)
 	const [rankMain, setrankMain] = useState(
-		(localStorage.getItem('rankMain')!==null) ?
-		JSON.parse(localStorage.getItem('rankMain')) :
-		0
+		(localStorage.getItem('rankMain') !== null) ?
+			JSON.parse(localStorage.getItem('rankMain')) :
+			0
 	)
 	const [year, setyear] = useState(
-		(localStorage.getItem('year')!==null) ?
-		JSON.parse(localStorage.getItem('year')) :
-		0
+		(localStorage.getItem('year') !== null) ?
+			JSON.parse(localStorage.getItem('year')) :
+			0
 	)
 	const [round, setround] = useState(
-		(localStorage.getItem('round')!==null) ?
-		localStorage.getItem('round') :
-		0
+		(localStorage.getItem('round') !== null) ?
+			localStorage.getItem('round') :
+			0
 	)
 	const [choice, setchoice] = useState(
-		(localStorage.getItem('choice')!==null) ?
-		localStorage.getItem('choice') :
-		""
+		(localStorage.getItem('choice') !== null) ?
+			localStorage.getItem('choice') :
+			""
 	)
 	const [testChoices, settestChoices] = useState([])
 	const [saveTestChoices, setsaveTestChoices] = useState(
-		(localStorage.getItem('saveTestChoices')!==null) ?
-		JSON.parse(localStorage.getItem('saveTestChoices')) :
-		[]
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
 	)
 
 	useEffect(() => {
@@ -135,13 +135,13 @@ const TestChoices = ({
 			localStorage.setItem("year", JSON.stringify(year))
 			localStorage.setItem("round", round)
 			localStorage.setItem("choice", choice)
-			if (JSON.parse(localStorage.getItem('autoOpenedForm'))!==true) {
+			if (JSON.parse(localStorage.getItem('autoOpenedForm')) !== true) {
 				setdisableAdd(false)
 				setchoiceFormOpen(true)
 				localStorage.setItem('autoOpenedForm', JSON.stringify(true))
 			}
 			setdataSubmit(false)
-			
+
 		}
 	}, [dataSubmit])
 
@@ -176,7 +176,7 @@ const TestChoices = ({
 
 	useEffect(() => {
 		if (testChoiceObj.data.opening_rank) {
-			if (!testChoices.find((obj) => (obj!==null) && (obj.id===testChoiceObj.data.id))) {
+			if (!testChoices.find((obj) => (obj !== null) && (obj.id === testChoiceObj.data.id))) {
 				const choice = {
 					institute_id: testChoiceObj.data.institute_detail.id,
 					institute_type: testChoiceObj.data.institute_detail.type,
@@ -194,7 +194,7 @@ const TestChoices = ({
 					showCheckbox: false
 				}
 				const insertIndex = saveTestChoices.findIndex(
-					testChoice => (testChoice!==null && testChoice.id===testChoiceObj.data.id)
+					testChoice => (testChoice !== null && testChoice.id === testChoiceObj.data.id)
 				)
 				testChoices[insertIndex] = choice
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
@@ -231,7 +231,7 @@ const TestChoices = ({
 	const checkboxOnMouseEnter = (id) => {
 		settestChoices(
 			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=true
+				if (testChoice !== null && testChoice.id === id) testChoice.showCheckbox = true
 				return testChoice
 			})
 		)
@@ -240,20 +240,20 @@ const TestChoices = ({
 	const checkboxOnMouseLeave = (id) => {
 		settestChoices(
 			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=false
+				if (testChoice !== null && testChoice.id === id) testChoice.showCheckbox = false
 				return testChoice
 			})
 		)
 	}
 
-	const checkboxOnChange = (id, event=null) => {
+	const checkboxOnChange = (id, event = null) => {
 		let activateAllCheckboxes = false
 		let selectAllCheckboxes = true
 		settestChoices(
 			testChoices.map(testChoice => {
-				if (testChoice.id===id) {
-					testChoice.selected = event===null ? !testChoice.selected : event.target.checked
-				}else {
+				if (testChoice.id === id) {
+					testChoice.selected = event === null ? !testChoice.selected : event.target.checked
+				} else {
 					testChoice.selected = selectAll ? true : testChoice.selected
 				}
 				activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
@@ -295,7 +295,6 @@ const TestChoices = ({
 	const confirmRemoveChoices = () => {
 		const updateSaveChoices = []
 		settestChoices(testChoices.filter(testChoice => {
-			console.log(testChoice)
 			if (testChoice.selected || selectAll) return false
 
 			const saveChoice = {
@@ -334,17 +333,17 @@ const TestChoices = ({
 	}
 
 	const onChoiceDragEnd = (result) => {
-		if(result.destination.index!==result.source.index){
+		if (result.destination.index !== result.source.index) {
 			let removeIndex = result.source.index
 			let insertIndex = result.destination.index
-			if(result.destination.index < result.source.index) removeIndex++
-			if(result.destination.index > result.source.index) insertIndex++
+			if (result.destination.index < result.source.index) removeIndex++
+			if (result.destination.index > result.source.index) insertIndex++
 
 			testChoices.splice(insertIndex, 0, testChoices[result.source.index])
 			const updateSaveChoices = []
-			
-			settestChoices(testChoices.filter((testChoice,index) => {
-				if(index===removeIndex) return false
+
+			settestChoices(testChoices.filter((testChoice, index) => {
+				if (index === removeIndex) return false
 
 				const saveChoice = {
 					institute_id: testChoice.institute_id,
@@ -390,7 +389,7 @@ const TestChoices = ({
 				setdataSubmit={setchoiceDataSubmit}
 				fetchinstituteTypeDetail={choiceFormOpen}
 			/>
-			<ConfirmationDialog 
+			<ConfirmationDialog
 				open={openConfirmPrompt}
 				onClose={() => setopenConfirmPrompt(false)}
 				title={removeConfirmationPrompt.title}
@@ -420,30 +419,30 @@ const TestChoices = ({
 						)}
 					</div>
 					<div>
-						<IconButton 
-						disabled={showRemoveButton}
-						className="choice-button icon" 
-						onClick={editDetailButtonClick}
-						>
-							<img src={showRemoveButton ? editIconDisabled : editIcon}/>
-						</IconButton>
-					{testChoices.length !== 0 && (
-						<CSVLink
-							disabled={showRemoveButton}
-							data={testChoices.filter(testChoice => testChoice!==null)}
-							headers={download_headers}
-							filename={fileName}
-							target='_blank'
-							onClick={downloadClick}
-						>
-							<IconButton 
+						<IconButton
 							disabled={showRemoveButton}
 							className="choice-button icon"
+							onClick={editDetailButtonClick}
+						>
+							<img src={showRemoveButton ? editIconDisabled : editIcon} />
+						</IconButton>
+						{testChoices.length !== 0 && (
+							<CSVLink
+								disabled={showRemoveButton}
+								data={testChoices.filter(testChoice => testChoice !== null)}
+								headers={download_headers}
+								filename={fileName}
+								target='_blank'
+								onClick={downloadClick}
 							>
-								<img src={showRemoveButton ? downloadIconDisabled : downloadIcon}/>
-							</IconButton>
-						</CSVLink>
-					)}
+								<IconButton
+									disabled={showRemoveButton}
+									className="choice-button icon"
+								>
+									<img src={showRemoveButton ? downloadIconDisabled : downloadIcon} />
+								</IconButton>
+							</CSVLink>
+						)}
 					</div>
 				</div>
 				{testChoiceObj.loading ? (
@@ -456,7 +455,7 @@ const TestChoices = ({
 									<TableHead>
 										<TableRow>
 											<TableCell className='noto-sans tablehead-checkbox-column' align="center">
-												<Checkbox 
+												<Checkbox
 													checked={selectAll}
 													onChange={selectAllCheckboxOnChange}
 													disabled={!showAllCheckboxes}
@@ -468,19 +467,19 @@ const TestChoices = ({
 											))}
 										</TableRow>
 									</TableHead>
-									<DragDropContext 
+									<DragDropContext
 										onDragEnd={onChoiceDragEnd}
 									>
 										<Droppable droppableId='droppable'>
 											{(provided) => (
-												<TableBody 
-													className='prediction' 
+												<TableBody
+													className='prediction'
 													ref={provided.innerRef}
 												>
 													{testChoices.map((row, index) => (
-														row!==null &&
-														<Draggable 
-															key={row.id} 
+														row !== null &&
+														<Draggable
+															key={row.id}
 															draggableId={row.id}
 															index={index}
 														>
@@ -494,15 +493,15 @@ const TestChoices = ({
 																	onMouseEnter={() => checkboxOnMouseEnter(row.id)}
 																	onMouseLeave={() => checkboxOnMouseLeave(row.id)}
 																	onClick={() => checkboxOnChange(row.id)}
-																	ref={provided.innerRef}	
+																	ref={provided.innerRef}
 																	{...provided.draggableProps}
 																	{...provided.dragHandleProps}
 																>
-																	<TableCell 
-																	className='noto-sans checkbox-column'
-																	align="center"
+																	<TableCell
+																		className='noto-sans checkbox-column'
+																		align="center"
 																	>
-																		<Checkbox 
+																		<Checkbox
 																			checked={row.selected || selectAll}
 																			onChange={(event) => checkboxOnChange(row.id, event)}
 																			disabled={!(row.showCheckbox || showAllCheckboxes)}
