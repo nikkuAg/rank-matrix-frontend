@@ -20,6 +20,8 @@ import { fetchAllOnePrediction } from "../../../store/actions/prediction"
 import { makeSelectAllOnePrediction } from "../../../store/selectors/prediction"
 import TestChoiceDrawer from "../TestChoiceDrawer"
 import AddIcon from '@mui/icons-material/Add';
+import { Helmet } from "react-helmet"
+
 const AllBranchOneCollegePrediction = ({
 	setpredictionType,
 	predictionType,
@@ -92,6 +94,11 @@ const AllBranchOneCollegePrediction = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Specific College</title>
+				<meta name="keywords" content="College-specific branch details, Specific College,
+				 College-wise branch details, Opening and closing ranks for all branches, College-wise cuttoff trends" />
+			</Helmet>
 			<Header
 				heading='Prediction'
 				label={

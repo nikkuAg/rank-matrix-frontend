@@ -32,6 +32,7 @@ import { TableInfo } from "../../../components/tableHeader"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FilterBox } from "../../../components/FilterBox";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Helmet } from "react-helmet"
 
 const Ranks = ({
 	instituteTypeObj,
@@ -165,6 +166,12 @@ const Ranks = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Opening & Closing Ranks</title>
+				<meta name="keywords" content="Opening and closing ranks, JoSAA cutoff ranks, 
+					College-wise cutoffs, Branch-wise cutoff ranks, Category-wise cutoffs, 
+					Minimum cutoff ranks, Maximum cutoff ranks, Last year's cutoff trends" />
+			</Helmet>
 			<Header heading={"Opening and Closing Rank"} />
 			<div className='table-container'>
 				<div className='filters between'>
@@ -187,7 +194,7 @@ const Ranks = ({
 						)}
 						{!instituteTypeObj.loading &&
 							!instituteTypeObj.error &&
-							 (
+							(
 								<ClickableChips
 									chipList={instituteTypeObj.data}
 									defaultSelected={"IIT"}

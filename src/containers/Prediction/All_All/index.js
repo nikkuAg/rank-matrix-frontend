@@ -34,6 +34,7 @@ import { makeSelectYear } from "../../../store/selectors/form"
 import TestChoiceDrawer from "../TestChoiceDrawer"
 import AddIcon from '@mui/icons-material/Add';
 
+import { Helmet } from "react-helmet"
 
 const AllBranchAllCollegePrediction = ({
 	predictionObj,
@@ -159,6 +160,11 @@ const AllBranchAllCollegePrediction = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | All Available Choices</title>
+				<meta name="keywords" content="All branches and colleges, All Available Choices,
+				 College-wise branch details, Opening and closing ranks for all branches" />
+			</Helmet>
 			<Header
 				heading='Prediction'
 				label={

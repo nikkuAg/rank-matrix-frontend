@@ -6,11 +6,11 @@ import "./index.scss";
 
 export default function Events({change,dateChange}) {
   const [value, setValue] = useState();
-  const [date,setDate]=useState(null);
+  const [date,setDate]=useState();
 
   const handleDate=(e)=>{
       setDate(e)
-      dateChange(date)
+      dateChange(e)
   }
 
   return (

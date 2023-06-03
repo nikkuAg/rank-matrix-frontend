@@ -18,6 +18,7 @@ import { LightRankTooltip, PredictionList } from "../../../constants/general"
 import { fetchOneOnePrediction } from "../../../store/actions/prediction"
 import { makeSelectOneOnePrediction } from "../../../store/selectors/prediction"
 import TestChoiceDrawer from "../TestChoiceDrawer"
+import { Helmet } from "react-helmet"
 
 const OneBranchOneInstitutesPrediction = ({
 	setpredictionType,
@@ -95,6 +96,11 @@ const OneBranchOneInstitutesPrediction = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Specific Branch and College</title>
+				<meta name="keywords" content="College-specific & branch-specific details, Specific College and Branch,
+			 		College-Branch-wise details, Opening and closing ranks for branch and college across all years" />
+			</Helmet>
 			<Header
 				heading='Prediction'
 				label={

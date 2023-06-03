@@ -4,8 +4,7 @@ import {
     Dialog, 
     DialogActions, 
     DialogContent, 
-    DialogTitle, 
-    Divider
+    DialogTitle
 } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 import "./index.scss"

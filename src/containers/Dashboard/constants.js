@@ -32,7 +32,7 @@ export const featuresCard = [
 		link: "/choices",
 	},
 	{
-		title: "Important pdfs",
+		title: "Important Documents",
 		image: pdf,
 		link: "/pdfs",
 	}
@@ -124,5 +124,5 @@ export const websites=[
 	{
 		name:"JEE Advances",
 		val:"https://jeeadv.ac.in/"
-	},
+	}
 ]

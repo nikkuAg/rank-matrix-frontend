@@ -5,18 +5,11 @@ import {
 	IconButton,
 	Paper,
 	Table,
-	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	TableSortLabel,
 } from "@mui/material"
-import {
-	DragDropContext,
-	Draggable,
-	Droppable
-} from "react-beautiful-dnd"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import FormDialog from "../../components/formDialog"
@@ -35,11 +28,12 @@ import { showToast } from "../../store/actions/toast"
 import { makeSelectTestChoice } from "../../store/selectors/prediction"
 import { CSVLink } from "react-csv"
 import "../list.scss"
-import { TableInfo } from "../../components/tableHeader"
 import downloadIcon from "../../images/downloadIcon.svg"
 import downloadIconDisabled from "../../images/downloadIconDisabled.svg"
 import editIcon from "../../images/editIcon.svg"
 import editIconDisabled from "../../images/editIconDisabled.svg"
+import { ChoiceTableBody } from "./choiceTableBody"
+import { Helmet } from "react-helmet"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -61,6 +55,7 @@ const TestChoices = ({
 	const [showAllCheckboxes, setshowAllCheckboxes] = useState(false)
 	const [showRemoveButton, setshowRemoveButton] = useState(false)
 	const [openConfirmPrompt, setopenConfirmPrompt] = useState(false)
+	const [syncOrder, setsyncOrder] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
 		(localStorage.getItem('autoOpenedForm') !== null) ?
 			!JSON.parse(localStorage.getItem('autoOpenedForm')) :
@@ -103,14 +98,22 @@ const TestChoices = ({
 			[]
 	)
 
+	const syncInitialChoiceOrder = () => {
+		const reorderTestChoice = []
+		saveTestChoices.forEach((testChoice, index) => {
+			const choiceIndex = testChoices.findIndex(obj => obj.id === testChoice.id)
+			if (choiceIndex !== -1) reorderTestChoice.push(testChoices[choiceIndex])
+		})
+		settestChoices(reorderTestChoice)
+	}
+
 	useEffect(() => {
 		setopenForm(true)
 	}, [])
 
 	useEffect(() => {
 		if (dataSubmit) {
-			const emptyChoices = Array(saveTestChoices.length).fill(null)
-			settestChoices(emptyChoices)
+			settestChoices([])
 			if (choice === localStorage.getItem("choice")) {
 				saveTestChoices.forEach((element) => {
 					const payload = {
@@ -197,6 +200,7 @@ const TestChoices = ({
 					testChoice => (testChoice !== null && testChoice.id === testChoiceObj.data.id)
 				)
 				testChoices[insertIndex] = choice
+				settestChoices((prevChoice) => [...prevChoice, choice])
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {
 						institute_id: testChoiceObj.data.institute_detail.id,
@@ -219,6 +223,13 @@ const TestChoices = ({
 			}
 		}
 	}, [testChoiceObj])
+
+	useEffect(() => {
+		if ((!syncOrder) && testChoices.length === saveTestChoices.length) {
+			syncInitialChoiceOrder()
+			setsyncOrder(true)
+		}
+	}, [testChoices])
 
 	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
@@ -362,6 +373,12 @@ const TestChoices = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Test your Choices</title>
+				<meta name="keywords" content="Choice filling, Reorder choices, Preferred choices, 
+					Rank-based choice order, College and branch selection, Smart choice order generator, 
+					Best choice sequence" />
+			</Helmet>
 			<Header heading='Test your JoSAA Choices' />
 			<FormDialog
 				openForm={openForm}
@@ -537,6 +554,15 @@ const TestChoices = ({
 											)}
 										</Droppable>
 									</DragDropContext>
+									<ChoiceTableBody
+										testChoices={testChoices}
+										selectAll={selectAll}
+										showAllCheckboxes={showAllCheckboxes}
+										settestChoices={settestChoices}
+										setsaveTestChoices={setsaveTestChoices}
+										setselectAll={setselectAll}
+										setshowAllCheckboxes={setshowAllCheckboxes}
+									/>
 								</Table>
 							</TableContainer>
 						</>
