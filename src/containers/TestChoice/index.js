@@ -5,18 +5,11 @@ import {
 	IconButton,
 	Paper,
 	Table,
-	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	TableSortLabel,
 } from "@mui/material"
-import {
-	DragDropContext,
-	Draggable,
-	Droppable
-} from "react-beautiful-dnd"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import FormDialog from "../../components/formDialog"
@@ -35,11 +28,11 @@ import { showToast } from "../../store/actions/toast"
 import { makeSelectTestChoice } from "../../store/selectors/prediction"
 import { CSVLink } from "react-csv"
 import "../list.scss"
-import { TableInfo } from "../../components/tableHeader"
 import downloadIcon from "../../images/downloadIcon.svg"
 import downloadIconDisabled from "../../images/downloadIconDisabled.svg"
 import editIcon from "../../images/editIcon.svg"
 import editIconDisabled from "../../images/editIconDisabled.svg"
+import { ChoiceTableBody } from "./choiceTableBody"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -61,6 +54,7 @@ const TestChoices = ({
 	const [showAllCheckboxes, setshowAllCheckboxes] = useState(false)
 	const [showRemoveButton, setshowRemoveButton] = useState(false)
 	const [openConfirmPrompt, setopenConfirmPrompt] = useState(false)
+	const [syncOrder, setsyncOrder] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
 		(localStorage.getItem('autoOpenedForm')!==null) ?
 		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
@@ -103,14 +97,22 @@ const TestChoices = ({
 		[]
 	)
 
+	const syncInitialChoiceOrder = () => {
+		const reorderTestChoice = []
+		saveTestChoices.forEach((testChoice,index) => {
+			const choiceIndex = testChoices.findIndex(obj => obj.id===testChoice.id)
+			if(choiceIndex!==-1) reorderTestChoice.push(testChoices[choiceIndex])
+		})
+		settestChoices(reorderTestChoice)
+	}
+
 	useEffect(() => {
 		setopenForm(true)
 	}, [])
 
 	useEffect(() => {
 		if (dataSubmit) {
-			const emptyChoices = Array(saveTestChoices.length).fill(null)
-			settestChoices(emptyChoices)
+			settestChoices([])
 			if (choice === localStorage.getItem("choice")) {
 				saveTestChoices.forEach((element) => {
 					const payload = {
@@ -193,10 +195,7 @@ const TestChoices = ({
 					selected: false,
 					showCheckbox: false
 				}
-				const insertIndex = saveTestChoices.findIndex(
-					testChoice => (testChoice!==null && testChoice.id===testChoiceObj.data.id)
-				)
-				testChoices[insertIndex] = choice
+				settestChoices((prevChoice) => [...prevChoice, choice])
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {
 						institute_id: testChoiceObj.data.institute_detail.id,
@@ -221,50 +220,19 @@ const TestChoices = ({
 	}, [testChoiceObj])
 
 	useEffect(() => {
+		if((!syncOrder) && testChoices.length===saveTestChoices.length) {
+			syncInitialChoiceOrder()
+			setsyncOrder(true)
+		}
+	}, [testChoices])
+
+	useEffect(() => {
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
 	}, [saveTestChoices])
 
 	useEffect(() => {
 		setshowRemoveButton(showAllCheckboxes)
 	}, [showAllCheckboxes])
-
-	const checkboxOnMouseEnter = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=true
-				return testChoice
-			})
-		)
-	}
-
-	const checkboxOnMouseLeave = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=false
-				return testChoice
-			})
-		)
-	}
-
-	const checkboxOnChange = (id, event=null) => {
-		let activateAllCheckboxes = false
-		let selectAllCheckboxes = true
-		settestChoices(
-			testChoices.map(testChoice => {
-				if (testChoice.id===id) {
-					testChoice.selected = event===null ? !testChoice.selected : event.target.checked
-				}else {
-					testChoice.selected = selectAll ? true : testChoice.selected
-				}
-				activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
-				selectAllCheckboxes = selectAllCheckboxes && testChoice.selected
-				return testChoice
-			})
-		)
-		setselectAll(selectAllCheckboxes)
-		setshowAllCheckboxes(activateAllCheckboxes)
-		setshowRemoveButton(activateAllCheckboxes)
-	}
 
 	const selectAllCheckboxOnChange = (event) => {
 		setselectAll(event.target.checked)
@@ -295,7 +263,6 @@ const TestChoices = ({
 	const confirmRemoveChoices = () => {
 		const updateSaveChoices = []
 		settestChoices(testChoices.filter(testChoice => {
-			console.log(testChoice)
 			if (testChoice.selected || selectAll) return false
 
 			const saveChoice = {
@@ -330,34 +297,6 @@ const TestChoices = ({
 				"success",
 				toastDuration
 			)
-		}
-	}
-
-	const onChoiceDragEnd = (result) => {
-		if(result.destination.index!==result.source.index){
-			let removeIndex = result.source.index
-			let insertIndex = result.destination.index
-			if(result.destination.index < result.source.index) removeIndex++
-			if(result.destination.index > result.source.index) insertIndex++
-
-			testChoices.splice(insertIndex, 0, testChoices[result.source.index])
-			const updateSaveChoices = []
-			
-			settestChoices(testChoices.filter((testChoice,index) => {
-				if(index===removeIndex) return false
-
-				const saveChoice = {
-					institute_id: testChoice.institute_id,
-					branch_id: testChoice.branch_id,
-					quota: testChoice.quota,
-					seat_pool: testChoice.seat_pool,
-					category: testChoice.category,
-					id: testChoice.id,
-				}
-				updateSaveChoices.push(saveChoice)
-				return true
-			}))
-			setsaveTestChoices(updateSaveChoices)
 		}
 	}
 
@@ -468,76 +407,15 @@ const TestChoices = ({
 											))}
 										</TableRow>
 									</TableHead>
-									<DragDropContext 
-										onDragEnd={onChoiceDragEnd}
-									>
-										<Droppable droppableId='droppable'>
-											{(provided) => (
-												<TableBody 
-													className='prediction' 
-													ref={provided.innerRef}
-												>
-													{testChoices.map((row, index) => (
-														row!==null &&
-														<Draggable 
-															key={row.id} 
-															draggableId={row.id}
-															index={index}
-														>
-															{(provided, snapshot) => (
-																<TableRow
-																	sx={{
-																		"&:last-child td, &:last-child th": { border: 0 },
-																	}}
-																	className={snapshot.isDragging ? `${row.color} rank` : `${row.color} rank`}
-																	key={row.id}
-																	onMouseEnter={() => checkboxOnMouseEnter(row.id)}
-																	onMouseLeave={() => checkboxOnMouseLeave(row.id)}
-																	onClick={() => checkboxOnChange(row.id)}
-																	ref={provided.innerRef}	
-																	{...provided.draggableProps}
-																	{...provided.dragHandleProps}
-																>
-																	<TableCell 
-																	className='noto-sans checkbox-column'
-																	align="center"
-																	>
-																		<Checkbox 
-																			checked={row.selected || selectAll}
-																			onChange={(event) => checkboxOnChange(row.id, event)}
-																			disabled={!(row.showCheckbox || showAllCheckboxes)}
-																			className={(row.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
-																		/>
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_type}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.branch_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.quota}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.seat_pool}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.opening_rank}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.closing_rank}
-																	</TableCell>
-																</TableRow>
-															)}
-														</Draggable>
-													))}
-												</TableBody>
-											)}
-										</Droppable>
-									</DragDropContext>
+									<ChoiceTableBody 
+										testChoices={testChoices}
+										selectAll={selectAll}
+										showAllCheckboxes={showAllCheckboxes}
+										settestChoices={settestChoices}
+										setsaveTestChoices={setsaveTestChoices}
+										setselectAll={setselectAll}
+										setshowAllCheckboxes={setshowAllCheckboxes}
+									/>
 								</Table>
 							</TableContainer>
 						</>
