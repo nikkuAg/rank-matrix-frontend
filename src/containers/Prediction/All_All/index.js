@@ -28,6 +28,7 @@ import OneBranchOneInstitutesPrediction from "../One_One"
 import { YearField } from "../../../components/formDialog/fields/year"
 import { RoundField } from "../../../components/formDialog/fields/round"
 import { RankField } from "../../../components/formDialog/fields/rank"
+import { Helmet } from "react-helmet"
 
 const AllBranchAllCollegePrediction = ({
 	predictionObj,
@@ -124,6 +125,11 @@ const AllBranchAllCollegePrediction = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | All Available Choices</title>
+				<meta name="keywords" content="All branches and colleges, All Available Choices,
+				 College-wise branch details, Opening and closing ranks for all branches" />
+			</Helmet>
 			<Header
 				heading='Prediction'
 				label={
