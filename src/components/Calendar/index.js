@@ -9,7 +9,7 @@ export default function Events({change,dateChange}) {
   const [date,setDate]=useState(null);
 
   const handleDate=(e)=>{
-      if(date==null){
+      if(date==null || e.getTime()!=date.getTime()){
         setDate(e)
         dateChange(e)
       }
