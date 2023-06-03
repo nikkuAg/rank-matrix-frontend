@@ -1,6 +1,7 @@
 import {
 	Button,
 	CircularProgress,
+	IconButton,
 	Paper,
 	Table,
 	TableBody,
@@ -28,14 +29,21 @@ import OneBranchOneInstitutesPrediction from "../One_One"
 import { YearField } from "../../../components/formDialog/fields/year"
 import { RoundField } from "../../../components/formDialog/fields/round"
 import { RankField } from "../../../components/formDialog/fields/rank"
+import { makeSelectRound } from "../../../store/selectors/form"
+import { makeSelectYear } from "../../../store/selectors/form"
+import TestChoiceDrawer from "../TestChoiceDrawer"
+import AddIcon from '@mui/icons-material/Add';
+
 import { Helmet } from "react-helmet"
 
 const AllBranchAllCollegePrediction = ({
 	predictionObj,
 	predictionComponent,
+	roundList,
+	yearList
 }) => {
 	const [predictionType, setpredictionType] = useState("all_all")
-	const [instituteType, setinstituteType] = useState("")
+	const [instituteType, setinstituteType] = useState("IIT")
 	const [category, setcategory] = useState("")
 	const [cutoff, setcutoff] = useState(10)
 	const [seatPool, setseatPool] = useState("")
@@ -46,41 +54,64 @@ const AllBranchAllCollegePrediction = ({
 	const [round, setround] = useState(6)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const [saveTestChoices, setsaveTestChoices] = useState(
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
+	)
 
 	useEffect(() => {
 		setopenForm(true)
 	}, [predictionType])
 
 	useEffect(() => {
-		if (dataSubmit) {
-			const payload = {
-				instituteType,
-				category,
-				seatPool,
-				quota,
-				option,
-				year,
-				round,
-				rank,
-				cutoff,
-			}
-			predictionComponent(payload)
-			localStorage.setItem("instituteType", instituteType)
-			localStorage.setItem("category", category)
-			localStorage.setItem("cutoff", cutoff)
-			localStorage.setItem("seatPool", seatPool)
-			localStorage.setItem("quota", quota)
-			localStorage.setItem("rank", rank)
-			localStorage.setItem("option", option)
-			localStorage.setItem("year", year)
-			localStorage.setItem("round", round)
-			setdataSubmit(false)
+		const payload = {
+			instituteType,
+			category,
+			seatPool,
+			quota,
+			option,
+			year,
+			round,
+			rank,
+			cutoff,
 		}
-	}, [dataSubmit, year, round, cutoff])
+		predictionComponent(payload)
+		localStorage.setItem("instituteType", instituteType)
+		localStorage.setItem("category", category)
+		localStorage.setItem("cutoff", cutoff)
+		localStorage.setItem("seatPool", seatPool)
+		localStorage.setItem("quota", quota)
+		localStorage.setItem("rank", rank)
+		localStorage.setItem("option", option)
+		localStorage.setItem("year", year)
+		localStorage.setItem("round", round)
+		setdataSubmit(false)
+	}, [dataSubmit, year, round])
 
 	const editDetailButtonClick = () => {
 		setopenForm(true)
 	}
+	const handleAddChoice = (institute_id, branch_id) => {
+		let modifiedarray = saveTestChoices;
+		let modifiedObject = {
+			institute_id: institute_id,
+			branch_id: branch_id,
+			quota: quota,
+			seat_pool: seatPool,
+			category: category,
+			id: `${institute_id}_${branch_id}_${quota}_${category}_${seatPool}`,
+		}
+		if (modifiedarray.filter(obj => obj.id === `${institute_id}_${branch_id}_${quota}_${category}_${seatPool}`).length === 0) {
+			modifiedarray.push(modifiedObject);
+			setsaveTestChoices(saveTestChoices);
+			localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+
+		}
+		handleOpenDrawer()
+	}
+
 
 	const toolTip = (color) => {
 		if (color === "green") {
@@ -122,6 +153,10 @@ const AllBranchAllCollegePrediction = ({
 			/>
 		)
 	}
+	const handleOpenDrawer = () => {
+		setOpenDrawer(true);
+	}
+
 
 	return (
 		<div className='list-container'>
@@ -165,26 +200,36 @@ const AllBranchAllCollegePrediction = ({
 					<Button className='choice-button' onClick={editDetailButtonClick}>
 						Edit Details
 					</Button>
-					<div>
-						{/* <YearFieldint 
+					<div className="outer-fields">
+						<YearField
+							form={{ title: "Year", name: "year" }}
 							year={year}
-							setYear={setyear}
+							setyear={setyear}
+							yearList={yearList}
 
 						/>
 						<RoundField
+							form={{ title: "Round", name: "round" }}
 							roud={round}
-							setRound={setround}
+							setround={setround}
+							roundList={roundList}
 						/>
-						<RankField
-							rank={rank}
-							rankMain={rank}
-							setCutoff={setcutoff}
-						/> */}
-						<Button variant="filled">
-							JoSAA List
-						</Button>
-
 					</div>
+					<Button variant="filled" className="josaa-list-button" onClick={handleOpenDrawer}>
+						JoSAA List
+					</Button>
+					<TestChoiceDrawer
+						open={openDrawer}
+						setOpen={setOpenDrawer}
+						year={year}
+						round={round}
+						cutoff={cutoff}
+						rank={rank}
+						rankMain={rank}
+						saveTestChoices={saveTestChoices}
+						setsaveTestChoices={setsaveTestChoices}
+
+					/>
 				</div>
 				{predictionObj.loading ? (
 					<CircularProgress />
@@ -231,13 +276,21 @@ const AllBranchAllCollegePrediction = ({
 																`${branch.code}-${institute.code}`
 															]?.color
 																} rank`}
+															onClick={() => {
+																handleAddChoice(institute.id, branch.id);
+															}}
 														>
 															{predictionObj.data.round_data[
 																`${branch.code}-${institute.code}`
 															]
-																? predictionObj.data.round_data[
-																	`${branch.code}-${institute.code}`
-																].rank
+																? (<>
+																	<IconButton className="addIconButton" >
+																		<AddIcon className="addIcon white" />
+																	</IconButton>
+																	{predictionObj.data.round_data[
+																		`${branch.code}-${institute.code}`
+																	].rank}
+																</>)
 																: "-"}
 														</TableCell>
 													</LightRankTooltip>
@@ -258,6 +311,8 @@ const AllBranchAllCollegePrediction = ({
 const mapStateToProps = (state) => {
 	return {
 		predictionObj: makeSelectAllAllPrediction(state),
+		yearList: makeSelectYear(state),
+		roundList: makeSelectRound(state),
 	}
 }
 

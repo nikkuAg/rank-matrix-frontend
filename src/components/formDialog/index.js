@@ -325,17 +325,6 @@ const FormDialog = ({
 							<div>
 								Details for
 							</div>
-							{/* <Select
-								value={predictionData.value}
-								onChange={handlePredictionType}
-								className='prediction-type'
-							>
-								{predictionList.map((item, index) => (
-									<MenuItem value={item.value} key={index}>
-										{item.title}
-									</MenuItem>
-								))}
-							</Select> */}
 							{
 								predictionList.map((item, index) => {
 									return (
@@ -368,6 +357,7 @@ const FormDialog = ({
 									rankLabel={rankLabel}
 									setrank={setrank}
 									setrankMain={setrankMain}
+									setCutoff={setcutoffVariation}
 								/>
 							)
 						} else {

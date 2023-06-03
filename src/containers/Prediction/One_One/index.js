@@ -17,6 +17,7 @@ import { TableInfo } from "../../../components/tableHeader"
 import { LightRankTooltip, PredictionList } from "../../../constants/general"
 import { fetchOneOnePrediction } from "../../../store/actions/prediction"
 import { makeSelectOneOnePrediction } from "../../../store/selectors/prediction"
+import TestChoiceDrawer from "../TestChoiceDrawer"
 import { Helmet } from "react-helmet"
 
 const OneBranchOneInstitutesPrediction = ({
@@ -36,6 +37,12 @@ const OneBranchOneInstitutesPrediction = ({
 	const [instituteId, setinstituteId] = useState(0)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
+	const [openDrawer, setOpenDrawer] = useState(false)
+	const [saveTestChoices, setsaveTestChoices] = useState(
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
+	)
 
 	useEffect(() => {
 		setopenForm(true)
@@ -68,6 +75,24 @@ const OneBranchOneInstitutesPrediction = ({
 	const editDetailButtonClick = () => {
 		setopenForm(true)
 	}
+	const handleOpenDrawer = () => {
+		setOpenDrawer(true);
+	}
+	const handleAddChoice = () => {
+		let modifiedarray = saveTestChoices;
+		modifiedarray.push({
+			institute_id: instituteId,
+			branch_id: branchId,
+			quota: quota,
+			seat_pool: seatPool,
+			category: category,
+			id: `${instituteId}_${branchId}_${quota}_${category}_${seatPool}`,
+		})
+		setsaveTestChoices(modifiedarray)
+		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+	}
+
+
 
 	return (
 		<div className='list-container'>
@@ -113,8 +138,24 @@ const OneBranchOneInstitutesPrediction = ({
 							<div className='heading'>
 								<TableInfo heading={predictionObj.data.institute.name} />
 								<TableInfo heading={predictionObj.data.branch.branch_code} />
+								<Button variant="filled" className="josaa-list-button" onClick={handleAddChoice}>Add to Choices</Button>
 							</div>
 						)}
+					<Button variant="filled" className="josaa-list-button" onClick={handleOpenDrawer}>
+						JoSAA List
+					</Button>
+					<TestChoiceDrawer
+						open={openDrawer}
+						setOpen={setOpenDrawer}
+						year={2022}
+						round={6}
+						cutoff={cutoff}
+						rank={rank}
+						rankMain={rank}
+						saveTestChoices={saveTestChoices}
+						setsaveTestChoices={setsaveTestChoices}
+
+					/>
 				</div>
 				{predictionObj.loading ? (
 					<CircularProgress />
