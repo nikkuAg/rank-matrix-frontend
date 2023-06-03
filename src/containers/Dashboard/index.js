@@ -28,12 +28,15 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 	}, []);
 
 	const [Month,setMonth]=useState();
+  const [month2,setMonth2]=useState();
   const [selectdate,setSelectdate]=useState(null);
   const [show,setShow]=useState(true);
   
   function handleMonth(newMonth) {
     setMonth(newMonth);
-    console.log(Month)
+  }
+  function handleMonth2(newMonth) {
+    setMonth2(newMonth);
   }
   function handleSelect(newDate){
     setSelectdate(newDate);
@@ -112,7 +115,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   {impDates.map((dates, index) =>{ 
                     let start=dates.startDate;
                     let startobj=new Date(start)
-                    if(startobj.getMonth()+1===Month){
+                    if(startobj.getMonth()+1===month2){
                       return (
                         <div className="timeline">
                           <div className="timeline-date">
@@ -145,7 +148,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   >Calendar
                   </Button>)
                 }
-                {show && <Events change={handleMonth} dateChange={handleSelect}/>}
+                {show && <Events change={handleMonth2} dateChange={handleSelect}/>}
               </Box>
             </Grid>
           </Grid>
