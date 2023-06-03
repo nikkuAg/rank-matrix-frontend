@@ -31,6 +31,7 @@ export const ImportantPdfs = () => {
 	return (
 		<div className='list-container'>
 			<Header heading={"Important Pdfs"} />
+			{PdfsList.length!==0?
 			<div className='table-container'>
 					<div className="searchbox">
 						{(
@@ -99,7 +100,7 @@ export const ImportantPdfs = () => {
 							)}
 					</>
 				
-			</div>
+			</div>:<div></div>}
 		</div>
 	);
 };
