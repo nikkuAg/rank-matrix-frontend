@@ -30,11 +30,11 @@
 			.nirf_column {
 				display: flex;
 				align-items: center;
-				width: 14rem;
-				@media (max-width: 500px) {
-					width: 12rem;
-				}
-				justify-content: center;
+				width: 10rem;
+				// @media (max-width: 500px) {
+				// 	width: 12rem;
+				// }
+				// justify-content: center;
 				.nirf_label {
 					padding: 1px 5px;
 					color: #6096fc;
@@ -43,6 +43,10 @@
 				.nirf-year-change {
 					min-width: 2.5rem;
 					min-height: 2.5rem;
+					opacity: 1;
+				}
+				.nirf-not-visible{
+					opacity: 0.5;
 				}
 			}
 		}
