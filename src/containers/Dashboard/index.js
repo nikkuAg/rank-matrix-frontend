@@ -30,6 +30,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 	const [Month,setMonth]=useState();
   const [month2,setMonth2]=useState();
   const [selectdate,setSelectdate]=useState(null);
+  const [selectdate2,setSelectdate2]=useState(null);
   const [show,setShow]=useState(true);
   
   function handleMonth(newMonth) {
@@ -40,6 +41,10 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
   }
   function handleSelect(newDate){
     setSelectdate(newDate);
+  }
+  function handleSelect2(newDate){
+    setSelectdate2(newDate);
+
   }
   function showCalendar(){
       if(show==true){
@@ -92,7 +97,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                         >
                           {link.name}
                         </Typography>
-                        <a className="website" href={link.val} >{link.val}</a>
+                        <a className="website" target="_blank" href={link.val} >{link.val}</a>
                       </div>
                     ))}
                   </ul>
@@ -112,7 +117,16 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   Important Dates
                 </Typography>
                 <div className="important-dates">
-                  {impDates.map((dates, index) =>{ 
+                  {impDates.filter((dates,index)=>{
+                    let start=dates.startDate;
+                    let startobj=new Date(start)
+                    if(selectdate2==null){
+                      return dates;
+                    }
+                    else if(selectdate2.getDate()==startobj.getDate()){
+                      return dates;
+                    }
+                  }).map((dates, index) =>{ 
                     let start=dates.startDate;
                     let startobj=new Date(start)
                     if(startobj.getMonth()+1===month2){
@@ -148,7 +162,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   >Calendar
                   </Button>)
                 }
-                {show && <Events change={handleMonth2} dateChange={handleSelect}/>}
+                {show && <Events change={handleMonth2} dateChange={handleSelect2}/>}
               </Box>
             </Grid>
           </Grid>
@@ -195,27 +209,36 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 								Important Dates
 							</Typography>
 							<div className="important-dates">
-								{impDates.map((dates, index) =>{ 
+								{impDates.filter((dates,index)=>{
                   let start=dates.startDate;
                   let startobj=new Date(start)
-                  if(startobj.getMonth()+1===Month){
-                    return (
-                      <div className="timeline">
-                        <div className="timeline-date">
-                            {startobj.getDate()}
+                  if(selectdate==null){
+                    return dates;
+                  }
+                  else if(selectdate.getDate()==startobj.getDate()){
+                    return dates;
+                  }
+                }).map((dates, index) =>{ 
+                  let start=dates.startDate;
+                  let startobj=new Date(start)
+                    if(startobj.getMonth()+1===Month){
+                      return (
+                        <div className="timeline">
+                          <div className="timeline-date">
+                              {startobj.getDate()}
+                          </div>
+                          <Typography
+                            gutterBottom
+                            variant='p'
+                            component='p'
+                            key={index}
+                            className='noto-sans'
+                          >
+                            {dates.title} 
+                          </Typography>
                         </div>
-                        <Typography
-                          gutterBottom
-                          variant='p'
-                          component='p'
-                          key={index}
-                          className='noto-sans'
-                        >
-                          {dates.title} 
-                        </Typography>
-                      </div>
-                    )
-                  }	
+                      )
+                    }	
                 })}
 							</div>
 						</Box>

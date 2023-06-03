@@ -1,6 +1,6 @@
 .dashboard-container {
 	display: flex;
-	align-items: center;
+	align-items: top;
 	margin: 3rem 2rem;
 	margin-top: 2rem;
 	@media (max-width: 850px) {
@@ -53,9 +53,6 @@
         @media (max-width: 1200px) and (min-width: 1000px) {
             padding: 1rem 0.5rem;
             max-width: 15rem;
-            .MuiTypography-root {
-                font-size: 0.8rem;
-            }
         }
         @media (max-width: 900px) {
             min-width: 13rem;
@@ -109,9 +106,6 @@
         @media (max-width: 1200px) and (min-width: 1000px) {
             padding: 1rem 0.5rem;
             max-width: 15rem;
-            .MuiTypography-root {
-                font-size: 0.8rem;
-            }
         }
         @media (max-width: 900px) {
             min-width: 13rem;
@@ -129,7 +123,7 @@
 	.important-websites{
         overflow-y: auto;
         margin-bottom: 0.2rem;
-        max-height: 15rem;
+        max-height: 14rem;
 	}
 	.website{
         color:#3245EB;

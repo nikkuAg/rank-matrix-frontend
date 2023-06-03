@@ -32,7 +32,7 @@ export const featuresCard = [
 		link: "/choices",
 	},
 	{
-		title: "Important pdfs",
+		title: "Important Documents",
 		image: pdf,
 		link: "/pdfs",
 	}

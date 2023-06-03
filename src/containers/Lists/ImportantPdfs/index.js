@@ -48,13 +48,13 @@ export const ImportantPdfs = () => {
 							<Table sx={{ Width: 650 }}>
 								<TableHead>
 									<TableRow>
-										<TableCell variant="head">
+										<TableCell variant="head" className="header">
 											Sl.NO
 										</TableCell>
-										<TableCell variant="head">
+										<TableCell variant="head" className="header">
 											Title
 										</TableCell>
-										<TableCell variant="head" align='right'>
+										<TableCell variant="head" className="header" align='right'>
 											Download
 										</TableCell>
 									</TableRow>
@@ -74,7 +74,7 @@ export const ImportantPdfs = () => {
 											}}
 											key={row.id}
 										>
-											<TableCell>
+											<TableCell className='noto-sans'>
 												{row.id}
 											</TableCell>
 											<TableCell className='noto-sans' align='left'>
