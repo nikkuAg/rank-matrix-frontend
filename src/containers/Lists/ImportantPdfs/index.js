@@ -37,70 +37,71 @@ export const ImportantPdfs = () => {
 			</Helmet>
 			<Header heading={"Important Pdfs"} />
 			<div className='table-container'>
-				<div className="searchbox">
-					{(
-						<SearchBar
-							labelText={"Search by any keyword"}
-							defaultWord={searchWord}
-							setSearchKey={setSearchWord}
-							setPage={setPage}
-						/>
-					)}
-
-				</div>
+				{PdfsList.length > 0 &&
+					<div className="searchbox">
+						{(
+							<SearchBar
+								labelText={"Search by any keyword"}
+								defaultWord={searchWord}
+								setSearchKey={setSearchWord}
+								setPage={setPage}
+							/>
+						)}
+					</div>}
 				<>
 					<TableContainer component={Paper}>
 						<Table sx={{ Width: 650 }}>
-							<TableHead>
-								<TableRow>
-									<TableCell variant="head" className="header">
-										Sl.NO
-									</TableCell>
-									<TableCell variant="head" className="header">
-										Title
-									</TableCell>
-									<TableCell variant="head" className="header" align='right'>
-										Download
-									</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{PdfsList.length!==0?
-									(<div>{PdfsList.filter((row) => {
-										if (searchWord == "") {
-											return row
-										}
-										else if (row.title.toLowerCase().includes(searchWord.toLowerCase())) {
-											return row
-										}
+							{PdfsList.length > 0 ?
+								(<><TableHead>
+									<TableRow>
+										<TableCell variant="head" className="header">
+											S.NO
+										</TableCell>
+										<TableCell variant="head" className="header">
+											Title
+										</TableCell>
+										<TableCell variant="head" className="header" align='right'>
+											Download
+										</TableCell>
+									</TableRow>
+								</TableHead>
+									<TableBody>
+										<div>{PdfsList.filter((row) => {
+											if (searchWord == "") {
+												return row
+											}
+											else if (row.title.toLowerCase().includes(searchWord.toLowerCase())) {
+												return row
+											}
 										}).map((row) => (
-										<TableRow
-											sx={{
-												"&:last-child td, &:last-child th": { border: 0 },
-											}}
-											key={row.id}
-										>
-											<TableCell className='noto-sans'>
-												{row.id}
-											</TableCell>
-											<TableCell className='noto-sans' align='left'>
-												{row.title}
-											</TableCell>
-											<TableCell className='noto-sans' align='right'>
-												<Link href={row.link} target='_blank' sx={{ mr: 1 }}>
-													<DownloadIcon color="primary" />
-												</Link>
-											</TableCell>
-										</TableRow>
-									))}
-									</div>)
+											<TableRow
+												sx={{
+													"&:last-child td, &:last-child th": { border: 0 },
+												}}
+												key={row.id}
+											>
+												<TableCell className='noto-sans'>
+													{row.id}
+												</TableCell>
+												<TableCell className='noto-sans' align='left'>
+													{row.title}
+												</TableCell>
+												<TableCell className='noto-sans' align='right'>
+													<Link href={row.link} target='_blank' sx={{ mr: 1 }}>
+														<DownloadIcon color="primary" />
+													</Link>
+												</TableCell>
+											</TableRow>
+										))}
+										</div>
+									</TableBody>
+								</>)
 								:
-								(<TableRow>
+								<TableRow>
 									<TableCell className='emptyList' align='left'>
 										No pdf released by JoSAA for the year 2023 yet
 									</TableCell>
-								</TableRow>)}
-							</TableBody>
+								</TableRow>}
 						</Table>
 					</TableContainer>
 					{PdfsList.total_pages > 1 && (

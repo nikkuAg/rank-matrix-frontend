@@ -9,9 +9,11 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	TableBody
 } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import FormDialog from "../../components/formDialog"
 import { ConfirmationDialog } from "../../components/confirmationDialog"
 import { Header } from "../../components/header"
@@ -484,76 +486,6 @@ const TestChoices = ({
 											))}
 										</TableRow>
 									</TableHead>
-									<DragDropContext
-										onDragEnd={onChoiceDragEnd}
-									>
-										<Droppable droppableId='droppable'>
-											{(provided) => (
-												<TableBody
-													className='prediction'
-													ref={provided.innerRef}
-												>
-													{testChoices.map((row, index) => (
-														row !== null &&
-														<Draggable
-															key={row.id}
-															draggableId={row.id}
-															index={index}
-														>
-															{(provided, snapshot) => (
-																<TableRow
-																	sx={{
-																		"&:last-child td, &:last-child th": { border: 0 },
-																	}}
-																	className={snapshot.isDragging ? `${row.color} rank` : `${row.color} rank`}
-																	key={row.id}
-																	onMouseEnter={() => checkboxOnMouseEnter(row.id)}
-																	onMouseLeave={() => checkboxOnMouseLeave(row.id)}
-																	onClick={() => checkboxOnChange(row.id)}
-																	ref={provided.innerRef}
-																	{...provided.draggableProps}
-																	{...provided.dragHandleProps}
-																>
-																	<TableCell
-																		className='noto-sans checkbox-column'
-																		align="center"
-																	>
-																		<Checkbox
-																			checked={row.selected || selectAll}
-																			onChange={(event) => checkboxOnChange(row.id, event)}
-																			disabled={!(row.showCheckbox || showAllCheckboxes)}
-																			className={(row.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
-																		/>
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_type}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.institute_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.branch_name}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.quota}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.seat_pool}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.opening_rank}
-																	</TableCell>
-																	<TableCell className='noto-sans'>
-																		{row.closing_rank}
-																	</TableCell>
-																</TableRow>
-															)}
-														</Draggable>
-													))}
-												</TableBody>
-											)}
-										</Droppable>
-									</DragDropContext>
 									<ChoiceTableBody
 										testChoices={testChoices}
 										selectAll={selectAll}
