@@ -17,6 +17,7 @@ import { TableInfo } from "../../../components/tableHeader"
 import { LightRankTooltip, PredictionList } from "../../../constants/general"
 import { fetchOneAllPrediction } from "../../../store/actions/prediction"
 import { makeSelectOneAllPrediction } from "../../../store/selectors/prediction"
+import { Helmet } from "react-helmet"
 
 const OneBranchAllInstitutesPrediction = ({
 	setpredictionType,
@@ -68,6 +69,11 @@ const OneBranchAllInstitutesPrediction = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Specific Branch</title>
+				<meta name="keywords" content="Branch-specific college details, Specific Branches,
+			 	Branch-wise college details, Opening and closing ranks for all college, Branch-wise cuttoff trends" />
+			</Helmet>
 			<Header
 				heading='Prediction'
 				label={
@@ -138,9 +144,8 @@ const OneBranchAllInstitutesPrediction = ({
 															<TableCell
 																align='center'
 																key={index}
-																className={`${
-																	obj.opening_rank != 0 ? obj.color : ""
-																} rank`}
+																className={`${obj.opening_rank != 0 ? obj.color : ""
+																	} rank`}
 															>
 																{obj.opening_rank != 0 ? (
 																	<>
