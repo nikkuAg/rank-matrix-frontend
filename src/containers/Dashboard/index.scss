@@ -134,6 +134,7 @@
 	.website{
         color:#3245EB;
         word-wrap: break-word;
+        font-size: 0.9rem;
         @media (max-width:600px) {
             font-size: 0.8rem;
         }
@@ -238,7 +239,7 @@
             justify-content: center;
             width: 90%;
         }
-        @media(max-width:1859px)and(min-width:1403px){
+        @media(max-width:1840px)and(min-width:1403px){
             justify-content: space-evenly;
         }
         @media(min-width:2524px){
