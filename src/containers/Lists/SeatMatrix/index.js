@@ -31,6 +31,7 @@ import { ClickableChips } from "../../../components/chips"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FilterBox } from "../../../components/FilterBox";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Helmet } from "react-helmet"
 
 const SeatMatrix = ({
 	seatMatrixComponent,
@@ -147,6 +148,12 @@ const SeatMatrix = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Seat Matrix</title>
+				<meta name="keywords" content="Seat matrix, College seat availability, 
+				Branch-wise seats, Category-wise seats, Quota allocation, Seat distribution, 
+				College-wise seat details, Available seats per branch" />
+			</Helmet>
 			<Header heading={"Seat Matrix"} />
 			<div className='extra-container'>
 				<Box

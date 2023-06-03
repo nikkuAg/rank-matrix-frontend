@@ -30,6 +30,7 @@ import { ClickableChips } from "../../../components/chips";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FilterBox } from "../../../components/FilterBox";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Helmet } from "react-helmet";
 
 const CollegeList = ({
 	instituteListComponent,
@@ -125,6 +126,11 @@ const CollegeList = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<meta name="keywords" content="Participating colleges, College, Institutes, NIRF, NIRF Ranking, 
+					Engineering colleges" />
+				<title>Rank Matrix | Participating Colleges</title>
+			</Helmet>
 			<Header heading={"Participating Colleges"} />
 			<div className='table-container'>
 				<div className='filters between'>

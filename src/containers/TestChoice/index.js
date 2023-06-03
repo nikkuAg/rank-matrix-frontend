@@ -33,6 +33,7 @@ import downloadIconDisabled from "../../images/downloadIconDisabled.svg"
 import editIcon from "../../images/editIcon.svg"
 import editIconDisabled from "../../images/editIconDisabled.svg"
 import { ChoiceTableBody } from "./choiceTableBody"
+import { Helmet } from "react-helmet"
 
 const TestChoices = ({
 	testChoiceObj,
@@ -56,52 +57,52 @@ const TestChoices = ({
 	const [openConfirmPrompt, setopenConfirmPrompt] = useState(false)
 	const [syncOrder, setsyncOrder] = useState(false)
 	const [disableAdd, setdisableAdd] = useState(
-		(localStorage.getItem('autoOpenedForm')!==null) ?
-		!JSON.parse(localStorage.getItem('autoOpenedForm')) :
-		true
+		(localStorage.getItem('autoOpenedForm') !== null) ?
+			!JSON.parse(localStorage.getItem('autoOpenedForm')) :
+			true
 	)
 	const [cutoff, setcutoff] = useState(
-		(localStorage.getItem('cutoff')!==null) ?
-		JSON.parse(localStorage.getItem('cutoff')) :
-		10
+		(localStorage.getItem('cutoff') !== null) ?
+			JSON.parse(localStorage.getItem('cutoff')) :
+			10
 	)
 	const [rank, setrank] = useState(
-		(localStorage.getItem('rank')!==null) ?
-		JSON.parse(localStorage.getItem('rank')) :
-		0
+		(localStorage.getItem('rank') !== null) ?
+			JSON.parse(localStorage.getItem('rank')) :
+			0
 	)
 	const [rankMain, setrankMain] = useState(
-		(localStorage.getItem('rankMain')!==null) ?
-		JSON.parse(localStorage.getItem('rankMain')) :
-		0
+		(localStorage.getItem('rankMain') !== null) ?
+			JSON.parse(localStorage.getItem('rankMain')) :
+			0
 	)
 	const [year, setyear] = useState(
-		(localStorage.getItem('year')!==null) ?
-		JSON.parse(localStorage.getItem('year')) :
-		0
+		(localStorage.getItem('year') !== null) ?
+			JSON.parse(localStorage.getItem('year')) :
+			0
 	)
 	const [round, setround] = useState(
-		(localStorage.getItem('round')!==null) ?
-		localStorage.getItem('round') :
-		0
+		(localStorage.getItem('round') !== null) ?
+			localStorage.getItem('round') :
+			0
 	)
 	const [choice, setchoice] = useState(
-		(localStorage.getItem('choice')!==null) ?
-		localStorage.getItem('choice') :
-		""
+		(localStorage.getItem('choice') !== null) ?
+			localStorage.getItem('choice') :
+			""
 	)
 	const [testChoices, settestChoices] = useState([])
 	const [saveTestChoices, setsaveTestChoices] = useState(
-		(localStorage.getItem('saveTestChoices')!==null) ?
-		JSON.parse(localStorage.getItem('saveTestChoices')) :
-		[]
+		(localStorage.getItem('saveTestChoices') !== null) ?
+			JSON.parse(localStorage.getItem('saveTestChoices')) :
+			[]
 	)
 
 	const syncInitialChoiceOrder = () => {
 		const reorderTestChoice = []
-		saveTestChoices.forEach((testChoice,index) => {
-			const choiceIndex = testChoices.findIndex(obj => obj.id===testChoice.id)
-			if(choiceIndex!==-1) reorderTestChoice.push(testChoices[choiceIndex])
+		saveTestChoices.forEach((testChoice, index) => {
+			const choiceIndex = testChoices.findIndex(obj => obj.id === testChoice.id)
+			if (choiceIndex !== -1) reorderTestChoice.push(testChoices[choiceIndex])
 		})
 		settestChoices(reorderTestChoice)
 	}
@@ -137,13 +138,13 @@ const TestChoices = ({
 			localStorage.setItem("year", JSON.stringify(year))
 			localStorage.setItem("round", round)
 			localStorage.setItem("choice", choice)
-			if (JSON.parse(localStorage.getItem('autoOpenedForm'))!==true) {
+			if (JSON.parse(localStorage.getItem('autoOpenedForm')) !== true) {
 				setdisableAdd(false)
 				setchoiceFormOpen(true)
 				localStorage.setItem('autoOpenedForm', JSON.stringify(true))
 			}
 			setdataSubmit(false)
-			
+
 		}
 	}, [dataSubmit])
 
@@ -178,7 +179,7 @@ const TestChoices = ({
 
 	useEffect(() => {
 		if (testChoiceObj.data.opening_rank) {
-			if (!testChoices.find((obj) => (obj!==null) && (obj.id===testChoiceObj.data.id))) {
+			if (!testChoices.find((obj) => (obj !== null) && (obj.id === testChoiceObj.data.id))) {
 				const choice = {
 					institute_id: testChoiceObj.data.institute_detail.id,
 					institute_type: testChoiceObj.data.institute_detail.type,
@@ -220,7 +221,7 @@ const TestChoices = ({
 	}, [testChoiceObj])
 
 	useEffect(() => {
-		if((!syncOrder) && testChoices.length===saveTestChoices.length) {
+		if ((!syncOrder) && testChoices.length === saveTestChoices.length) {
 			syncInitialChoiceOrder()
 			setsyncOrder(true)
 		}
@@ -302,6 +303,12 @@ const TestChoices = ({
 
 	return (
 		<div className='list-container'>
+			<Helmet>
+				<title>Rank Matrix | Test your Choices</title>
+				<meta name="keywords" content="Choice filling, Reorder choices, Preferred choices, 
+					Rank-based choice order, College and branch selection, Smart choice order generator, 
+					Best choice sequence" />
+			</Helmet>
 			<Header heading='Test your JoSAA Choices' />
 			<FormDialog
 				openForm={openForm}
@@ -329,7 +336,7 @@ const TestChoices = ({
 				setdataSubmit={setchoiceDataSubmit}
 				fetchinstituteTypeDetail={choiceFormOpen}
 			/>
-			<ConfirmationDialog 
+			<ConfirmationDialog
 				open={openConfirmPrompt}
 				onClose={() => setopenConfirmPrompt(false)}
 				title={removeConfirmationPrompt.title}
@@ -359,30 +366,30 @@ const TestChoices = ({
 						)}
 					</div>
 					<div>
-						<IconButton 
-						disabled={showRemoveButton}
-						className="choice-button icon" 
-						onClick={editDetailButtonClick}
-						>
-							<img src={showRemoveButton ? editIconDisabled : editIcon}/>
-						</IconButton>
-					{testChoices.length !== 0 && (
-						<CSVLink
-							disabled={showRemoveButton}
-							data={testChoices.filter(testChoice => testChoice!==null)}
-							headers={download_headers}
-							filename={fileName}
-							target='_blank'
-							onClick={downloadClick}
-						>
-							<IconButton 
+						<IconButton
 							disabled={showRemoveButton}
 							className="choice-button icon"
+							onClick={editDetailButtonClick}
+						>
+							<img src={showRemoveButton ? editIconDisabled : editIcon} />
+						</IconButton>
+						{testChoices.length !== 0 && (
+							<CSVLink
+								disabled={showRemoveButton}
+								data={testChoices.filter(testChoice => testChoice !== null)}
+								headers={download_headers}
+								filename={fileName}
+								target='_blank'
+								onClick={downloadClick}
 							>
-								<img src={showRemoveButton ? downloadIconDisabled : downloadIcon}/>
-							</IconButton>
-						</CSVLink>
-					)}
+								<IconButton
+									disabled={showRemoveButton}
+									className="choice-button icon"
+								>
+									<img src={showRemoveButton ? downloadIconDisabled : downloadIcon} />
+								</IconButton>
+							</CSVLink>
+						)}
 					</div>
 				</div>
 				{testChoiceObj.loading ? (
@@ -395,7 +402,7 @@ const TestChoices = ({
 									<TableHead>
 										<TableRow>
 											<TableCell className='noto-sans tablehead-checkbox-column' align="center">
-												<Checkbox 
+												<Checkbox
 													checked={selectAll}
 													onChange={selectAllCheckboxOnChange}
 													disabled={!showAllCheckboxes}
@@ -407,7 +414,7 @@ const TestChoices = ({
 											))}
 										</TableRow>
 									</TableHead>
-									<ChoiceTableBody 
+									<ChoiceTableBody
 										testChoices={testChoices}
 										selectAll={selectAll}
 										showAllCheckboxes={showAllCheckboxes}
