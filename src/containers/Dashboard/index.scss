@@ -43,6 +43,9 @@
         .recent-updates {
             max-height: 13rem;
             overflow-y: auto;
+            @media(min-width:1001px)and(max-width: 1385px){
+                padding-left: 1.5rem;
+            }
             @media(max-width:600px){
                 max-height: 7rem;
                 overflow-y: auto;
@@ -124,6 +127,9 @@
         overflow-y: auto;
         margin-bottom: 0.2rem;
         max-height: 14rem;
+        @media(min-width:1001px)and(max-width: 1385px){
+            padding-left: 1.5rem;
+        }
 	}
 	.website{
         color:#3245EB;
