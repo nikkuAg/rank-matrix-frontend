@@ -66,28 +66,30 @@ const AllBranchAllCollegePrediction = ({
 	}, [predictionType])
 
 	useEffect(() => {
-		const payload = {
-			instituteType,
-			category,
-			seatPool,
-			quota,
-			option,
-			year,
-			round,
-			rank,
-			cutoff,
+		if (dataSubmit) {
+			const payload = {
+				instituteType,
+				category,
+				seatPool,
+				quota,
+				option,
+				year,
+				round,
+				rank,
+				cutoff,
+			}
+			predictionComponent(payload)
+			localStorage.setItem("instituteType", instituteType)
+			localStorage.setItem("category", category)
+			localStorage.setItem("cutoff", cutoff)
+			localStorage.setItem("seatPool", seatPool)
+			localStorage.setItem("quota", quota)
+			localStorage.setItem("rank", rank)
+			localStorage.setItem("option", option)
+			localStorage.setItem("year", year)
+			localStorage.setItem("round", round)
+			setdataSubmit(false)
 		}
-		predictionComponent(payload)
-		localStorage.setItem("instituteType", instituteType)
-		localStorage.setItem("category", category)
-		localStorage.setItem("cutoff", cutoff)
-		localStorage.setItem("seatPool", seatPool)
-		localStorage.setItem("quota", quota)
-		localStorage.setItem("rank", rank)
-		localStorage.setItem("option", option)
-		localStorage.setItem("year", year)
-		localStorage.setItem("round", round)
-		setdataSubmit(false)
 	}, [dataSubmit, year, round])
 
 	const editDetailButtonClick = () => {
