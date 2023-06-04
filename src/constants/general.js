@@ -140,7 +140,7 @@ export const LightRankTooltip = styled(({ className, ...props }) => (
 	},
 }));
 
-export const apiURL = "https://rankmatrix.iitr.ac.in";
+export const apiURL = "https://localhost:8000";
 
 export const toastDuration = 2000;
 
