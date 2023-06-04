@@ -18,7 +18,7 @@ import { Header } from "../../../components/header";
 import { SearchBar } from "../../../components/search";
 import { CustomPagination } from "../../../components/pagination";
 import "../../list.scss";
-import { PdfsList } from "./constants";
+import { PdfsList } from "../../../constants/dashboard";
 import { Helmet } from "react-helmet";
 
 export const ImportantPdfs = () => {

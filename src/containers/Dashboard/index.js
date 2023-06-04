@@ -15,7 +15,7 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Box } from "@mui/system";
-import { featuresCard, impDates, websites } from "./constants";
+import { featuresCard, impDates, websites } from "../../constants/dashboard";
 import { fetchRecentUpdates } from "../../store/actions/dashboard";
 import { connect } from "react-redux";
 import { makeSelectRecentUpdate } from "../../store/selectors/dashboard";

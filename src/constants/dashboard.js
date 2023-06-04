@@ -1,9 +1,9 @@
-import colleges from "../../images/colleges.svg";
-import prediction from "../../images/prediction.svg";
-import rank from "../../images/ranks.svg";
-import seats from "../../images/seats.svg";
-import testChoices from "../../images/testChoices.svg";
-import pdf from "../../images/pdf.svg";
+import colleges from "../images/colleges.svg";
+import prediction from "../images/prediction.svg";
+import rank from "../images/ranks.svg";
+import seats from "../images/seats.svg";
+import testChoices from "../images/testChoices.svg";
+import pdf from "../images/pdf.svg";
 
 export const featuresCard = [
 	{
@@ -126,3 +126,5 @@ export const websites = [
 		val: "https://jeeadv.ac.in/"
 	}
 ]
+
+export const PdfsList = []
