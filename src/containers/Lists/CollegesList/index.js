@@ -70,8 +70,12 @@ const CollegeList = ({
 			orderField: orderBy,
 			ordering: order,
 			type_list: institute,
-			...filterValues
 		};
+		for (let x in filterValues) {
+			if (filterValues[x]) {
+				payload[x] = filterValues[x];
+			}
+		}
 		instituteListComponent(payload);
 	}, [institute, page, searchWord, orderBy, order, filterValues]);
 
