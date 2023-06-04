@@ -76,7 +76,7 @@ export const ChoiceRow = ({
                     checked={choice.selected || selectAll}
                     onChange={(event) => checkboxOnChange(choice.id, event)}
                     disabled={!(choice.showCheckbox || showAllCheckboxes)}
-                    className='active-checkbox'
+                    className={(choice.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
                 />
             </TableCell>
             <TableCell className='noto-sans'>
