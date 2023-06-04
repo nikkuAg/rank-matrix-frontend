@@ -8,10 +8,14 @@ export const getRequest = (requestURL,payload) => {
 		params:payload,
 		paramsSerializer:params => {
 				return qs.stringify(params,{arrayFormat:'repeat'})
-			  }
-	}).then((resposne) => resposne);
-};
+			  },
+		 headers: {
+                                'Access-Control-Allow-Credentials': true,
+                        }
 
+
+	}).then((resposne) => resposne);
+}
 export function getErrorBody(error) {
 	let response = {};
 	try {

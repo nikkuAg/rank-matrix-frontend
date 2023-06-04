@@ -41,13 +41,13 @@
             padding-right: 0.2rem;
         }
         .recent-updates {
-            max-height: 13rem;
+            height: 13rem;
             overflow-y: auto;
             @media(min-width:1001px)and(max-width: 1385px){
                 padding-left: 1.5rem;
             }
             @media(max-width:600px){
-                max-height: 7rem;
+                height: 7rem;
                 overflow-y: auto;
             }
         }
