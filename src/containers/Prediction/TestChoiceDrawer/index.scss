@@ -46,7 +46,7 @@
                 }
             }
             .dragIcon{
-                color: #6096fc;
+                color: #DADADA;
                 font-size: 2rem;
                 margin-right: 0.5rem;
             }
@@ -56,6 +56,17 @@
             .MuiChip-root{
                 background-color: rgba(219, 223, 229, 0.2);
                 margin-right:1rem;
+            }
+        }
+        .choiceElement.dragging{
+            .dragIcon{
+                color: #6096fc;
+                ;
+            }
+        }
+        .choiceElement:hover{
+            .dragIcon{
+                color: #CECECE;
             }
         }
     }

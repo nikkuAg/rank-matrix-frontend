@@ -152,7 +152,7 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
                                                 {(provided, snapshot) => {
                                                     return (
                                                         <div
-                                                            className="choiceElement"
+                                                            className={snapshot.isDragging ? `dragging choiceElement` : ` choiceElement`}
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}>
