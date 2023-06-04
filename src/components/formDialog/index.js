@@ -158,7 +158,7 @@ const FormDialog = ({
 	}, [year])
 
 	useEffect(() => {
-		if (setInstituteId) {
+		if (setInstituteId && instituteId != 0) {
 			const payload = {
 				instituteId,
 			}
