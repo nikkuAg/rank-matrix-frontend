@@ -13,7 +13,6 @@ import {
 } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import FormDialog from "../../components/formDialog"
 import { ConfirmationDialog } from "../../components/confirmationDialog"
 import { Header } from "../../components/header"
@@ -28,6 +27,7 @@ import { removeConfirmationPrompt } from "../../constants/general"
 import { fetchTestChoice } from "../../store/actions/prediction"
 import { showToast } from "../../store/actions/toast"
 import { makeSelectTestChoice } from "../../store/selectors/prediction"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { CSVLink } from "react-csv"
 import "../list.scss"
 import downloadIcon from "../../images/downloadIcon.svg"
@@ -201,7 +201,7 @@ const TestChoices = ({
 				const insertIndex = saveTestChoices.findIndex(
 					testChoice => (testChoice !== null && testChoice.id === testChoiceObj.data.id)
 				)
-				testChoices[insertIndex] = choice
+				// testChoices[insertIndex] = choice
 				settestChoices((prevChoice) => [...prevChoice, choice])
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {

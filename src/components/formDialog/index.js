@@ -176,6 +176,7 @@ const FormDialog = ({
 				institute_type: instituteType,
 			}
 			if (!setInstituteId) {
+				setquota("")
 				quotaListComponent(payload)
 			}
 			if (setInstituteId) {

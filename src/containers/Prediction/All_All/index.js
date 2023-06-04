@@ -105,12 +105,13 @@ const AllBranchAllCollegePrediction = ({
 		}
 		if (modifiedarray.filter(obj => obj.id === `${institute_id}_${branch_id}_${quota}_${category}_${seatPool}`).length === 0) {
 			modifiedarray.push(modifiedObject);
-			setsaveTestChoices(saveTestChoices);
-			localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
-
+			console.log("saved test choices", modifiedarray)
+			setsaveTestChoices(modifiedarray);
+			localStorage.setItem('saveTestChoices', JSON.stringify(modifiedarray))
 		}
 		handleOpenDrawer()
 	}
+
 
 
 	const toolTip = (color) => {
@@ -275,7 +276,7 @@ const AllBranchAllCollegePrediction = ({
 															className={`${predictionObj.data.round_data[
 																`${branch.code}-${institute.code}`
 															]?.color
-																} rank`}
+																} rank pointer`}
 															onClick={() => {
 																handleAddChoice(institute.id, branch.id);
 															}}

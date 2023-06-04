@@ -89,6 +89,7 @@ const AllBranchOneCollegePrediction = ({
 		})
 		setsaveTestChoices(modifiedarray)
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+		handleOpenDrawer();
 	}
 
 
@@ -175,10 +176,10 @@ const AllBranchOneCollegePrediction = ({
 									<TableBody>
 										{predictionObj.data.branch.map((branch) => (
 											<TableRow key={branch.id} className='prediction'>
-												<TableCell className='branch-cell'>
-													<IconButton className="addIconButton" onClick={() => {
-														handleAddChoice(branch.id);
-													}}>
+												<TableCell className='branch-cell' onClick={() => {
+													handleAddChoice(branch.id);
+												}}>
+													<IconButton className="addIconButton" >
 														<AddIcon className="addIcon" />
 													</IconButton>
 													{branch.branch_code}

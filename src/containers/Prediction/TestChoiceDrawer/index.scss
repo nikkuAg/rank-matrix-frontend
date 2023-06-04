@@ -1,11 +1,20 @@
 .choicesDrawer{
+    position: relative;
+    .closeIconButton{
+    position: absolute;
+    top:0;
+    right:0;
+}
+.choicesDrawerBox{
     max-width: 30rem;
     min-width: 20rem;
     background-color:  #FAFBFE;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem 0rem;
+    margin: 3rem 0rem;
+    position: relative;
+   
     .spotlight{
         align-items: center;
         justify-content: center;
@@ -51,4 +60,5 @@
         }
     }
 
+}
 }

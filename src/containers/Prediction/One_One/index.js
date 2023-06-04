@@ -90,6 +90,7 @@ const OneBranchOneInstitutesPrediction = ({
 		})
 		setsaveTestChoices(modifiedarray)
 		localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
+		handleOpenDrawer();
 	}
 
 

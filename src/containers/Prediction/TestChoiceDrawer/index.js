@@ -11,10 +11,26 @@ import "./index.scss"
 
 const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastComponent, rank, rankMain, cutoff, year, round, choice, open, setOpen, setsaveTestChoices, saveTestChoices }) => {
     const [testChoices, settestChoices] = useState([])
-    const [isEditing, setisEditing] = useState(false)
     const handleClose = () => {
         setOpen(false);
     }
+    const syncInitialChoiceOrder = () => {
+        console.log("called sync");
+        console.log(saveTestChoices);
+        console.log(testChoices)
+        const reorderTestChoice = []
+        saveTestChoices.forEach((testChoice, index) => {
+            const choiceIndex = testChoices.findIndex(obj => obj.id === testChoice.id)
+            if (choiceIndex !== -1) reorderTestChoice.push(testChoices[choiceIndex])
+        })
+        console.log("reorderTestChoice", reorderTestChoice)
+        settestChoices(reorderTestChoice)
+    }
+    useEffect(() => {
+        if (testChoices.length === saveTestChoices.length) {
+            syncInitialChoiceOrder()
+        }
+    }, [saveTestChoices.length])
     const onChoiceDragEnd = (result) => {
         if (result.destination.index !== result.source.index) {
             let removeIndex = result.source.index
@@ -24,9 +40,9 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
 
             testChoices.splice(insertIndex, 0, testChoices[result.source.index])
             const updateSaveChoices = []
-
+            console.log(testChoices, "test Choices")
             settestChoices(testChoices.filter((testChoice, index) => {
-                if (index === removeIndex) return false
+                if (index === removeIndex || testChoice == null) return false
 
                 const saveChoice = {
                     institute_id: testChoice.institute_id,
@@ -40,11 +56,14 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
                 return true
             }))
             setsaveTestChoices(updateSaveChoices)
+            localStorage.setItem('saveTestChoices', JSON.stringify(updateSaveChoices))
+
         }
     }
+
     useEffect(() => {
-        const emptyChoices = Array(saveTestChoices.length).fill(null)
-        settestChoices(emptyChoices)
+        console.log("whyyyyyyyyyyy");
+        settestChoices([]);
         saveTestChoices.forEach((element) => {
             const payload = {
                 instituteId: element.institute_id,
@@ -61,68 +80,68 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
             }
             testChoiceComponent(payload)
         })
-    }, [year, round, open, saveTestChoices])
-    useEffect(() => {
-        localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
-    }, [saveTestChoices])
-
+    }, [year, round, saveTestChoices.length])
     useEffect(() => {
         if (testChoiceObj.data.opening_rank) {
             console.log("called ")
-            if (!testChoices.find((obj) => (obj !== null) && (obj.id === testChoiceObj.data.id))) {
-                const choice = {
+            console.log(saveTestChoices, testChoices)
+            const choice = {
+                institute_id: testChoiceObj.data.institute_detail.id,
+                institute_type: testChoiceObj.data.institute_detail.type,
+                institute_name: testChoiceObj.data.institute_detail.name,
+                branch_id: testChoiceObj.data.branch_detail.id,
+                branch_name: testChoiceObj.data.branch_detail.name,
+                quota: testChoiceObj.data.quota,
+                seat_pool: testChoiceObj.data.seat_pool,
+                category: testChoiceObj.data.category,
+                opening_rank: testChoiceObj.data.opening_rank || "-",
+                closing_rank: testChoiceObj.data.closing_rank || "-",
+                color: testChoiceObj.data.color,
+                id: testChoiceObj.data.id,
+                selected: false,
+                showCheckbox: false
+            }
+            settestChoices((prevChoice) => [...prevChoice, choice])
+            if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
+                const saveChoice = {
                     institute_id: testChoiceObj.data.institute_detail.id,
-                    institute_type: testChoiceObj.data.institute_detail.type,
-                    institute_name: testChoiceObj.data.institute_detail.name,
                     branch_id: testChoiceObj.data.branch_detail.id,
-                    branch_name: testChoiceObj.data.branch_detail.name,
                     quota: testChoiceObj.data.quota,
                     seat_pool: testChoiceObj.data.seat_pool,
                     category: testChoiceObj.data.category,
-                    opening_rank: testChoiceObj.data.opening_rank || "-",
-                    closing_rank: testChoiceObj.data.closing_rank || "-",
-                    color: testChoiceObj.data.color,
                     id: testChoiceObj.data.id,
-                    selected: false,
-                    showCheckbox: false
                 }
-                const insertIndex = saveTestChoices.findIndex(
-                    testChoice => (testChoice !== null && testChoice.id === testChoiceObj.data.id)
-                )
-                testChoices[insertIndex] = choice
-                if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
-                    const saveChoice = {
-                        institute_id: testChoiceObj.data.institute_detail.id,
-                        branch_id: testChoiceObj.data.branch_detail.id,
-                        quota: testChoiceObj.data.quota,
-                        seat_pool: testChoiceObj.data.seat_pool,
-                        category: testChoiceObj.data.category,
-                        id: testChoiceObj.data.id,
-                    }
-                    setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
-                }
-            } else {
-
+                setsaveTestChoices((prevChoice) => [...prevChoice, saveChoice])
             }
+            // syncInitialChoiceOrder()
         }
-    }, [testChoiceObj, saveTestChoices])
-    const handleRemoveChoice = (obj) => {
-        let modifiedarray = saveTestChoices;
 
-        const findIndex = modifiedarray.findIndex(a => a.id === obj.id)
+    }, [testChoiceObj])
+    // const handleRemoveChoice = (obj) => {
+    //     let modifiedarray = saveTestChoices;
 
-        findIndex !== -1 && modifiedarray.splice(findIndex, 1);
-        setsaveTestChoices(modifiedarray);
-        localStorage.setItem('saveTestChoices', JSON.stringify(saveTestChoices))
-    }
+    //     const findIndex = modifiedarray.findIndex(a => a.id === obj.id)
+
+    //     findIndex !== -1 && modifiedarray.splice(findIndex, 1);
+    //     setsaveTestChoices(modifiedarray);
+    //     localStorage.setItem('saveTestChoices', JSON.stringify(modifiedarray))
+    // }
+    // useEffect(() => {
+    //     console.log("sssschanged")
+    //     console.log(saveTestChoices)
+    // }, [saveTestChoices.length, saveTestChoices])
 
     return (
         <Drawer
             anchor="right"
             open={open}
             onClose={handleClose}
+            className="choicesDrawer"
         >
-            <Box className="choicesDrawer">
+            <IconButton className="closeIconButton" onClick={handleClose}>
+                <CloseIcon className="closeIcon" />
+            </IconButton>
+            <Box className="choicesDrawerBox">
                 <Box className="spotlight"><Typography>JoSAA List</Typography></Box>
                 {testChoices.length > 0 ? (
                     <DragDropContext

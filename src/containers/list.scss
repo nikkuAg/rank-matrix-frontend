@@ -201,6 +201,7 @@
 				left: 0;
 				z-index: 1;
 				background-color: white;
+				cursor: pointer;
 			}
 		}
 		.prediction {
@@ -208,6 +209,10 @@
 				font-size: 1rem;
 				font-weight: 500;
 				position: relative;
+				&.pointer{
+					cursor: pointer;
+				}
+				
 				@media (max-width: 500px) {
 					font-size: 0.8rem;
 				}
@@ -225,6 +230,7 @@
 				background-color: #f95656;
 			}
 			.addIconButton{
+				visibility: hidden;
 				position: absolute;
 				top:0;
 				right: 0;
@@ -233,13 +239,16 @@
 					font-size: medium;
 				}
 				.addIcon.white{
-					visibility: hidden;
 					color: #ffffff;
 				}
 				
 				
 			}
+			
 			.rank:hover .addIcon.white{
+				visibility: visible;
+			}
+			.branch-cell:hover .addIcon{
 				visibility: visible;
 			}
 			.MuiTableCell-root:not(.branch-cell) {
