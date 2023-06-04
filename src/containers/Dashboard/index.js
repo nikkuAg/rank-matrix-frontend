@@ -28,18 +28,18 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
     recentUpdateComponent();
   }, []);
 
-  const [Month, setMonth] = useState();
-  const [month2, setMonth2] = useState();
+  const [change1, setChange1] = useState([]);
+  const [change2, setChange2] = useState([]);
   const [selectdate, setSelectdate] = useState(null);
   const [selectdate2, setSelectdate2] = useState(null);
   const [show, setShow] = useState(true);
 
-  function handleMonth(newMonth) {
-    setMonth(newMonth);
-  }
-  function handleMonth2(newMonth) {
-    setMonth2(newMonth);
-  }
+  // function handleChange(newChange) {
+  //   setChange1(newChange);
+  // }
+  // function handleChange2(newChange) {
+  //   setMonth2(newChange);
+  // }
   function handleSelect(newDate) {
     setSelectdate(newDate);
   }
@@ -48,7 +48,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
 
   }
   function showCalendar() {
-    if (show == true) {
+    if (show === true) {
       setShow(false);
     }
     else {
@@ -124,16 +124,16 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   {impDates.filter((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
-                    if (selectdate2 == null) {
+                    if (selectdate2 === null) {
                       return dates;
                     }
-                    else if (selectdate2.getDate() == startobj.getDate()) {
+                    else if (selectdate2.getDate() === startobj.getDate()) {
                       return dates;
                     }
                   }).map((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
-                    if (startobj.getMonth() + 1 === month2) {
+                    if (startobj.getMonth() + 1 === change2[0]) {
                       return (
                         <div className="timeline">
                           <div className="timeline-date">
@@ -157,7 +157,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
             </Grid>
             <Grid item xs={1} sm={3} md={5}>
               <Box className='dates'>
-                {(recentUpdateObject.data.length == 0) &&
+                {(recentUpdateObject.data.length === 0) &&
                   (<Button
                     onClick={showCalendar}
                     variant="contained"
@@ -166,7 +166,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   >Calendar
                   </Button>)
                 }
-                {show && <Events change={handleMonth2} dateChange={handleSelect2} />}
+                {show && <Events change={setChange2} dateChange={handleSelect2} />}
               </Box>
             </Grid>
           </Grid>
@@ -183,19 +183,19 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card>
                 <CardActionArea>
-                  <Link to={card.link}>
+                  <Link to={card.link} className="cardLink">
                     <CardMedia
                       component='img'
                       alt={card.title}
                       image={card.image}
                     />
+                    <CardContent>
+                      <Typography gutterBottom variant='h5' component='div' align="center">
+                        {card.title}
+                      </Typography>
+                    </CardContent>
                   </Link>
                 </CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='div' align="center">
-                    {card.title}
-                  </Typography>
-                </CardContent>
               </Card>
             </Grid>
           ))}
@@ -216,16 +216,16 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 {impDates.filter((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
-                  if (selectdate == null) {
+                  if (selectdate === null) {
                     return dates;
                   }
-                  else if (selectdate.getDate() == startobj.getDate()) {
+                  else if (selectdate.getDate() === startobj.getDate()) {
                     return dates;
                   }
                 }).map((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
-                  if (startobj.getMonth() + 1 === Month) {
+                  if (startobj.getMonth() + 1 === change1[0]) {
                     return (
                       <div className="timeline">
                         <div className="timeline-date">
@@ -249,7 +249,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
           </Grid>
           <Grid item xs={1} sm={3} md={5}>
             <Box className='dates'>
-              {(recentUpdateObject.data.length == 0) &&
+              {(recentUpdateObject.data.length === 0) &&
                 (<Button
                   onClick={showCalendar}
                   variant="contained"
@@ -258,7 +258,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 >Calendar
                 </Button>)
               }
-              {show && <Events change={handleMonth} dateChange={handleSelect} />}
+              {show && <Events change={setChange1} dateChange={handleSelect} />}
             </Box>
           </Grid>
         </Grid>

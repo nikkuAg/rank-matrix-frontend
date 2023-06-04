@@ -5,7 +5,7 @@ import moment from 'moment'
 import "./index.scss";
 
 export default function Events({ change, dateChange }) {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState([]);
   const [date, setDate] = useState(null);
 
   const handleDate = (e) => {
@@ -25,7 +25,7 @@ export default function Events({ change, dateChange }) {
       onChange={handleDate}
       showNeighboringMonth={false}
       tileClassName={({ date, view }) => {
-        setValue(date.getMonth() + 1)
+        setValue([date.getMonth() + 1,date.getFullYear()])
         change(value);
         if (impDates.find(x => x.startDate === moment(date).format("YYYY-MM-DD"))) {
           return 'highlight'
