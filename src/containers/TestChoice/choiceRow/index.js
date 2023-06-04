@@ -1,7 +1,7 @@
 import {
-	Checkbox,
-	TableCell,
-	TableRow,
+    Checkbox,
+    TableCell,
+    TableRow,
 } from "@mui/material"
 import React from "react"
 
@@ -18,41 +18,41 @@ export const ChoiceRow = ({
 }) => {
 
     const checkboxOnMouseEnter = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=true
-				return testChoice
-			})
-		)
-	}
+        settestChoices(
+            testChoices.map(testChoice => {
+                if (testChoice !== null && testChoice.id === id) testChoice.showCheckbox = true
+                return testChoice
+            })
+        )
+    }
 
-	const checkboxOnMouseLeave = (id) => {
-		settestChoices(
-			testChoices.map(testChoice => {
-				if(testChoice!==null && testChoice.id===id) testChoice.showCheckbox=false
-				return testChoice
-			})
-		)
-	}
+    const checkboxOnMouseLeave = (id) => {
+        settestChoices(
+            testChoices.map(testChoice => {
+                if (testChoice !== null && testChoice.id === id) testChoice.showCheckbox = false
+                return testChoice
+            })
+        )
+    }
 
-	const checkboxOnChange = (id, event=null) => {
-		let activateAllCheckboxes = false
-		let selectAllCheckboxes = true
-		settestChoices(
-			testChoices.map(testChoice => {
-				if (testChoice.id===id) {
-					testChoice.selected = event===null ? !testChoice.selected : event.target.checked
-				}else {
-					testChoice.selected = selectAll ? true : testChoice.selected
-				}
-				activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
-				selectAllCheckboxes = selectAllCheckboxes && testChoice.selected
-				return testChoice
-			})
-		)
-		setselectAll(selectAllCheckboxes)
-		setshowAllCheckboxes(activateAllCheckboxes)
-	}
+    const checkboxOnChange = (id, event = null) => {
+        let activateAllCheckboxes = false
+        let selectAllCheckboxes = true
+        settestChoices(
+            testChoices.map(testChoice => {
+                if (testChoice.id === id) {
+                    testChoice.selected = event === null ? !testChoice.selected : event.target.checked
+                } else {
+                    testChoice.selected = selectAll ? true : testChoice.selected
+                }
+                activateAllCheckboxes = activateAllCheckboxes || testChoice.selected
+                selectAllCheckboxes = selectAllCheckboxes && testChoice.selected
+                return testChoice
+            })
+        )
+        setselectAll(selectAllCheckboxes)
+        setshowAllCheckboxes(activateAllCheckboxes)
+    }
 
     return (
         <TableRow
@@ -64,19 +64,19 @@ export const ChoiceRow = ({
             onMouseEnter={() => checkboxOnMouseEnter(choice.id)}
             onMouseLeave={() => checkboxOnMouseLeave(choice.id)}
             onClick={() => checkboxOnChange(choice.id)}
-            ref={provided.innerRef}	
+            ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
         >
-            <TableCell 
-            className='noto-sans checkbox-column'
-            align="center"
+            <TableCell
+                className='noto-sans checkbox-column'
+                align="center"
             >
-                <Checkbox 
+                <Checkbox
                     checked={choice.selected || selectAll}
                     onChange={(event) => checkboxOnChange(choice.id, event)}
                     disabled={!(choice.showCheckbox || showAllCheckboxes)}
-                    className={(choice.showCheckbox || showAllCheckboxes) ? 'active-checkbox' : 'inactive-checkbox'}
+                    className='active-checkbox'
                 />
             </TableCell>
             <TableCell className='noto-sans'>

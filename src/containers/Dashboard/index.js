@@ -277,7 +277,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 >
                   {link.name}
                 </Typography>
-                <a className="website" href={link.val} >{link.val}</a>
+                <a className="website" target="_blank" href={link.val} >{link.val}</a>
               </div>
             ))}
           </ul>

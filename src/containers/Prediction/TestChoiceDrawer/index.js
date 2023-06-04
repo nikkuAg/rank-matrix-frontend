@@ -15,15 +15,11 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
         setOpen(false);
     }
     const syncInitialChoiceOrder = () => {
-        console.log("called sync");
-        console.log(saveTestChoices);
-        console.log(testChoices)
         const reorderTestChoice = []
         saveTestChoices.forEach((testChoice, index) => {
             const choiceIndex = testChoices.findIndex(obj => obj.id === testChoice.id)
             if (choiceIndex !== -1) reorderTestChoice.push(testChoices[choiceIndex])
         })
-        console.log("reorderTestChoice", reorderTestChoice)
         settestChoices(reorderTestChoice)
     }
     useEffect(() => {
@@ -40,7 +36,6 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
 
             testChoices.splice(insertIndex, 0, testChoices[result.source.index])
             const updateSaveChoices = []
-            console.log(testChoices, "test Choices")
             settestChoices(testChoices.filter((testChoice, index) => {
                 if (index === removeIndex || testChoice == null) return false
 
@@ -62,7 +57,6 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
     }
 
     useEffect(() => {
-        console.log("whyyyyyyyyyyy");
         settestChoices([]);
         saveTestChoices.forEach((element) => {
             const payload = {
@@ -83,8 +77,6 @@ const TestChoiceDrawer = ({ testChoiceObj, testChoiceComponent, showToastCompone
     }, [year, round, saveTestChoices.length])
     useEffect(() => {
         if (testChoiceObj.data.opening_rank) {
-            console.log("called ")
-            console.log(saveTestChoices, testChoices)
             const choice = {
                 institute_id: testChoiceObj.data.institute_detail.id,
                 institute_type: testChoiceObj.data.institute_detail.type,
