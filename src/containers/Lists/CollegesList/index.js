@@ -261,7 +261,7 @@ const CollegeList = ({
 																	{nirfRankNumber === 0
 																		? row.nirf_1 === 10000
 																			? "-"
-																			: row.nirf_1 > 250
+																			: row.nirf_1 > 100
 																				? String(row.nirf_1) +
 																				"-" +
 																				String(row.nirf_1 + 49)
