@@ -28,18 +28,14 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
     recentUpdateComponent();
   }, []);
 
-  const [Month, setMonth] = useState();
+  const [Month1, setMonth1] = useState();
   const [month2, setMonth2] = useState();
+  const [year1, setYear1] = useState();
+  const [year2, setYear2] = useState();
   const [selectdate, setSelectdate] = useState(null);
   const [selectdate2, setSelectdate2] = useState(null);
   const [show, setShow] = useState(true);
 
-  function handleMonth(newMonth) {
-    setMonth(newMonth);
-  }
-  function handleMonth2(newMonth) {
-    setMonth2(newMonth);
-  }
   function handleSelect(newDate) {
     setSelectdate(newDate);
   }
@@ -124,20 +120,25 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   {impDates.filter((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
+                    let today=new Date();
                     if (selectdate2 == null) {
-                      return dates;
+                      if((startobj.getMonth() + 1 === Month1) && (startobj.getDate()>=today.getDate())){
+                        return dates;
+                      }
                     }
-                    else if (selectdate2.getDate() == startobj.getDate()) {
+                    else if (selectdate2.getDate() == startobj.getDate() ) {
                       return dates;
                     }
                   }).map((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
-                    if (startobj.getMonth() + 1 === month2) {
+                    if ((startobj.getMonth() + 1 === month2) && (startobj.getFullYear()===year2)) {
                       return (
                         <div className="timeline">
                           <div className="timeline-date">
-                            {startobj.getDate()}
+                            <div>
+                              {startobj.getDate()}
+                            </div>
                           </div>
                           <Typography
                             gutterBottom
@@ -166,7 +167,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   >Calendar
                   </Button>)
                 }
-                {show && <Events change={handleMonth2} dateChange={handleSelect2} />}
+                {show && <Events change={setMonth2} yearChange={setYear2} dateChange={handleSelect2} />}
               </Box>
             </Grid>
           </Grid>
@@ -183,19 +184,19 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card>
                 <CardActionArea>
-                  <Link to={card.link}>
+                  <Link to={card.link} className="cardLink">
                     <CardMedia
                       component='img'
                       alt={card.title}
                       image={card.image}
                     />
-                  </Link>
+                  <CardContent>
+                    <Typography gutterBottom variant='h5' component='div' align="center">
+                      {card.title}
+                    </Typography>
+                  </CardContent>
+                </Link>
                 </CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='div' align="center">
-                    {card.title}
-                  </Typography>
-                </CardContent>
               </Card>
             </Grid>
           ))}
@@ -216,8 +217,11 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 {impDates.filter((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
+                  let today=new Date();
                   if (selectdate == null) {
-                    return dates;
+                    if((startobj.getMonth() + 1 === Month1) && (startobj.getDate()>=today.getDate())){
+                      return dates;
+                    }
                   }
                   else if (selectdate.getDate() == startobj.getDate()) {
                     return dates;
@@ -225,7 +229,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 }).map((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
-                  if (startobj.getMonth() + 1 === Month) {
+                  if ((startobj.getMonth() + 1 === Month1) && (startobj.getFullYear()===year1)) {
                     return (
                       <div className="timeline">
                         <div className="timeline-date">
@@ -258,7 +262,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 >Calendar
                 </Button>)
               }
-              {show && <Events change={handleMonth} dateChange={handleSelect} />}
+              {show && <Events change={setMonth1} yearChange={setYear1} dateChange={handleSelect} />}
             </Box>
           </Grid>
         </Grid>

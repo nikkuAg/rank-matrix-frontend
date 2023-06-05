@@ -4,8 +4,9 @@ import Calendar from 'react-calendar';
 import moment from 'moment'
 import "./index.scss";
 
-export default function Events({ change, dateChange }) {
-  const [value, setValue] = useState();
+export default function Events({ change,yearChange,dateChange }) {
+  const [month, setMonth] = useState();
+  const [year, setYear] = useState();
   const [date, setDate] = useState(null);
 
   const handleDate = (e) => {
@@ -25,8 +26,10 @@ export default function Events({ change, dateChange }) {
       onChange={handleDate}
       showNeighboringMonth={false}
       tileClassName={({ date, view }) => {
-        setValue(date.getMonth() + 1)
-        change(value);
+        setMonth(date.getMonth() + 1)
+        setYear(date.getFullYear())
+        change(month);
+        yearChange(year);
         if (impDates.find(x => x.startDate === moment(date).format("YYYY-MM-DD"))) {
           return 'highlight'
         }

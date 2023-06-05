@@ -79,7 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75em;
+    font-size: 1em;
     font-weight: bold;
   }
   
@@ -138,6 +138,7 @@
   
   .react-calendar__tile--active {
     background: #6096FC;
+    color: #FFFFFF !important;
     border-radius: 50%;
   }
   
@@ -155,6 +156,7 @@
 
 .highlight{
   padding: 3px 6px;
+  color: #6096FC;
   background: rgba(96, 150, 252, 0.15);
   border-radius: 50%;
 }

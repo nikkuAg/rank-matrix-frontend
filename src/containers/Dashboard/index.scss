@@ -177,6 +177,9 @@
                     min-height: 13rem;
                     min-width: 13rem;
                 }
+                .cardLink{
+                    text-decoration: none;
+                }
                 .MuiCardContent-root {
                     padding: 0.5rem;
                     .MuiTypography-root {
@@ -246,7 +249,7 @@
             justify-content: center;
             width: 90%;
         }
-        @media(max-width:1840px)and(min-width:1000px){
+        @media(max-width:1846px)and(min-width:1000px){
             justify-content: space-evenly;
         }
         @media(min-width:2524px){
@@ -263,13 +266,19 @@
         margin-bottom: 0.5rem;
 	}
 	.timeline-date{
-        height: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 1.76rem;
         flex: 0 0 11%;
         border-radius: 50%;
         background-color: #6096FC;
         color:#ffffff;
         text-align: center; 
         margin-right:0.5rem;
+        @media(min-width: 1000px)and(max-width: 1385px){
+            height: 1.6rem;
+        }
 	}
 	
 	.dategrid{
@@ -357,6 +366,9 @@
     .calendarButton{
         width: 16rem;
         justify-content: flex-start;
+        @media(min-width: 1000px)and (max-width:1385px){
+            width:14rem;
+        }
         // color: #000000;
     }
     
