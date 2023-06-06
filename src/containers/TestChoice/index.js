@@ -198,10 +198,6 @@ const TestChoices = ({
 					selected: false,
 					showCheckbox: false
 				}
-				const insertIndex = saveTestChoices.findIndex(
-					testChoice => (testChoice !== null && testChoice.id === testChoiceObj.data.id)
-				)
-				// testChoices[insertIndex] = choice
 				settestChoices((prevChoice) => [...prevChoice, choice])
 				if (!saveTestChoices.find((obj) => obj.id === testChoiceObj.data.id)) {
 					const saveChoice = {
