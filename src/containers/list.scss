@@ -217,17 +217,40 @@
 					font-size: 0.8rem;
 				}
 			}
+			.checkbox-column {
+				padding: 0.75rem;
+				.active-checkbox {
+					padding: 0;
+					color: #6096fc;
+				}
+				.inactive-checkbox {
+					padding: 0;
+					color: transparent;
+				}
+			}
 			.green {
 				background-color: #4bcf6f;
+				.active-checkbox {
+					color: #ffffff;
+				}
 			}
 			.yellow {
 				background-color: #fbbc05;
+				.active-checkbox {
+					color: #ffffff;
+				}
 			}
 			.orange {
 				background-color: #f27844;
+				.active-checkbox {
+					color:#ffffff;
+				}
 			}
 			.red {
 				background-color: #f95656;
+				.active-checkbox {
+					color: #ffffff;
+				}
 			}
 			.addIconButton{
 				visibility: hidden;
@@ -254,17 +277,7 @@
 			.MuiTableCell-root:not(.branch-cell) {
 				border: 1px solid #e1e5f0;
 			}
-			.checkbox-column {
-				padding: 0.75rem;
-				.active-checkbox {
-					padding: 0;
-					color: #ffffff;
-				}
-				.inactive-checkbox {
-					padding: 0;
-					color: transparent;
-				}
-			}
+			
 		}
 		.tablehead-checkbox-column {
 			padding: 1rem 0.75rem 0.5rem;

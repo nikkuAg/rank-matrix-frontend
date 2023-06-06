@@ -54,6 +54,8 @@ const AllBranchAllCollegePrediction = ({
 	const [round, setround] = useState(6)
 	const [openForm, setopenForm] = useState(false)
 	const [dataSubmit, setdataSubmit] = useState(false)
+	const [yearChange, setYearChange] = useState(false);
+	const [roundChange, setRoundChange] = useState(false);
 	const [openDrawer, setOpenDrawer] = useState(false)
 	const [saveTestChoices, setsaveTestChoices] = useState(
 		(localStorage.getItem('saveTestChoices') !== null) ?
@@ -64,9 +66,14 @@ const AllBranchAllCollegePrediction = ({
 	useEffect(() => {
 		setopenForm(true)
 	}, [predictionType])
-
 	useEffect(() => {
-		if (dataSubmit) {
+		setYearChange(true);
+	}, [year])
+	useEffect(() => {
+		setRoundChange(true);
+	}, [round])
+	useEffect(() => {
+		if (dataSubmit || yearChange || roundChange) {
 			const payload = {
 				instituteType,
 				category,
@@ -89,8 +96,10 @@ const AllBranchAllCollegePrediction = ({
 			localStorage.setItem("year", year)
 			localStorage.setItem("round", round)
 			setdataSubmit(false)
+			setYearChange(false);
+			setRoundChange(false)
 		}
-	}, [dataSubmit, year, round])
+	}, [dataSubmit, yearChange, roundChange])
 
 	const editDetailButtonClick = () => {
 		setopenForm(true)
@@ -213,7 +222,7 @@ const AllBranchAllCollegePrediction = ({
 						/>
 						<RoundField
 							form={{ title: "Round", name: "round" }}
-							roud={round}
+							round={round}
 							setround={setround}
 							roundList={roundList}
 						/>
@@ -280,7 +289,11 @@ const AllBranchAllCollegePrediction = ({
 															]?.color
 																} rank pointer`}
 															onClick={() => {
-																handleAddChoice(institute.id, branch.id);
+																if (predictionObj.data.round_data[
+																	`${branch.code}-${institute.code}`
+																]) {
+																	handleAddChoice(institute.id, branch.id);
+																}
 															}}
 														>
 															{predictionObj.data.round_data[

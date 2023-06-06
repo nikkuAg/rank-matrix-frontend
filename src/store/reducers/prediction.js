@@ -116,7 +116,7 @@ const reducer = (state = initialState, action) =>
       case FETCH_TEST_CHOICE_SUCCESS:
         draft.test_choice.loading = false;
         draft.test_choice.error = false;
-        draft.test_choice.data = action.response.data;;
+        draft.test_choice.data = action.response.data;
         break;
       case FETCH_TEST_CHOICE_ERROR:
         draft.test_choice.loading = true;
