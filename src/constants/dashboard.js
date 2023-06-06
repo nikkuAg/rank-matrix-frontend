@@ -119,7 +119,7 @@ export const websites = [
 	},
 	{
 		name: "JEE Mains",
-		val: "https://jeemain.nta.nic.in/about-jeemain-2023/"
+		val: "https://jeemain.nta.nic.in/"
 	},
 	{
 		name: "JEE Advanced",
