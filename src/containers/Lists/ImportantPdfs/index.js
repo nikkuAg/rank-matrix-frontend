@@ -66,7 +66,7 @@ export const ImportantPdfs = () => {
 									</TableRow>
 								</TableHead>
 									<TableBody>
-										<div>{PdfsList.filter((row) => {
+										{PdfsList.filter((row) => {
 											if (searchWord == "") {
 												return row
 											}
@@ -93,7 +93,6 @@ export const ImportantPdfs = () => {
 												</TableCell>
 											</TableRow>
 										))}
-										</div>
 									</TableBody>
 								</>)
 								:

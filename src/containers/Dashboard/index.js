@@ -120,19 +120,19 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                   {impDates.filter((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
-                    let today=new Date();
+                    let today = new Date();
                     if (selectdate2 == null) {
-                      if((startobj.getMonth() + 1 === Month1) && (startobj.getDate()>=today.getDate())){
+                      if ((startobj.getMonth() + 1 === Month1) && (startobj >= today)) {
                         return dates;
                       }
                     }
-                    else if (selectdate2.getDate() == startobj.getDate() ) {
+                    else if (selectdate2.getDate() == startobj.getDate()) {
                       return dates;
                     }
                   }).map((dates, index) => {
                     let start = dates.startDate;
                     let startobj = new Date(start)
-                    if ((startobj.getMonth() + 1 === month2) && (startobj.getFullYear()===year2)) {
+                    if ((startobj.getMonth() + 1 === month2) && (startobj.getFullYear() === year2)) {
                       return (
                         <div className="timeline">
                           <div className="timeline-date">
@@ -190,12 +190,12 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                       alt={card.title}
                       image={card.image}
                     />
-                  <CardContent>
-                    <Typography gutterBottom variant='h5' component='div' align="center">
-                      {card.title}
-                    </Typography>
-                  </CardContent>
-                </Link>
+                    <CardContent>
+                      <Typography gutterBottom variant='h5' component='div' align="center">
+                        {card.title}
+                      </Typography>
+                    </CardContent>
+                  </Link>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -217,9 +217,9 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 {impDates.filter((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
-                  let today=new Date();
+                  let today = new Date();
                   if (selectdate == null) {
-                    if((startobj.getMonth() + 1 === Month1) && (startobj.getDate()>=today.getDate())){
+                    if ((startobj.getMonth() + 1 === Month1) && (startobj >= today)) {
                       return dates;
                     }
                   }
@@ -229,7 +229,7 @@ const Dashboard = ({ recentUpdateComponent, recentUpdateObject }) => {
                 }).map((dates, index) => {
                   let start = dates.startDate;
                   let startobj = new Date(start)
-                  if ((startobj.getMonth() + 1 === Month1) && (startobj.getFullYear()===year1)) {
+                  if ((startobj.getMonth() + 1 === Month1) && (startobj.getFullYear() === year1)) {
                     return (
                       <div className="timeline">
                         <div className="timeline-date">
