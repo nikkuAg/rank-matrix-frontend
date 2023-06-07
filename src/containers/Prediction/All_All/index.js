@@ -116,7 +116,6 @@ const AllBranchAllCollegePrediction = ({
 		}
 		if (modifiedarray.filter(obj => obj.id === `${institute_id}_${branch_id}_${quota}_${category}_${seatPool}`).length === 0) {
 			modifiedarray.push(modifiedObject);
-			console.log("saved test choices", modifiedarray)
 			setsaveTestChoices(modifiedarray);
 			localStorage.setItem('saveTestChoices', JSON.stringify(modifiedarray))
 		}
