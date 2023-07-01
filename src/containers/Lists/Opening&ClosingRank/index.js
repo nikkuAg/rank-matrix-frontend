@@ -86,6 +86,10 @@ const Ranks = ({
 	}, [rankListObj.data])
 
 	useEffect(() => {
+		setPage(1);
+	}, [filterValues])
+
+	useEffect(() => {
 		const payload = {
 			type_list: instituteType,
 			page,

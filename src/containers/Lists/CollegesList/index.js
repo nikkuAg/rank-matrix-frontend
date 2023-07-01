@@ -64,6 +64,11 @@ const CollegeList = ({
 	}, []);
 
 	useEffect(() => {
+		setPage(1);
+	}, [filterValues])
+
+
+	useEffect(() => {
 		const payload = {
 			page,
 			search: searchWord,

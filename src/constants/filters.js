@@ -111,11 +111,12 @@ export const filters = {
             choices: 'SEAT_POOL_CHOICES'
         }
     ],
+
     OPENING_RANK_FILTER: [
         {
             name: 'range',
-            min_keyword: 'opening_rank_gt',
-            max_keyword: 'opening_rank_lt',
+            min_keyword: 'opening_rank__gt',
+            max_keyword: 'opening_rank__lt',
             min: 0,
             max: 50000,
             type: 'number',
@@ -124,8 +125,8 @@ export const filters = {
     CLOSING_RANK_FILTER: [
         {
             name: 'range',
-            min_keyword: 'closing_rank_gt',
-            max_keyword: 'closing_rank_lt',
+            min_keyword: 'closing_rank__gt',
+            max_keyword: 'closing_rank__lt',
             min: 0,
             max: 50000,
             type: 'number'

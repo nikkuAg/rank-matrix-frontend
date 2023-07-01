@@ -64,6 +64,11 @@ const SeatMatrix = ({
 	}, [])
 
 	useEffect(() => {
+		setPage(1);
+	}, [filterValues])
+
+
+	useEffect(() => {
 		let payload = {
 			page,
 			search: searchWord,
