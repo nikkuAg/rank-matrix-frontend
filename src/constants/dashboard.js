@@ -165,6 +165,48 @@ export const impDates = [
 		startDate: "2023-07-26",
 		endDate: null
 	},
+	{
+		id: 22,
+		title: "Registration",
+		startDate: "2023-11-01",
+		endDate: "2023-12-04"
+	},
+	{
+		id: 23,
+		title: "JEE Mains Session-1",
+		startDate: "2024-01-24",
+		endDate: "2024-02-01"
+	},
+	{
+		id: 24,
+		title: " Results JEE Mains Session-1",
+		startDate: "2024-02-12",
+		endDate: null
+	},
+	{
+		id: 25,
+		title: "Online submission of application form (Session-2)",
+		startDate: "2024-02-02",
+		endDate: "2024-03-02"
+	},
+	{
+		id: 26,
+		title: "Last date for successful transaction of Application Fee (Session-2)",
+		startDate: "2024-02-02",
+		endDate: "2024-03-02"
+	},
+	{
+		id: 27,
+		title: "JEE Mains Session-2",
+		startDate: "2024-04-01",
+		endDate: "2024-04-15"
+	},
+	{
+		id: 28,
+		title: " Results JEE Mains Session-1",
+		startDate: "2024-04-25",
+		endDate: null
+	},
 ];
 
 export const websites = [
@@ -199,12 +241,12 @@ export const PdfsList = [
 	},
 	{
 		id: 3,
-		title: "Business Rule for JoSAA 2023",
-		link: "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2023/06/2023060749.pdf",
+		title: "Information bulletin for JEE Mains 2024",
+		link: "https://jeemain.nta.ac.in/images/information-bulletin-for-jee-main-2024.pdf",
 	},
 	{
 		id: 4,
-		title: "JoSAA 2023 Schedule",
-		link: "https://cdnbbsr.s3waas.gov.in/s313111c20aee51aeb480ecbd988cd8cc9/uploads/2023/06/2023060766.pdf",
+		title: "Syllabus JEE Mains 2024",
+		link: "https://jeemain.nta.ac.in/images/syllabus-for-jee-main-2024-as-on-01-november-2023.pdf",
 	}
 ]
