@@ -173,15 +173,39 @@ export const impDates = [
 	},
 	{
 		id: 23,
-		title: "JEE Mains Session 1",
+		title: "JEE Mains Session-1",
 		startDate: "2024-01-24",
 		endDate: "2024-02-01"
 	},
 	{
 		id: 24,
-		title: "JEE Mains Session 2",
+		title: " Results JEE Mains Session-1",
+		startDate: "2024-02-12",
+		endDate: null
+	},
+	{
+		id: 25,
+		title: "Online submission of application form (Session-2)",
+		startDate: "2024-02-02",
+		endDate: "2024-03-02"
+	},
+	{
+		id: 26,
+		title: "Last date for successful transaction of Application Fee (Session-2)",
+		startDate: "2024-02-02",
+		endDate: "2024-03-02"
+	},
+	{
+		id: 27,
+		title: "JEE Mains Session-2",
 		startDate: "2024-04-01",
 		endDate: "2024-04-15"
+	},
+	{
+		id: 28,
+		title: " Results JEE Mains Session-1",
+		startDate: "2024-04-25",
+		endDate: null
 	},
 ];
 
